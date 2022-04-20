@@ -1,0 +1,5 @@
+{
+  "ignore": [".git", "node_modules", "dist"],
+  "exec": "npm run dev",
+  "ext": "ts"
+}
