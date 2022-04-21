@@ -1,6 +1,6 @@
 
 const SALTROUNDS = "13"
-const MONGO_URI = "mongodb://localhost:27017/test"
+const MONGO_URI = "mongodb://localhost:27017/Users"
 
 
 class conf{
