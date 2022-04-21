@@ -1,7 +1,9 @@
+import 'dotenv/config' 
 import express from "express";
 import bodyParser from "body-parser";
 import index from "./routes/index";
-import "./db/index.js";
+import "./db/index";
+
 
 const app = express();
 
