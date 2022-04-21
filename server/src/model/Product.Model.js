@@ -2,35 +2,33 @@ var mongoose = require("mongoose");
 
 var ProductSchema = new mongoose.Schema({
   name: {
-    type: [String, "Product Name must be of type 'string'"],
+    type: String,
     required: [true, "Product Name is required"],
   },
   rate: {
-    type: [Number, "Rate must be of type 'Number'"],
+    type: Number,
     default: 0,
     min: [0, "Rate can't be less than 0"],
     max: [0, "Rate can't be more than 5"],
   },
   price: {
-    type: [Number, "Rate must be of type 'Number'"],
+    type: Number,
     required: true,
     validate(value) {
       if (value <= 0) throw new Error("Price can't be less than or equal zero");
     },
   },
   shortDescription: {
-    type: [String, "The Short Description must be of type 'String'"],
+    type: String,
     required: true,
   },
-  availability: {
-    type: [Boolean, "Availability must be of type 'Boolean'"],
-  },
-  imgsURL: {
-    type: [String, "Product Name must be of type 'string'"],
+  availability: Boolean,
+  imgURL: {
+    type: String,
     required: true,
   },
   Weight: {
-    type: [Number, "Weight must be of type 'Number'"],
+    type: Number,
     required: true,
     validate(value) {
       if (value <= 0)
@@ -38,7 +36,7 @@ var ProductSchema = new mongoose.Schema({
     },
   },
   availableInventory: {
-    type: [Number, "The Available Inventory must be of type 'Number'"],
+    type: Number,
     required: true,
     validate(value) {
       if (value <= 0)
@@ -48,11 +46,11 @@ var ProductSchema = new mongoose.Schema({
     },
   },
   longDescription: {
-    type: [String, "The Long Description must be of type 'String'"],
+    type: String,
     required: true,
   },
   productInformation: {
-    type: [String, "The Product Information must be of type 'String'"],
+    type: String,
     required: true,
   },
 });
