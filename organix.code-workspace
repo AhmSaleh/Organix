@@ -1,17 +1,22 @@
 {
-    "folders": [
-      {
-        "path": "server"
-      },
-      {
-        "path": "client"
-      },
-      {
-        "path": "shared"
-      },
-      {
-        "path": ".",
-        "name": "root"
-      }
-    ]
-  }
+  "folders": [
+    {
+      "path": "server"
+    },
+    {
+      "path": "client"
+    },
+    {
+      "path": "shared"
+    },
+    {
+      "path": ".",
+      "name": "root"
+    },
+  ],
+  "settings": {
+    "files.exclude": {
+      "**/node_modules/*/**": true
+    }
+  },
+}
