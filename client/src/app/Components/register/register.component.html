@@ -1,0 +1,88 @@
+<section class="jumbotron container-img vertical-center">
+    <h1 class="display-4 text-center text-white">Sign Up</h1>
+  <div class="container col-lg-6 col-md-8 col-sm-10 ">
+    <form [formGroup]="myForm" class="row g-3" novalidate (ngSubmit)="onSubmit()">
+      <fieldset formGroupName="name" class="container-fluid">
+        <div class="row">
+          <div class="form-group mt-3 col">
+            <div class="form-floating">
+              <input type="text" id="register-firstname"
+                class="form-control {{formControlOpacity('firstName')}} {{formControlClass('firstName')}}"
+                formControlName="firstName" placeholder="First Name" />
+              <label for="register-firstname">First Name</label>
+            </div>
+            <span *ngIf="formControlClass('firstName') == invalidClass">
+              <p class="form-text form-control-feedback" style="color: #dc3545;">First name is required.</p>
+            </span>
+          </div>
+
+          <div class="form-group mt-3 col">
+            <div class="form-floating">
+              <input type="text" id="register-lastname"
+                class="form-control {{formControlOpacity('lastName')}} {{formControlClass('lastName')}}"
+                formControlName="lastName" placeholder="Last Name" />
+              <label for="register-lastname">Last Name</label>
+            </div>
+            <span *ngIf="formControlClass('lastName') == invalidClass">
+              <p class="form-text form-control-feedback" style="color: #dc3545;">Last name is required.</p>
+            </span>
+          </div>
+        </div>
+      </fieldset>
+
+
+      <div class="form-group">
+        <div class="form-floating">
+          <input type="email" id="register-email"
+            class="form-control {{formControlOpacity('email')}} {{formControlClass('email')}}" formControlName="email"
+            placeholder="Email" />
+          <label for="register-email">Email</label>
+        </div>
+        <span *ngIf="formControlClass('email') == invalidClass">
+          <p class="form-text form-control-feedback" style="color: #dc3545;" *ngIf="email.errors!['required']">Email is
+            required.</p>
+          <p class="form-text form-control-feedback" style="color: #dc3545;" *ngIf="email.errors!['pattern']">Email
+            format is incorrect.</p>
+        </span>
+      </div>
+
+      <div class="form-group">
+        <div class="form-floating">
+          <input type="password" id="register-password"
+            class="form-control {{formControlOpacity('password')}} {{formControlClass('password')}}"
+            formControlName="password" placeholder="Password" />
+          <label for="register-password">Password</label>
+        </div>
+        <span *ngIf="formControlClass('password') == invalidClass">
+          <p class="form-text form-control-feedback" style="color: #dc3545;" *ngIf="password.errors!['required']">
+            Password
+            is required.</p>
+          <p class="form-text form-control-feedback" style="color: #dc3545;" *ngIf="password.errors!['minlength']">
+            Password is too short.</p>
+        </span>
+      </div>
+
+      <div class="form-group mb-3">
+        <div class="form-floating">
+          <select class="form-control form-select {{formControlOpacity('role')}} {{formControlClass('role')}}"
+            formControlName="role">
+            <option value="" hidden selected>Please select a role</option>
+            <option *ngFor="let role of availableRoles" [value]="role">{{role}}</option>
+          </select>
+          <label for="register-role">Role</label>
+        </div>
+        <span *ngIf="formControlClass('role') == invalidClass">
+          <p class="form-text form-control-feedback" style="color: #dc3545;">Role is required.</p>
+        </span>
+      </div>
+
+      <div class="d-grid gap-2 mb-3">
+        <button type="submit" class="btn btn-success ">Register</button>
+        <button type="reset" class="btn btn-secondary" (click)="onReset()">Reset</button>
+      </div>
+
+    </form>
+  </div>
+</section>
+
+<!-- <pre>{{email.errors|json}}</pre> -->

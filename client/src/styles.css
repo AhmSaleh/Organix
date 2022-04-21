@@ -1,1 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
+/* html, body{min-height:100%;}
+html { overflow-y:scroll; }
+body{height:100vh;} */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html{
+    height: 100vh;
+}
+
+body{
+    width: 100%;
+    min-height: 100%;
+    /* border: 1px solid red; */
+}
