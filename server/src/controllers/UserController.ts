@@ -1,9 +1,19 @@
+import UserService from "../services/UserService";
+import { Request, Response } from 'express';
+
 const {ajv} = require("../Utils/validate");
 const jwt = require("jsonwebtoken");
 
 const UserModel = require("../Model/UserModel");
 
-async function postLogin(req,res){
+class UserController{
+    static postLogin = postLogin;
+    static postRegister = postRegister;
+    static getAll = getAll;
+    static getProfile = getProfile;
+}
+
+async function postLogin(req:Request,res:Response){
     const user = req.body;
     
     const validate = ajv.getSchema("userLogin");
@@ -11,14 +21,14 @@ async function postLogin(req,res){
     // check the validation
     if(!valid) return res.status(400).send(validate.errors);
     // check the user exist
-    const userModel = new UserModel();
-    const userExist = await userModel.getUserByEmail(user.email);
+    
+    const userExist = await UserService.getUserByEmail(user.email);
     if(!userExist) return res.status(401).send("failed to login");
     // check the password
-    const isPasswordCorrect = await userModel.comparePassword(user.password,userExist.hash);
+    const isPasswordCorrect = await UserService.comparePassword(user.password,userExist.hash);
     if(!isPasswordCorrect) return res.status(401).send("failed to login");
     
-    tokenPayload = {
+    const tokenPayload = {
         UserId:user.email,
         adminRole:true
     };
@@ -31,7 +41,7 @@ async function postLogin(req,res){
     res.send("Login success");
 }
 
-async function postRegister(req,res){
+async function postRegister(req:Request,res:Response){
     const user = req.body;
     console.log(user)
     const validate = ajv.getSchema("userRegestraion");
@@ -40,30 +50,25 @@ async function postRegister(req,res){
     // check the validation
     if(!valid) return res.status(400).send(validate.errors);
     // check the user exist
-    const userModel = new UserModel();
-    const userExist = await userModel.getUserByEmail(user.email);
+    
+    const userExist = await UserService.getUserByEmail(user.email);
     if(userExist) return res.status(400).send("Email already exist");
     // register success
-    const newUser = await userModel.createUser(user);
+    const newUser = await UserService.createUser(user);
     res.send(newUser);
 
 }
 
-async function getAll(req,res){
-    const userModel = new UserModel();
-    const users = await userModel.getAllUsers();
+async function getAll(req:Request,res:Response){
+    
+    const users = await UserService.getAllUsers();
     res.send(users);
 }
 
-async function getProfile(req,res){
-    const userModel = new UserModel();
-    const user = await userModel.getUserByEmail(req.params.email);
+async function getProfile(req:Request,res:Response){
+    
+    const user = await UserService.getUserByEmail(req.params.email);
     res.send(user);
 }
 
-module.exports = {
-    postLogin,
-    postRegister,
-    getAll,
-    getProfile
-}
+export default UserController;
