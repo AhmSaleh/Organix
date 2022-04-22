@@ -1,5 +1,6 @@
 import ProductService from "../services/ProductService";
 import { Request, Response } from "express";
+const { ajv } = require("../Utils/validate");
 
 class ProductController {
   static POSTProduct = POSTProduct;
@@ -11,8 +12,14 @@ class ProductController {
 
 async function POSTProduct(req: Request, res: Response) {
   try {
+    const validate = ajv.getSchema("product");
+    const valid = validate(req.body);
+
+    if (!valid) return res.status(400).send();
+
     const product = await ProductService.createProduct(req.body);
     res.send(product).status(200);
+    res.send();
   } catch (err: any) {
     if (err.name === "ValidationError") {
       res.status(400).send(err);
@@ -66,7 +73,13 @@ async function DELETEProductById(req: Request, res: Response) {
 
 async function UPDATEProductById(req: Request, res: Response) {
   try {
+    const validate = ajv.getSchema("product");
+    const valid = validate(req.body);
+
+    if (!valid) return res.status(400).send();
+
     const product = await ProductService.updateProduct(req.params.id, req.body);
+
     if (!product) {
       return res
         .status(404)
