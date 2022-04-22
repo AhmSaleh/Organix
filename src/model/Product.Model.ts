@@ -7,7 +7,7 @@ export interface IProduct {
   shortDescription: string;
   availability: boolean;
   imgURL: string;
-  Weight: number;
+  weight: number;
   availableInventory: number;
   longDescription: string;
   productInformation: string;
@@ -40,7 +40,7 @@ var ProductSchema = new mongoose.Schema<IProduct>({
     type: String,
     required: true,
   },
-  Weight: {
+  weight: {
     type: Number,
     required: true,
     validate(value: number) {
