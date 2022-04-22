@@ -1,6 +1,19 @@
-var mongoose = require("mongoose");
+import mongoose from "mongoose";
 
-var ProductSchema = new mongoose.Schema({
+export interface IProduct {
+  name: string;
+  rate: number;
+  price: number;
+  shortDescription: string;
+  availability: boolean;
+  imgURL: string;
+  Weight: number;
+  availableInventory: number;
+  longDescription: string;
+  productInformation: string;
+}
+
+var ProductSchema = new mongoose.Schema<IProduct>({
   name: {
     type: String,
     required: [true, "Product Name is required"],
@@ -14,7 +27,7 @@ var ProductSchema = new mongoose.Schema({
   price: {
     type: Number,
     required: true,
-    validate(value) {
+    validate(value: number) {
       if (value <= 0) throw new Error("Price can't be less than or equal zero");
     },
   },
@@ -30,7 +43,7 @@ var ProductSchema = new mongoose.Schema({
   Weight: {
     type: Number,
     required: true,
-    validate(value) {
+    validate(value: number) {
       if (value <= 0)
         throw new Error("Weight can't be less than or equal zero");
     },
@@ -38,7 +51,7 @@ var ProductSchema = new mongoose.Schema({
   availableInventory: {
     type: Number,
     required: true,
-    validate(value) {
+    validate(value: number) {
       if (value <= 0)
         throw new Error(
           "The Available Inventory can't be less than or equal zero"
@@ -55,26 +68,5 @@ var ProductSchema = new mongoose.Schema({
   },
 });
 
-ProductSchema.methods.createProduct = async function (product) {
-  return await mongoose.model("Product").create(product);
-};
-
-ProductSchema.methods.getAllProducts = async function () {
-  return await mongoose.model("Product").find({});
-};
-
-ProductSchema.methods.getProductById = async function (_id) {
-  return await mongoose.model("Product").findById(_id);
-};
-
-ProductSchema.methods.updateProduct = async function (_id, product) {
-  return await mongoose
-    .model("Product")
-    .findByIdAndUpdate(_id, product, { new: true, runValidators: true });
-};
-
-ProductSchema.methods.deleteProduct = async function (_id) {
-  return await mongoose.model("Product").findByIdAndDelete(_id);
-};
-
-module.exports = mongoose.model("Product", ProductSchema);
+const ProductModel = mongoose.model<IProduct>("Product", ProductSchema);
+export { ProductModel, ProductSchema };
