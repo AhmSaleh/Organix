@@ -16,7 +16,8 @@ class UserService {
         return await mongoose.model('User').create({
             email: user.email,
             hash: hash,
-            name: user.name
+            name: user.name,
+            role: user.role
         });
     };
 
