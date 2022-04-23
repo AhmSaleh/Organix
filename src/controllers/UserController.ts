@@ -7,7 +7,12 @@ import  ajv from "../Utils/validate";
 import  jwt  from "jsonwebtoken";
 import {IRegesterData} from "../Utils/SchemaRegester";
 
-class UserController{
+
+export interface ITockeBayload {
+    UserId: Types.ObjectId,
+    role: RoleEnum
+}
+class UserController {
     static postLogin = postLogin;
     static postRegister = postRegister;
     static getAll = getAll;
@@ -26,12 +31,10 @@ async function postLogin(req:Request,res:Response){
     const userExist = await UserService.getUserByEmail(user.email);
     if(!userExist) return res.status(401).send("failed to login");
     // check the password
-    const isPasswordCorrect = await UserService.comparePassword(user.password,userExist.hash);
-    if(!isPasswordCorrect) return res.status(401).send("failed to login");
-    
-    const tokenPayload = {
-        UserId:user.email,
-        role:userExist.role
+    //TODO check that id work
+    const tokenPayload: ITockeBayload = {
+        UserId: userExist._id,
+        role: userExist.role
     };
     
     var Token = await jwt.sign(tokenPayload ,conf.JWT_SECRET,{expiresIn:conf.jwtExpire});
