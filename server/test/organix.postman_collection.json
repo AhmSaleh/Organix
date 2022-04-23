@@ -9,57 +9,6 @@
 			"name": "User",
 			"item": [
 				{
-					"name": "getAll",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:3000/api/user/all",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"user",
-								"all"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "createUser",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"email\":\"abdo2@email.com\",\r\n    \"password\":\"AA123ab31421@#S\",\r\n    \"name\":\"abdo\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:3000/api/user/register",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"user",
-								"register"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "login",
 					"event": [
 						{
@@ -72,6 +21,182 @@
 									"\r",
 									"pm.test(\"response contain login success\", function () {\r",
 									"    pm.response.to.have.body(\"Login success\")\r",
+									"});\r",
+									"\r",
+									"pm.test(\"ressponse contain tocken in header\",function(){\r",
+									"    pm.response.to.have.header(\"x-auth-token\");\r",
+									"})\r",
+									"\r",
+									"pm.test(\"set tocken as collection valiables\",function(){\r",
+									"    const tocken = pm.response.headers.get(\"x-auth-token\");\r",
+									"    pm.collectionVariables.set(\"Tocken\",tocken);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"followAuthorizationHeader": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"abdo2@email.com\",\r\n    \"password\": \"AA123ab31421@#S\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response contain login success\", function () {\r",
+									"    pm.response.to.have.body(\"Login success\")\r",
+									"});\r",
+									"\r",
+									"pm.test(\"ressponse contain tocken in header\",function(){\r",
+									"    pm.response.to.have.header(\"x-auth-token\");\r",
+									"})\r",
+									"\r",
+									"pm.test(\"set tocken as collection valiables\",function(){\r",
+									"    const tocken = pm.response.headers.get(\"x-auth-token\");\r",
+									"    pm.collectionVariables.set(\"Tocken\",tocken);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"followAuthorizationHeader": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"admin@email.com\",\r\n    \"password\": \"AA123ab31421@#S\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAll",
+					"protocolProfileBehavior": {
+						"followAuthorizationHeader": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/user/all",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.be.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"abdo22222@email.com\",\r\n    \"password\":\"AA123ab31421@#S\",\r\n    \"name\":{\"first\":\"abdo\",\"last\":\"ragab\"}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user/register",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createUser by admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.be.status(201);\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -83,7 +208,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\":\"abdo2@email.com\",\r\n    \"password\":\"AA123ab31421@#S\"\r\n}",
+							"raw": "{\r\n    \"email\":\"admin2@email.com\",\r\n    \"password\":\"AA123ab31421@#S\",\r\n    \"name\":{\"first\":\"abdo\",\"last\":\"ragab\"},\r\n    \"role\":\"admin\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -91,15 +216,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:7400/user/",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/user/register/admin",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "7400",
 							"path": [
 								"user",
-								""
+								"register",
+								"admin"
 							]
 						}
 					},
@@ -137,15 +261,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:7400/user/",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/user",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "7400",
 							"path": [
-								"user",
-								""
+								"user"
 							]
 						}
 					},
@@ -157,12 +278,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:7400/user/abdo2@email.com",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/user/abdo2@email.com",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "7400",
 							"path": [
 								"user",
 								"abdo2@email.com"
@@ -171,7 +290,81 @@
 					},
 					"response": []
 				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
 			]
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "in",
+				"value": "header",
+				"type": "string"
+			},
+			{
+				"key": "value",
+				"value": "{{Tocken}}",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "x-auth-token",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:3000/api"
+		},
+		{
+			"key": "Tocken",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoidXNlciIsImlhdCI6MTY1MDc1MTAxOSwiZXhwIjoxNjUwNzU0NjE5fQ.sH_NtQ5NRvGasN6N28psrEQrtDRCi2772LH0qouv3aM"
+		},
+		{
+			"key": "baseUrl",
+			"value": ""
 		}
 	]
 }
