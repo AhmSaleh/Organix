@@ -1,5 +1,6 @@
 import { JSONSchemaType } from "ajv"
 import Ajv, { JTDDataType } from "ajv/dist/jtd"
+import { RoleEnum } from "../model/UserModel";
 
 
 
@@ -10,7 +11,8 @@ export interface IRegesterData {
     name: {
         first: string;
         last: string;
-    }
+    },
+    role: RoleEnum
 }
 const regester_schema: JSONSchemaType<IRegesterData> = {
     "type": "object",
@@ -44,10 +46,15 @@ const regester_schema: JSONSchemaType<IRegesterData> = {
             "required": ["first", "last"],
             "additionalProperties": false
 
-        }
+        },
+        "role": {
+            type: "string",
+            enum: Object.values(RoleEnum),
+            default: RoleEnum.user
+        },
     },
-    "required": ["email", "password", "name"],
-    "additionalProperties": false
+    required: ["email", "password", "name"],
+    additionalProperties: false
 }
 
 
