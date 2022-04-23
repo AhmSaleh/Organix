@@ -73,6 +73,7 @@ export class RegisterComponent implements OnInit {
   onSubmit(): void {
     if (this.myForm.valid) {
       console.log('submitting...');
+      //TODO add submit logic
       //to be changed later once the api is created
     }
   }
