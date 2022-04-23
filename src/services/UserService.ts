@@ -3,7 +3,7 @@
 
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
-import conf from "../config";
+import conf from "../conf";
 import {IUser} from "../model/UserModel";
 import { IRegesterData } from "../Utils/SchemaRegester";
 
