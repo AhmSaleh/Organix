@@ -1,7 +1,7 @@
 const Ajv = require("ajv");
 const addFormats = require("ajv-formats");
 
-const regester_user = require("./SchemaRegester.json");
+import regester_user from "./SchemaRegester" 
 const login_user = require("./SchemaLogin.json");
 const post_post = require("./SchemaPost.json");
 const product_crud = require("./Schema.Product.json");
