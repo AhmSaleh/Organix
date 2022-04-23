@@ -1,13 +1,17 @@
-import mongoose from "mongoose";
+import { Schema, model } from 'mongoose';
+
 
 export interface IUser {
     email: string;
     hash: string;
     name: string;
+    role: RoleEnum;
 }
 
+export enum RoleEnum { user="user", merchent="merchent", admin="admin" }
 
-const UserSchema = new mongoose.Schema<IUser>({
+
+const UserSchema = new Schema<IUser>({
     email: {
         type: String,
         match: [/\S+@\S+\.\S+/, 'is invalid'],
@@ -30,10 +34,15 @@ const UserSchema = new mongoose.Schema<IUser>({
             required: true,
             minlength: [1, 'is too short (minimum is 1 characters)'],
         }
+    },
+    role: {
+        type: String,
+        enum: Object.values(RoleEnum),
+        default: RoleEnum.user
     }
 });
 
 
 //export the model and the schema
-const UserModel = mongoose.model<IUser>('User', UserSchema);
-export { UserModel, UserSchema }
+const UserModel = model<IUser>('User', UserSchema);
+export default UserModel;

@@ -1,10 +1,11 @@
 import UserService from "../services/UserService";
 import { Request, Response } from 'express';
+import conf from "../conf";
+
 
 const {ajv} = require("../Utils/validate");
-const jwt = require("jsonwebtoken");
+import  jwt  from "jsonwebtoken";
 
-const UserModel = require("../Model/UserModel");
 
 class UserController{
     static postLogin = postLogin;
@@ -30,12 +31,11 @@ async function postLogin(req:Request,res:Response){
     
     const tokenPayload = {
         UserId:user.email,
-        adminRole:true
+        role:userExist.role
     };
-    console.log("load: ")
-    console.log(tokenPayload)
-    var Token = await jwt.sign(tokenPayload ,"thisistokensecret");
-    console.log("userToken: "+Token)
+    
+    var Token = await jwt.sign(tokenPayload ,conf.JWT_SECRET,{expiresIn:conf.jwtExpire});
+    // add the tocken to cookies
     res.header("x-auth-token",Token)
     // login success
     res.send("Login success");
@@ -43,7 +43,7 @@ async function postLogin(req:Request,res:Response){
 
 async function postRegister(req:Request,res:Response){
     const user = req.body;
-    console.log(user)
+    
     const validate = ajv.getSchema("userRegestraion");
     const valid = validate(user);
     
