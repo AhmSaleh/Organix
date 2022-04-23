@@ -2,10 +2,10 @@ import UserService from "../services/UserService";
 import { Request, Response } from 'express';
 import conf from "../conf";
 
+import  ajv from "../Utils/validate";
 
-const {ajv} = require("../Utils/validate");
 import  jwt  from "jsonwebtoken";
-
+import {IRegesterData} from "../Utils/SchemaRegester";
 
 class UserController{
     static postLogin = postLogin;
@@ -42,15 +42,8 @@ async function postLogin(req:Request,res:Response){
 }
 
 async function postRegister(req:Request,res:Response){
-    const user = req.body;
-    
-    const validate = ajv.getSchema("userRegestraion");
-    const valid = validate(user);
-    
-    // check the validation
-    if(!valid) return res.status(400).send(validate.errors);
+    const user : IRegesterData= req.body ;
     // check the user exist
-    
     const userExist = await UserService.getUserByEmail(user.email);
     if(userExist) return res.status(400).send("Email already exist");
     // register success
