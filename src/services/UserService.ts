@@ -1,11 +1,17 @@
+
+
+
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import conf from "../config";
-import {IUser, UserModel , UserSchema} from "../model/UserModel";
+import {IUser} from "../model/UserModel";
+import { IRegesterData } from "../Utils/SchemaRegester";
+
+
 
 class UserService {
 
-    async createUser(user: { password: string, email: string, name: string }) {
+    async createUser(user: IRegesterData) {
         const hash = await bcrypt.hash(user.password, conf.SaltRounds);
         return await mongoose.model('User').create({
             email: user.email,

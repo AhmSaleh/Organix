@@ -20,14 +20,20 @@ const UserSchema = new mongoose.Schema<IUser>({
         required: true
     },
     name: {
-        type: String,
-        minlength: [2, 'is too short (minimum is 2 characters)'],
-        required: true
+        first: {
+            type: String,
+            required: true,
+            minlength: [1, 'is too short (minimum is 1 characters)'],
+        },
+        last: {
+            type: String,
+            required: true,
+            minlength: [1, 'is too short (minimum is 1 characters)'],
+        }
     }
-    
 });
 
 
 //export the model and the schema
 const UserModel = mongoose.model<IUser>('User', UserSchema);
-export {UserModel , UserSchema}
+export { UserModel, UserSchema }
