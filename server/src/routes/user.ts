@@ -12,4 +12,4 @@ router.get("/all",UserController.getAll);
 
 router.get("/:email",UserController.getProfile);
 
-module.exports = router;
+export default router;
