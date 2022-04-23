@@ -3,7 +3,7 @@ const addFormats = require("ajv-formats");
 
 import regester_admin from "./SchemaRegester" 
 import regester_user from "./SchemaRegesterForUser"
-const login_user = require("./SchemaLogin.json");
+import login_user from "./SchemaLogin" 
 const post_post = require("./SchemaPost.json");
 const product_crud = require("./Schema.Product.json");
 
