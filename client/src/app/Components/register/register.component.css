@@ -1,6 +1,6 @@
 .container-img {
   width: 65%;
-  background-image: url('/assets/Images/saleh.jpeg');
+  background-image: url("/assets/img/saleh.jpeg");
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
@@ -8,7 +8,6 @@
   padding: 0;
   border-radius: 5px;
 }
-
 
 .checkout {
   padding-top: 80px;
@@ -19,14 +18,14 @@
   color: #999999;
   text-align: center;
   background: #f5f5f5;
-  border-top: 1px solid #6AB963;
+  border-top: 1px solid #6ab963;
   padding: 12px 0 12px;
   margin-bottom: 75px;
 }
 
 .checkout h6 span {
   font-size: 16px;
-  color: #6AB963;
+  color: #6ab963;
   margin-right: 5px;
 }
 
@@ -95,12 +94,12 @@
   visibility: hidden;
 }
 
-.checkout__input__checkbox label input:checked~.checkmark {
+.checkout__input__checkbox label input:checked ~ .checkmark {
   background: #7fad39;
   border-color: #7fad39;
 }
 
-.checkout__input__checkbox label input:checked~.checkmark:after {
+.checkout__input__checkbox label input:checked ~ .checkmark:after {
   opacity: 1;
 }
 
