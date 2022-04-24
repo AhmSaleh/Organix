@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
+import { UserService } from 'src/app/Services/user.service';
 
 @Component({
   selector: 'app-register',
@@ -7,7 +8,7 @@ import { FormGroup, Validators, FormControl } from '@angular/forms';
   styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent implements OnInit {
-  constructor() {}
+  constructor(private userService: UserService) { }
 
   validClass = ' is-valid ';
   invalidClass = ' is-invalid ';
@@ -74,6 +75,15 @@ export class RegisterComponent implements OnInit {
     if (this.myForm.valid) {
       console.log('submitting...');
       //TODO add submit logic
+      this.userService.addUser(this.myForm.value).subscribe(
+        (data) => {
+          console.log(data);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+
       //to be changed later once the api is created
     }
   }
@@ -106,5 +116,5 @@ export class RegisterComponent implements OnInit {
     return this.role.valid ? ' is-valid ' : this.invalidClass;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 }
