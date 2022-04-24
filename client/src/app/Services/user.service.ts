@@ -18,7 +18,7 @@ export interface IRegesterData {
   providedIn: 'root'
 })
 export class UserService {
-  UserUrl = 'http://localhost:3000/api/users';
+  UserUrl = 'http://localhost:3000/api/user';
   constructor(private http:HttpClient) { }
 
   addUser(user: IRegesterData): Observable<IRegesterData>{
