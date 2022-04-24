@@ -40,10 +40,10 @@
         </div>
         <span
           [ngClass]="{'visible': (formControlClass('email') == invalidClass), 'invisible' :(formControlClass('email') != invalidClass)}">
-          <p class="form-text form-control-feedback m-0" style="color: #dc3545;" *ngIf="email.errors!['required']">Email
+          <p class="form-text form-control-feedback m-0" style="color: #dc3545;" *ngIf="email.errors?.['required']">Email
             is
             required.</p>
-          <p class="form-text form-control-feedback m-0" style="color: #dc3545;" *ngIf="email.errors!['pattern']">Email
+          <p class="form-text form-control-feedback m-0" style="color: #dc3545;" *ngIf="email.errors?.['pattern']">Email
             format is incorrect.</p>
         </span>
       </div>
@@ -57,10 +57,10 @@
         </div>
         <span
           [ngClass]="{'visible': (formControlClass('password') == invalidClass), 'invisible' :(formControlClass('password') != invalidClass)}">
-          <p class="form-text form-control-feedback m-0" style="color: #dc3545;" *ngIf="password.errors!['required']">
+          <p class="form-text form-control-feedback m-0" style="color: #dc3545;" *ngIf="password.errors?.['required']">
             Password
             is required.</p>
-          <p class="form-text form-control-feedback m-0" style="color: #dc3545;" *ngIf="password.errors!['minlength']">
+          <p class="form-text form-control-feedback m-0" style="color: #dc3545;" *ngIf="password.errors?.['minlength']">
             Password is too short.</p>
         </span>
       </div>

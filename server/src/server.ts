@@ -2,6 +2,7 @@ import 'dotenv/config'
 import express from "express";
 import bodyParser from "body-parser";
 import index from "./routes/index";
+import cors from "cors"
 import "./db/index";
 
 
@@ -9,6 +10,8 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(cors())
 
 // Configure Routes Middlewares
 app.use("/api", index);
