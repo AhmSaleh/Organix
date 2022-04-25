@@ -7,71 +7,81 @@ import { FormGroup, Validators, FormControl } from '@angular/forms';
   styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent implements OnInit {
-  constructor() {}
-
   validClass = ' is-valid ';
   invalidClass = ' is-invalid ';
-
+  myRegisterForm: FormGroup;
   availableRoles: String[] = ['Customer', 'Trader'];
 
-  firstName: FormControl = new FormControl('', Validators.required);
-  lastName: FormControl = new FormControl('', Validators.required);
-  email: FormControl = new FormControl('', [
-    Validators.required,
-    Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/),
-  ]);
-  password: FormControl = new FormControl('', [
-    Validators.required,
-    Validators.minLength(8),
-  ]);
-  role: FormControl = new FormControl('', Validators.required);
-
-  myForm: FormGroup = new FormGroup({
-    name: new FormGroup({
-      firstName: this.firstName,
-      lastName: this.lastName,
-    }),
-    email: this.email,
-    password: this.password,
-    role: this.role,
-  });
-
-  formControlClass(controlName: String): String {
-    switch (controlName) {
-      case 'firstName':
-        return this.firstNameClass();
-      case 'lastName':
-        return this.lastNameClass();
-      case 'email':
-        return this.emailClass();
-      case 'password':
-        return this.passwordClass();
-      case 'role':
-        return this.roleClass();
-      default:
-        return '';
-    }
+  constructor() {
+    this.myRegisterForm = new FormGroup({
+      name: new FormGroup({
+        firstName: new FormControl('', Validators.required),
+        lastName: new FormControl('', Validators.required),
+      }),
+      email: new FormControl('', [
+        Validators.required,
+        Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/),
+      ]),
+      password: new FormControl('', [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.maxLength(20),
+      ]),
+      role: new FormControl('', Validators.required),
+    });
   }
 
-  formControlOpacity(controlName: String): String {
-    switch (controlName) {
-      case 'firstName':
-        return this.firstName.pristine ? 'opacity-50' : '';
-      case 'lastName':
-        return this.lastName.pristine ? 'opacity-50' : '';
-      case 'email':
-        return this.email.pristine ? 'opacity-50' : '';
-      case 'password':
-        return this.password.pristine ? 'opacity-50' : '';
-      case 'role':
-        return this.role.pristine ? 'opacity-50' : '';
-      default:
-        return '';
-    }
+  firstnameOpacity() {
+    return this.myRegisterForm.get(`name.firstName`)?.pristine ||
+      this.myRegisterForm.get(`name.firstName`)?.invalid
+      ? 'opacity-50'
+      : '';
+  }
+
+  lastnameOpacity() {
+    return this.myRegisterForm.get(`name.lastName`)?.pristine ||
+      this.myRegisterForm.get(`name.lastName`)?.invalid
+      ? 'opacity-50'
+      : '';
+  }
+
+  emailOpacity() {
+    return this.myRegisterForm.controls['email'].pristine ||
+      this.myRegisterForm.controls['email'].invalid
+      ? 'opacity-50'
+      : '';
+  }
+
+  passwordOpacity() {
+    return this.myRegisterForm.controls['password'].pristine ||
+      this.myRegisterForm.controls['password'].invalid
+      ? 'opacity-50'
+      : '';
+  }
+
+  roleOpacity() {
+    return this.myRegisterForm.controls['role'].pristine ||
+      this.myRegisterForm.controls['role'].invalid
+      ? 'opacity-50'
+      : '';
+  }
+
+  emailErrors(): String {
+    if (!this.myRegisterForm.controls['email'].errors) return '';
+    return Object.keys(
+      this.myRegisterForm.controls['email'].errors
+    )[0].toString();
+  }
+
+  passwordErrors(): String {
+    if (!this.myRegisterForm.controls['password'].errors) return '';
+    return Object.keys(
+      this.myRegisterForm.controls['password'].errors
+    )[0].toString();
   }
 
   onSubmit(): void {
-    if (this.myForm.valid) {
+    if (this.myRegisterForm.valid) {
       console.log('submitting...');
       //TODO add submit logic
       //to be changed later once the api is created
@@ -79,31 +89,41 @@ export class RegisterComponent implements OnInit {
   }
 
   onReset() {
-    this.myForm.reset();
+    this.myRegisterForm.reset();
   }
 
-  private emailClass(): String {
-    if (this.email.untouched) return '';
-    return this.email.valid ? this.validClass : this.invalidClass;
+  emailClass(): String {
+    if (this.myRegisterForm.controls['email'].untouched) return '';
+    return this.myRegisterForm.controls['email'].valid
+      ? this.validClass
+      : this.invalidClass;
   }
 
-  private passwordClass(): String {
-    if (this.password.untouched) return '';
-    return this.password.valid ? this.validClass : this.invalidClass;
+  passwordClass(): String {
+    if (this.myRegisterForm.controls['password'].untouched) return '';
+    return this.myRegisterForm.controls['password'].valid
+      ? this.validClass
+      : this.invalidClass;
   }
 
-  private firstNameClass(): String {
-    if (this.firstName.untouched) return '';
-    return this.firstName.valid ? this.validClass : this.invalidClass;
+  firstNameClass(): String {
+    if (this.myRegisterForm.get(`name.firstName`)!.untouched) return '';
+    return this.myRegisterForm.get(`name.firstName`)!.valid
+      ? this.validClass
+      : this.invalidClass;
   }
 
-  private lastNameClass(): String {
-    if (this.lastName.untouched) return '';
-    return this.lastName.valid ? this.validClass : this.invalidClass;
+  lastNameClass(): String {
+    if (this.myRegisterForm.get(`name.lastName`)!.untouched) return '';
+    return this.myRegisterForm.get(`name.lastName`)!.valid
+      ? this.validClass
+      : this.invalidClass;
   }
-  private roleClass(): String {
-    if (this.role.untouched) return '';
-    return this.role.valid ? ' is-valid ' : this.invalidClass;
+  roleClass(): String {
+    if (this.myRegisterForm.controls['role'].untouched) return '';
+    return this.myRegisterForm.controls['role'].valid
+      ? ' is-valid '
+      : this.invalidClass;
   }
 
   ngOnInit(): void {}

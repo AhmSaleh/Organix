@@ -1,30 +1,24 @@
 <section class="jumbotron container-img vertical-center">
-  <h1 class="display-4 text-center text-white">Sign Up</h1>
-  <div class="container col-lg-6 col-md-8 col-sm-10 ">
-    <form [formGroup]="myForm" class="row" novalidate (ngSubmit)="onSubmit()">
+  <h1 class="text-center text-black bold" style="font-size: 60px;">Register</h1>
+  <div class="container col-lg-8 col-md-9 col-sm-10 ">
+    <form [formGroup]="myRegisterForm" class="row" novalidate (ngSubmit)="onSubmit()">
       <fieldset formGroupName="name" class="container-fluid">
         <div class="row">
           <div class="form-group mt-3 col">
-            <div class="form-floating">
-              <input type="text" id="register-firstname"
-                class="form-control {{formControlOpacity('firstName')}} {{formControlClass('firstName')}}"
-                formControlName="firstName" placeholder="First Name" />
-              <label for="register-firstname">First Name</label>
-            </div>
+            <label for="register-firstname">First Name</label>
+            <input type="text" id="register-firstname" class="form-control {{firstnameOpacity()}} {{firstNameClass()}}"
+              formControlName="firstName" placeholder="First Name" />
             <span class="form-text form-control-feedback" style="color: #dc3545;"
-              [ngClass]="{'visible': (formControlClass('firstName') == invalidClass), 'invisible' :(formControlClass('firstName') != invalidClass)}">First
+              [ngClass]="{'visible': (firstNameClass() == invalidClass), 'invisible' :(firstNameClass() != invalidClass)}">First
               name is required.</span>
           </div>
 
           <div class="form-group mt-3 col">
-            <div class="form-floating">
-              <input type="text" id="register-lastname"
-                class="form-control {{formControlOpacity('lastName')}} {{formControlClass('lastName')}}"
-                formControlName="lastName" placeholder="Last Name" />
-              <label for="register-lastname">Last Name</label>
-            </div>
+            <label for="register-lastname">Last Name</label>
+            <input type="text" id="register-lastname" class="form-control {{lastnameOpacity()}} {{lastNameClass()}}"
+              formControlName="lastName" placeholder="Last Name" />
             <span class="form-text form-control-feedback" style="color: #dc3545;"
-              [ngClass]="{'visible': (formControlClass('lastName') == invalidClass), 'invisible' :(formControlClass('lastName') != invalidClass)}">Last
+              [ngClass]="{'visible': (lastNameClass() == invalidClass), 'invisible' :(lastNameClass() != invalidClass)}">Last
               name is required.</span>
           </div>
         </div>
@@ -32,57 +26,54 @@
 
 
       <div class="form-group">
-        <div class="form-floating">
-          <input type="email" id="register-email"
-            class="form-control {{formControlOpacity('email')}} {{formControlClass('email')}}" formControlName="email"
-            placeholder="Email" />
-          <label for="register-email">Email</label>
-        </div>
-        <span
-          [ngClass]="{'visible': (formControlClass('email') == invalidClass), 'invisible' :(formControlClass('email') != invalidClass)}">
-          <p class="form-text form-control-feedback m-0" style="color: #dc3545;" *ngIf="email.errors!['required']">Email
-            is
-            required.</p>
-          <p class="form-text form-control-feedback m-0" style="color: #dc3545;" *ngIf="email.errors!['pattern']">Email
+        <label for="register-email">Email</label>
+        <input type="email" id="register-email" class="form-control {{emailOpacity()}} {{emailClass()}}"
+          formControlName="email" placeholder="Email" />
+        <span [ngClass]="{'visible': (emailClass() == invalidClass), 'invisible' :(emailClass()!= invalidClass)}">
+          <p class="form-text form-control-feedback m-0" style="color: #dc3545;" *ngIf="emailErrors() == 'required'">
+            Email is required.</p>
+          <p class="form-text form-control-feedback m-0" style="color: #dc3545;" *ngIf="emailErrors() == 'pattern'">
+            Email
             format is incorrect.</p>
         </span>
       </div>
 
       <div class="form-group">
-        <div class="form-floating">
-          <input type="password" id="register-password"
-            class="form-control {{formControlOpacity('password')}} {{formControlClass('password')}}"
-            formControlName="password" placeholder="Password" />
-          <label for="register-password">Password</label>
-        </div>
+        <label for="register-password">Password</label>
+        <input type="password" id="register-password" class="form-control {{passwordOpacity()}} {{passwordClass()}}"
+          formControlName="password" placeholder="Password" />
+        <small id="passwordHelpBlock" class="form-text text-muted">
+          Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special
+          characters, or emoji.
+        </small>
         <span
-          [ngClass]="{'visible': (formControlClass('password') == invalidClass), 'invisible' :(formControlClass('password') != invalidClass)}">
-          <p class="form-text form-control-feedback m-0" style="color: #dc3545;" *ngIf="password.errors!['required']">
-            Password
-            is required.</p>
-          <p class="form-text form-control-feedback m-0" style="color: #dc3545;" *ngIf="password.errors!['minlength']">
+          [ngClass]="{'visible': (passwordClass() == invalidClass), 'invisible' :(passwordClass() != invalidClass)}">
+          <p class="form-text form-control-feedback m-0" style="color: #dc3545;" *ngIf="passwordErrors() == 'required'">
+            Password is required.</p>
+          <p class="form-text form-control-feedback m-0" style="color: #dc3545;"
+            *ngIf="passwordErrors() == 'minlength'">
             Password is too short.</p>
+          <p class="form-text form-control-feedback m-0" style="color: #dc3545;"
+            *ngIf="passwordErrors() == 'maxlength'">
+            Password is too long.</p>
         </span>
       </div>
 
       <div class="form-group">
-        <div class="form-floating">
-          <select class="form-control form-select {{formControlOpacity('role')}} {{formControlClass('role')}}"
-            formControlName="role">
-            <option value="" hidden selected>Please select a role</option>
-            <option *ngFor="let role of availableRoles" [value]="role">{{role}}</option>
-          </select>
-          <label for="register-role">Role</label>
-        </div>
-        <span
-          [ngClass]="{'visible': (formControlClass('role') == invalidClass), 'invisible' :(formControlClass('role') != invalidClass)}">
+        <label for="register-role">Role</label>
+        <select class="form-control form-select {{roleOpacity()}} {{roleClass()}}" formControlName="role"
+          style="cursor: pointer;">
+          <option value="" hidden selected>Please select a role</option>
+          <option *ngFor="let role of availableRoles" [value]="role">{{role}}</option>
+        </select>
+        <span [ngClass]="{'visible': (roleClass() == invalidClass), 'invisible' :(roleClass() != invalidClass)}">
           <p class="form-text form-control-feedback m-0" style="color: #dc3545;">Role is required.</p>
         </span>
       </div>
 
-      <div class="d-grid gap-2 mb-3">
-        <button type="submit" class="btn btn-success ">Register</button>
-        <button type="reset" class="btn btn-secondary" (click)="onReset()">Reset</button>
+      <div class="d-flex gap-2 mb-3 justify-content-center">
+        <button type="submit" class="site-btn ">Register</button>
+        <button type="reset" class="site-btn btn-secondary" (click)="onReset()">Reset</button>
       </div>
 
     </form>
