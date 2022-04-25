@@ -93,8 +93,6 @@ export class RegisterComponent implements OnInit {
           console.log(error);
         }
       );
-
-      //to be changed later once the api is created
     }
   }
 
