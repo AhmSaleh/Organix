@@ -11,6 +11,10 @@ import { MainLayoutComponent } from './Components/main-layout/main-layout.compon
 import { NotFoundComponentComponent } from './Components/not-found/not-found-component.component';
 import { HomeComponent } from './Components/home/home.component';
 import { LoginComponent } from './Components/login/login.component';
+import { ProductGridComponent } from './Components/shop/product-grid/product-grid.component';
+import { ShopComponent } from './Components/shop/shop.component';
+import { ProductItemComponent } from './Components/shop/product-item/product-item.component';
+import { SidebarComponent } from './Components/shop/sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +26,10 @@ import { LoginComponent } from './Components/login/login.component';
     NotFoundComponentComponent,
     HomeComponent,
     LoginComponent,
+    ProductGridComponent,
+    ShopComponent,
+    ProductItemComponent,
+    SidebarComponent,
   ],
   imports: [
     BrowserModule,
