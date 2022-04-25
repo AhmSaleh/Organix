@@ -4,7 +4,7 @@ import bodyParser from "body-parser";
 import index from "./routes/index";
 import cors from "cors"
 import "./db/index";
-
+import './Utils/seed';
 
 const app = express();
 
