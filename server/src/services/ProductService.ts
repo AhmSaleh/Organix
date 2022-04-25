@@ -14,6 +14,10 @@ class ProductService {
     return await ProductModel.findById(_id);
   }
 
+  async getProductByName(_name: string) {
+    return await ProductModel.find({ name: _name });
+  }
+
   async updateProduct(_id: string, product: IProduct) {
     return await ProductModel.findByIdAndUpdate(_id, product, {
       new: true,
