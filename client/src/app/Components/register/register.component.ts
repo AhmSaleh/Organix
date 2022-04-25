@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
+import { UserService } from 'src/app/Services/user.service';
 
 @Component({
   selector: 'app-register',
@@ -12,7 +13,7 @@ export class RegisterComponent implements OnInit {
   myRegisterForm: FormGroup;
   availableRoles: String[] = ['Customer', 'Trader'];
 
-  constructor() {
+  constructor(private userService: UserService) {
     this.myRegisterForm = new FormGroup({
       name: new FormGroup({
         firstName: new FormControl('', Validators.required),
@@ -84,6 +85,15 @@ export class RegisterComponent implements OnInit {
     if (this.myRegisterForm.valid) {
       console.log('submitting...');
       //TODO add submit logic
+      this.userService.addUser(this.myRegisterForm.value).subscribe(
+        (data) => {
+          console.log(data);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+
       //to be changed later once the api is created
     }
   }

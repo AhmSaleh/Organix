@@ -3,8 +3,9 @@
   "version": "2.0.0",
   "tasks": [
     {
+      "label": "npm: startDev",
       "type": "npm",
-      "script": "start",
+      "script": "start -- --port=42000",
       "isBackground": true,
       "problemMatcher": {
         "owner": "typescript",
