@@ -8,9 +8,9 @@ export interface RequestWithSchema<T> extends Request {
 export default function checkSchema<T>(schema_name:string) {
     return (req: Request, res: Response, next: NextFunction) => {
         const validate = ajv.getSchema(schema_name);
-        const valid = validate(req.body);
+        const valid = validate!(req.body);
         // check the validation
-        if (!valid) return res.status(400).send(validate.errors);
+        if (!valid) return res.status(400).send(validate?.errors);
         (req as RequestWithSchema<T>).data = req.body;
         next();   
     }
