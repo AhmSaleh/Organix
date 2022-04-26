@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './Components/home/home.component';
-import { LoginComponent } from './Components/login/login.component';
+import { LoginComponent } from './Components/User/login/login.component';
 import { MainLayoutComponent } from './Components/main-layout/main-layout.component';
 import { NotFoundComponentComponent } from './Components/not-found/not-found-component.component';
-import { RegisterComponent } from './Components/register/register.component';
+import { RegisterComponent } from './Components/User/register/register.component';
 import { ProductGridComponent } from './Components/shop/product-grid/product-grid.component';
 import { ShopComponent } from './Components/shop/shop.component';
+import { UserDetailsComponent } from './Components/User/user-details/user-details.component';
 
 const routes: Routes = [
   {
@@ -17,7 +18,8 @@ const routes: Routes = [
       { path: 'home', component: HomeComponent },
       { path: 'register', component: RegisterComponent },
       { path: 'login', component: LoginComponent },
-      { path: 'shop', component: ShopComponent}
+      { path: 'user/details', component: UserDetailsComponent },
+      { path: 'shop', component: ShopComponent },
     ],
   },
   { path: '**', component: NotFoundComponentComponent },
