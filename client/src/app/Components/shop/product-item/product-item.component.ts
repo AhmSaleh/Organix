@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { IProduct } from '../product-grid/product-grid.component';
+import { IProduct } from 'src/app/Services/ProductServices/get-all.service';
 
 @Component({
   selector: 'app-product-item',
@@ -9,17 +9,12 @@ import { IProduct } from '../product-grid/product-grid.component';
 export class ProductItemComponent implements OnInit {
 
   constructor() { 
-    this.product = {
-      id: 0,
-      name: 'Product default',
-      price: 100,
-      imageUrl: 'https://picsum.photos/200/300'
-    };
+    this.product = {} as IProduct;
   }
 
   ngOnInit(): void {
     this.currentImage = {
-      'background-image': `url(${this.product.imageUrl})`
+      'background-image': `url(${this.product.imgURL})`
     };
   }
 
