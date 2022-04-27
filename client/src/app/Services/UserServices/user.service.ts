@@ -11,6 +11,11 @@ export interface IRegesterData {
     last: string;
   };
 }
+export interface ILoginData {
+  email: string;
+  password: string;
+}
+
 
 @Injectable({
   providedIn: 'root',
@@ -23,6 +28,12 @@ export class UserService {
     return this.http
       .post<IRegesterData>(this.UserUrl + '/register', user)
       .pipe(catchError(this.handleError));
+  }
+
+  loginUser(user: ILoginData): Observable<any> {
+    return this.http.post(this.UserUrl, user).pipe(
+      catchError(this.handleError)
+    );
   }
 
   getUser(): Observable<IUser> {
