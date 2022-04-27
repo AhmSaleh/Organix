@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 export interface IProduct {
+  _id: string;
   name: string;
   rate: number;
   price: number;
