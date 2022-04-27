@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
+import { UserService } from 'src/app/Services/UserServices/RegisterService/user.service';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,7 @@ export class LoginComponent implements OnInit {
 
   myForm: FormGroup;
 
-  constructor() {
+  constructor(private userService: UserService) {
     this.myForm = new FormGroup({
       email: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required),
@@ -24,6 +25,14 @@ export class LoginComponent implements OnInit {
       console.log('submitting...');
       //TODO add login logic
       //to be changed later once the api is created
+      this.userService.loginUser(this.myForm.value).subscribe(
+        (data) => {
+          console.log(data);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
     }
   }
 

@@ -10,7 +10,10 @@ export interface IRegesterData {
       first: string;
       last: string;
   },
-
+}
+export interface ILoginData {
+  email: string;
+  password: string;
 }
 
 
@@ -27,6 +30,14 @@ export class UserService {
     );
   }
   
+
+  loginUser(user: ILoginData): Observable<any>{
+    return this.http.post(this.UserUrl, user).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+
 
   private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
