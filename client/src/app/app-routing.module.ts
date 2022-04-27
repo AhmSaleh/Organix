@@ -8,6 +8,7 @@ import { RegisterComponent } from './Components/User/register/register.component
 import { ProductGridComponent } from './Components/shop/product-grid/product-grid.component';
 import { ShopComponent } from './Components/shop/shop.component';
 import { UserDetailsComponent } from './Components/User/user-details/user-details.component';
+import { ProductDetailsComponent } from './Components/shop/product-details/product-details.component';
 
 const routes: Routes = [
   {
@@ -20,6 +21,7 @@ const routes: Routes = [
       { path: 'login', component: LoginComponent },
       { path: 'user/details', component: UserDetailsComponent },
       { path: 'shop', component: ShopComponent },
+      { path: 'product/:id', component: ProductDetailsComponent },
     ],
   },
   { path: '**', component: NotFoundComponentComponent },
