@@ -27,10 +27,13 @@
                         <app-rating-stars></app-rating-stars>
                         <div class="product__details__price">${{product.price}}</div>
                         <p>{{product.shortDescription}}</p>
+                        <!-- TODO add improve UI add left and right buttons -->
                         <div class="product__details__quantity">
                             <div class="quantity">
                                 <div class="pro-qty">
+                                    <!-- <span class="dec qtybtn">-</span> -->
                                     <input type="number" value="{{product.availableInventory?1:0}}" min="0" [max]="product.availableInventory">
+                                    <!-- <span class="inc qtybtn">+</span> -->
                                 </div>
                             </div>
                         </div>
