@@ -168,7 +168,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\":\"abdo22222@email.com\",\r\n    \"password\":\"AA123ab31421@#S\",\r\n    \"name\":{\"first\":\"abdo\",\"last\":\"ragab\"}\r\n}",
+							"raw": "{\r\n    \"email\":\"admin@email.com\",\r\n    \"password\":\"AA123ab31421@#S\",\r\n    \"name\":{\"first\":\"abdo\",\"last\":\"ragab\"}\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -309,6 +309,46 @@
 							""
 						]
 					}
+				}
+			]
+		},
+		{
+			"name": "products",
+			"item": [
+				{
+					"name": "getAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/product",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/product/626719facf4f70333b4a9840",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"product",
+								"626719facf4f70333b4a9840"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}
