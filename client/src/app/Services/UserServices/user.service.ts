@@ -1,17 +1,29 @@
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpHeaders,
-} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, throwError } from 'rxjs';
-import { IUser } from '../../../Models/IUser';
+import { catchError, Observable, throwError } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { IUser } from 'src/app/Models/IUser';
+
+export interface IRegesterData {
+  email: string;
+  password: string;
+  name: {
+    first: string;
+    last: string;
+  };
+}
+
 @Injectable({
   providedIn: 'root',
 })
-export class DetailsService {
+export class UserService {
   UserUrl = 'http://localhost:3000/api/user';
   constructor(private http: HttpClient) {}
+
+  addUser(user: IRegesterData): Observable<IRegesterData> {
+    return this.http
+      .post<IRegesterData>(this.UserUrl + '/register', user)
+      .pipe(catchError(this.handleError));
+  }
 
   getUser(): Observable<IUser> {
     return this.http
