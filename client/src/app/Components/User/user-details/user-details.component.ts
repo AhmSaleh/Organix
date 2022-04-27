@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IUser } from 'src/app/Models/IUser';
-import { DetailsService } from 'src/app/Services/UserServices/DetailsService/details.service.spec';
+import { UserService } from 'src/app/Services/UserServices/user.service';
 
 @Component({
   selector: 'app-user-details',
@@ -15,8 +15,8 @@ export class UserDetailsComponent implements OnInit {
     name: { first: '', last: '' },
     role: '',
   };
-  constructor(UserDetailservice: DetailsService) {
-    UserDetailservice.getUser().subscribe(
+  constructor(UserService: UserService) {
+    UserService.getUser().subscribe(
       (response) => {
         console.log('response received');
         this.User = response;

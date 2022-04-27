@@ -22,6 +22,10 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     if (this.myForm.valid) {
       console.log('submitting...');
+      localStorage.setItem(
+        'token',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOiI2MjY2YzUyNTRkMmRiZjM4NWZkNTRjYWEiLCJyb2xlIjoidXNlciIsImlhdCI6MTY1MDk5MjcxMCwiZXhwIjoxNjUwOTk2MzEwfQ.U7QOuChHnqDR0XwAReGgre4a8J8M1J8Vfs2GHxBTL6A'
+      );
       //TODO add login logic
       //to be changed later once the api is created
     }
