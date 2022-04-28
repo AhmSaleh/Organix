@@ -16,7 +16,6 @@ export interface ILoginData {
   password: string;
 }
 
-
 @Injectable({
   providedIn: 'root',
 })
@@ -31,9 +30,9 @@ export class UserService {
   }
 
   loginUser(user: ILoginData): Observable<any> {
-    return this.http.post(this.UserUrl, user).pipe(
-      catchError(this.handleError)
-    );
+    return this.http
+      .post(this.UserUrl, user, { responseType: 'text', observe: 'response' })
+      .pipe(catchError(this.handleError));
   }
 
   getUser(): Observable<IUser> {

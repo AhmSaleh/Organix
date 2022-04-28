@@ -6,11 +6,13 @@ import {
   UrlTree,
 } from '@angular/router';
 import { Observable } from 'rxjs';
+import { AuthService } from 'src/app/Services/auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RoleGuard implements CanActivate {
+  constructor(private auth: AuthService) {}
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
@@ -23,8 +25,7 @@ export class RoleGuard implements CanActivate {
   }
 
   isAuthorized(route: ActivatedRouteSnapshot): boolean {
-    const role = 'admin';
     const expecteRole = route.data['expecteRole'];
-    return role === expecteRole;
+    return this.auth.getRole() === expecteRole;
   }
 }

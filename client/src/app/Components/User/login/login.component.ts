@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
-import { UserService } from 'src/app/Services/UserServices/RegisterService/user.service';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/Services/auth.service';
+import { UserService } from 'src/app/Services/UserServices/user.service';
 
 @Component({
   selector: 'app-login',
@@ -10,10 +12,13 @@ import { UserService } from 'src/app/Services/UserServices/RegisterService/user.
 export class LoginComponent implements OnInit {
   validClass = ' is-valid ';
   invalidClass = ' is-invalid ';
-
   myForm: FormGroup;
 
-  constructor(private userService: UserService) {
+  constructor(
+    private userService: UserService,
+    private router: Router,
+    private auth: AuthService
+  ) {
     this.myForm = new FormGroup({
       email: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required),
@@ -22,16 +27,9 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     if (this.myForm.valid) {
-      console.log('submitting...');
-      localStorage.setItem(
-        'token',
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOiI2MjY2YzUyNTRkMmRiZjM4NWZkNTRjYWEiLCJyb2xlIjoidXNlciIsImlhdCI6MTY1MDk5MjcxMCwiZXhwIjoxNjUwOTk2MzEwfQ.U7QOuChHnqDR0XwAReGgre4a8J8M1J8Vfs2GHxBTL6A'
-      );
-      //TODO add login logic
-      //to be changed later once the api is created
       this.userService.loginUser(this.myForm.value).subscribe(
         (data) => {
-          console.log(data);
+          this.auth.login(data.headers.get('x-auth-token'));
         },
         (error) => {
           console.log(error);
