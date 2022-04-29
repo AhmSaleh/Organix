@@ -1,11 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
-export interface IProduct {
-  id: number;
-  name: string;
-  price: number;
-  imageUrl: string;
-}
+import { IProduct } from 'src/app/Models/IProdcut';
+import { ProductService } from 'src/app/Services/ProductServices/get-all.service';
 
 
 @Component({
@@ -15,15 +10,13 @@ export interface IProduct {
 })
 export class ProductGridComponent implements OnInit {
 
-  constructor() { }
+  constructor(private productService:ProductService) { }
 
   ngOnInit(): void {
+    this.productService.getAllProducts().subscribe(data=>{
+      this.products=data;
+    });
   }
 
-  public products :IProduct[]= Array(10).fill(1).map((x, i) => ({
-    id: i+1,
-    name: `Product ${i+1}`,
-    price: Math.floor(Math.random() * 1000),
-    imageUrl: `https://picsum.photos/seed/${i+1}/200/300`
-  }));
+  products :IProduct[]=[];
 }
