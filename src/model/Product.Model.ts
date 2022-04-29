@@ -20,9 +20,8 @@ var ProductSchema = new mongoose.Schema<IProduct>({
   },
   rate: {
     type: Number,
-    default: 0,
-    min: [0, "Rate can't be less than 0"],
-    max: [0, "Rate can't be more than 5"],
+    min: [0, "Rate can't be less than 1"],
+    max: [5, "Rate can't be more than 5"],
   },
   price: {
     type: Number,
@@ -38,11 +37,9 @@ var ProductSchema = new mongoose.Schema<IProduct>({
   availability: Boolean,
   imgURL: {
     type: String,
-    required: true,
   },
   weight: {
     type: Number,
-    required: true,
     validate(value: number) {
       if (value <= 0)
         throw new Error("Weight can't be less than or equal zero");
@@ -51,20 +48,13 @@ var ProductSchema = new mongoose.Schema<IProduct>({
   availableInventory: {
     type: Number,
     required: true,
-    validate(value: number) {
-      if (value <= 0)
-        throw new Error(
-          "The Available Inventory can't be less than or equal zero"
-        );
-    },
+    min:[0,"Available Inventory can't be less than zero"],
   },
   longDescription: {
     type: String,
-    required: true,
   },
   productInformation: {
     type: String,
-    required: true,
   },
 });
 
