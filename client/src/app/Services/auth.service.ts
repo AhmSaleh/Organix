@@ -26,4 +26,11 @@ export class AuthService {
     if (this.isLoggedIn()) return atob(this.getToken().split('.')[1]);
     throw new Error('No logged in user to find the role.');
   }
+
+  isAdmin() {
+    if (this.isLoggedIn())
+      return atob(this.getToken().split('.')[1]) === 'admin';
+
+    throw new Error('No logged in user to find if admin or not.');
+  }
 }

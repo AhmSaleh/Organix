@@ -21,7 +21,7 @@ export class RoleGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    return true;
+    return this.isAuthorized(route);
   }
 
   isAuthorized(route: ActivatedRouteSnapshot): boolean {

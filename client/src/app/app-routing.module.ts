@@ -9,13 +9,14 @@ import { ProductGridComponent } from './Components/shop/product-grid/product-gri
 import { ShopComponent } from './Components/shop/shop.component';
 import { UserDetailsComponent } from './Components/User/user-details/user-details.component';
 import { ProductDetailsComponent } from './Components/shop/product-details/product-details.component';
+import { AuthGuard } from './core/guards/auth.guard';
 
 const routes: Routes = [
   {
     path: '',
     component: MainLayoutComponent,
     children: [
-      { path: '', redirectTo: '/home', pathMatch: 'full' }, //Default path
+      { path: '', redirectTo: '/home', pathMatch: 'full' },
       { path: 'home', component: HomeComponent },
       { path: 'register', component: RegisterComponent },
       { path: 'login', component: LoginComponent },
