@@ -15,7 +15,7 @@ import { ProductGridComponent } from './Components/shop/product-grid/product-gri
 import { ShopComponent } from './Components/shop/shop.component';
 import { ProductItemComponent } from './Components/shop/product-item/product-item.component';
 import { SidebarComponent } from './Components/shop/sidebar/sidebar.component';
-import { CartComponent } from './Components/cart/cart.component';
+// import { CartComponent } from './Components/cart/cart.component';
 import { UserDetailsComponent } from './Components/User/user-details/user-details.component';
 import { ProductDetailsComponent } from './Components/shop/product-details/product-details.component';
 import { ReviewsComponent } from './Components/shop/productDetails/reviews/reviews.component';
@@ -36,7 +36,7 @@ import { RatingStarsComponent } from './Components/shop/productDetails/rating-st
     ShopComponent,
     ProductItemComponent,
     SidebarComponent,
-    CartComponent,
+    // CartComponent,
     UserDetailsComponent,
     ProductDetailsComponent,
     ReviewsComponent,
