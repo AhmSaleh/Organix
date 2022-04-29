@@ -2,12 +2,12 @@ import OrderModel from "../model/OrderModel";
 import {IOrder} from "../model/OrderModel";
 
 
-
+//modify price
 const addOrder = (data:IOrder)=>{
 var order = new OrderModel(data);
 order.save();
 }
-
+//with user
 const getOne = (OrderID:string)=>{
     return OrderModel.find({"_id":OrderID});
 }
