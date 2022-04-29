@@ -1,0 +1,26 @@
+{
+  "folders": [
+    {
+      "path": "server"
+    },
+    {
+      "path": "client"
+    },
+    {
+      "path": "shared"
+    },
+    {
+      "path": ".",
+      "name": "root"
+    },
+    {
+      "path": "template",
+      "name": "template"
+    }
+  ],
+  "settings": {
+    "files.exclude": {
+      "**/node_modules/*/**": true
+    }
+  }
+}

@@ -1,0 +1,36 @@
+<section class="jumbotron container-img vertical-center">
+  <h1 class="text-center text-black bold" style="font-size: 60px;">Log In</h1>
+  <div class="container col-lg-8 col-md-9 col-sm-10 ">
+    <form [formGroup]="myForm" class="row" novalidate (ngSubmit)="onSubmit()">
+
+      <div class="form-group">
+        <label for="login-email">Email</label>
+        <input type="email" id="login-email" class="form-control {{emailOpacity()}} {{emailClass()}}"
+          formControlName="email" placeholder="Email" />
+        <span [ngClass]="{'visible': (emailClass() == invalidClass), 'invisible' :(emailClass() != invalidClass)}">
+          <p class="form-text form-control-feedback m-0" style="color: #dc3545;">
+            Email is required.</p>
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label for="login-password">Password</label>
+        <input type="password" id="login-password" class="form-control {{passwordOpacity()}} {{passwordClass()}}"
+          formControlName="password" placeholder="Password" />
+        <span
+          [ngClass]="{'visible': (passwordClass() == invalidClass), 'invisible' :(passwordClass() != invalidClass)}">
+          <p class="form-text form-control-feedback m-0" style="color: #dc3545;">
+            Password is required.</p>
+        </span>
+      </div>
+
+      <div class="d-flex gap-2 mb-3 justify-content-center">
+        <button type="submit" class="site-btn ">Log In</button>
+        <button type="reset" class="site-btn btn-secondary" (click)="onReset()">Reset</button>
+      </div>
+
+    </form>
+  </div>
+</section>
+
+<!-- <pre>{{email.errors|json}}</pre> -->

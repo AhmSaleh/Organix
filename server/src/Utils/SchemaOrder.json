@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "properties": {
+    "UserID": {
+      "type": "string"
+    },
+    "Date": {
+      "type": "string",
+      "format": "date"
+    },
+    "Products": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "ProductID": { "type": "string" },
+          "Count": { "type": "number" },
+          "Price": { "type": "number" }
+        }
+      }
+    }
+  },
+  "required": ["UserID", "Products"]
+}
