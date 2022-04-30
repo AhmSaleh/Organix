@@ -18,7 +18,7 @@ function throwIfMissing(env: string, name:string) {
 
 
 
-class conf{
+class envconf{
     get MongoDB():string {    
         throwIfMissing("production", "MONGO_URI");
         return process.env.MONGO_URI ?? MONGO_URI;
@@ -34,6 +34,9 @@ class conf{
     get jwtExpire():number {
         return parseInt(process.env.jwt_expire ?? JWT_EXPIRES);
     }
+    get databaseReset():boolean {
+        return process.env.database_reset === "true" ?? false;
+    }
 }
 
-export default new conf();
+export default new envconf();

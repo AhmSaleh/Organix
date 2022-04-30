@@ -40,6 +40,9 @@ const procut_schema: JSONSchemaType<IProduct> = {
         },
         "productInformation": {
             "type": "string"
+        },
+        "categoryName": {
+            "type": "string"
         }
     },
     "required": [

@@ -11,6 +11,7 @@ export interface IProduct {
   availableInventory: number;
   longDescription: string;
   productInformation: string;
+  categoryName: string;
 }
 
 var ProductSchema = new mongoose.Schema<IProduct>({
@@ -56,7 +57,12 @@ var ProductSchema = new mongoose.Schema<IProduct>({
   productInformation: {
     type: String,
   },
+  categoryName: {
+    type: String,
+    required: true,
+  },
 });
 
+// ProductSchema.virtual('abailability').get(()=> this.availableInventory != 0);
 const ProductModel = mongoose.model<IProduct>("Product", ProductSchema);
 export { ProductModel, ProductSchema };
