@@ -69,7 +69,8 @@
             </li>
             <li>
               <a routerLink="/cart"
-                ><i class="fa fa-shopping-bag"></i> <span>3</span></a
+                ><i class="fa fa-shopping-bag"></i>
+                <span>{{ (cart | async)?.Products?.length }}</span></a
               >
             </li>
           </ul>

@@ -1,0 +1,26 @@
+GET http://localhost:3000/api/cart/userid HTTP/1.1
+Content-Type: application/json
+
+
+###
+
+POST http://localhost:3000/api/cart
+Content-Type: application/json
+
+{
+  "Products": [
+    {
+      "ProductID": "p10",
+      "Count": 9,
+      "_id": "626b65f0ffeeb53cbde09c7d"
+    },
+    {
+      "ProductID": "p2",
+      "Count": 9,
+      "_id": "626b65f0ffeeb53cbde09c7e"
+    }
+  ],
+  "UserID": "userid"
+}
+
+###

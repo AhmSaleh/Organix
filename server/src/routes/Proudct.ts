@@ -20,4 +20,6 @@ router.patch(
   ProductController.UPDATEProductById
 );
 
+router.get("/list/:list",ProductController.GETProductList)
+
 module.exports = router;
