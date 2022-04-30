@@ -2,6 +2,7 @@ import ProductService from "../services/ProductService";
 import { IProduct } from "../model/Product.Model";
 import mongoose from "mongoose";
 import { rand, randBoolean, randEmail, randFood, randFullName, randImg, randNumber, randParagraph, randSentence } from '@ngneat/falso';
+import envconf from "../envconf";
 
 
 let categories = [
@@ -68,8 +69,10 @@ async function resetAll() {
     return;
   }
   else {
-    await mongoose.connection.dropDatabase();
-    console.log("Database dropped");
+    if (envconf.databaseReset){
+      await mongoose.connection.dropDatabase();
+      console.log("Database dropped");
+    }
   }
 }
 
