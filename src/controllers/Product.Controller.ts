@@ -1,5 +1,5 @@
 import ProductService from "../services/ProductService";
-import { Request, Response } from "express";
+import { json, Request, Response } from "express";
 import ajv from "../Utils/validate";
 
 
@@ -10,6 +10,7 @@ class ProductController {
   static DELETEProductById = DELETEProductById;
   static UPDATEProductById = UPDATEProductById;
   static GETProductByName = GETProductByName;
+  static  GETProductList = getProductList
 }
 
 async function POSTProduct(req: Request, res: Response) {
@@ -40,6 +41,19 @@ async function GETProducts(req: Request, res: Response) {
     res.status(500).send(err);
   }
 }
+
+
+async function getProductList(req: Request, res: Response) {
+  try {
+    let arr:string[] = JSON.parse(req.params.list);
+    const list = await ProductService.getProductList(arr);
+    //validation....
+    res.send(list).status(200);
+  } catch (err) {
+    res.status(404).send(err);
+  }
+}
+
 
 async function GETProductById(req: Request, res: Response) {
   try {

@@ -28,6 +28,11 @@ class ProductService {
   async deleteProduct(_id: string) {
     return await ProductModel.findByIdAndDelete(_id);
   }
+
+
+  async getProductList(ids:string[]){
+    return await ProductModel.find().where('_id').in(ids);
+  }
 }
 
 export default new ProductService();
