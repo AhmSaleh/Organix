@@ -1,6 +1,6 @@
 import UserService from "../services/UserService";
 import { Request, Response } from "express";
-import conf from "../conf";
+import envconf from "../envconf";
 
 import jwt from "jsonwebtoken";
 import { IRegesterData } from "../Utils/SchemaRegester";
@@ -39,8 +39,8 @@ async function postLogin(r: Request, res: Response) {
     role: userExist.role,
   };
 
-  var Token = await jwt.sign(tokenPayload, conf.JWT_SECRET, {
-    expiresIn: conf.jwtExpire,
+  var Token = await jwt.sign(tokenPayload, envconf.JWT_SECRET, {
+    expiresIn: envconf.jwtExpire,
   });
   // add the tocken to cookies
   res.header("Access-Control-Expose-Headers", "*");

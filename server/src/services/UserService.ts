@@ -3,7 +3,7 @@
 
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
-import conf from "../conf";
+import envconf from "../envconf";
 import {IUser} from "../model/UserModel";
 import { IRegesterData } from "../Utils/SchemaRegester";
 
@@ -12,7 +12,7 @@ import { IRegesterData } from "../Utils/SchemaRegester";
 class UserService {
 
     async createUser(user: IRegesterData) {
-        const hash = await bcrypt.hash(user.password, conf.SaltRounds);
+        const hash = await bcrypt.hash(user.password, envconf.SaltRounds);
         return await mongoose.model('User').create({
             email: user.email,
             hash: hash,

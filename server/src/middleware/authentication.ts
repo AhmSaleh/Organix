@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import conf from '../conf';
+import envconf from '../envconf';
 import { ITockeBayload } from '../controllers/UserController';
 import { RoleEnum } from '../model/UserModel';
 var jwt = require("jsonwebtoken");
@@ -15,7 +15,7 @@ export default function checkRole(...allawedRoles: RoleEnum[]) {
         var Token = req.header("x-auth-token");
         if (!Token) return res.status(400).send("Access Denied no token provided");
         try {
-            var decodePayload = jwt.verify(Token, conf.JWT_SECRET);
+            var decodePayload = jwt.verify(Token, envconf.JWT_SECRET);
             if (allawedRoles.includes(decodePayload.role)) {
                 (req as RequestWithAuth).tockenInfo = decodePayload;   // add the user to the request
                 next();

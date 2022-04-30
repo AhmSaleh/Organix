@@ -1,9 +1,15 @@
-import mongoose from "mongoose";
 import { IProduct, ProductModel } from "../model/Product.Model";
+import CategoeryService from "./CategoeryService";
+
 
 class ProductService {
-  async createProduct(product: IProduct) {
-    return await ProductModel.create(product);
+  async createProduct(product: IProduct ) {
+    const new_product = await ProductModel.create(product);
+    // update category
+    if (new_product.categoryName.length) {
+      await CategoeryService.getORCreateCategory(product.categoryName);
+      CategoeryService.addProduct(new_product._id, product.categoryName);
+    }
   }
 
   async getAllProducts() {
@@ -18,15 +24,28 @@ class ProductService {
     return await ProductModel.find({ name: _name });
   }
 
-  async updateProduct(_id: string, product: IProduct) {
-    return await ProductModel.findByIdAndUpdate(_id, product, {
+  async updateProduct(_id: string, product:  Partial<IProduct>) {
+    let new_product =  await ProductModel.findByIdAndUpdate(_id, product , {
       new: true,
       runValidators: true,
     });
+    if (new_product?.categoryName.length) {
+      await CategoeryService.getORCreateCategory(new_product.categoryName);
+      CategoeryService.addProduct(new_product._id, new_product.categoryName);
+    }
+    return new_product;
   }
 
   async deleteProduct(_id: string) {
-    return await ProductModel.findByIdAndDelete(_id);
+    let product = await ProductModel.findByIdAndDelete(_id);
+    // remove from the category
+    if (product?.categoryName?.length) {
+      await CategoeryService.removeProduct(product._id, product.categoryName);
+    }
+  }
+
+  async getProductByCategory(_category: string) {
+    return await ProductModel.find({ categoryName: _category });
   }
 }
 
