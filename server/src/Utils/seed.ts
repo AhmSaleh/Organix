@@ -3,6 +3,9 @@ import { IProduct } from "../model/Product.Model";
 import mongoose from "mongoose";
 import { rand, randBoolean, randEmail, randFood, randFullName, randImg, randNumber, randParagraph, randSentence } from '@ngneat/falso';
 import envconf from "../envconf";
+import { IUser, RoleEnum } from "../model/UserModel";
+import UserService from "../services/UserService";
+import { IRegesterData } from "./SchemaRegester";
 
 
 let categories = [
@@ -50,16 +53,34 @@ async function fillProducts() {
 }
 
 
+async function addDefualtAdmin(){
+  const admin:IRegesterData  = {
+    name: {
+      first:"admin",
+      last:"admin"
+    },
+    email: envconf.adminEmail,
+    password: envconf.adminPassword,
+    role: RoleEnum.admin,
+  }
+  
+    UserService.createUser(admin);
+  
+}
+
 exports.fillProducts = fillProducts;
 
 
-function fillAll() {
+async function fillAll() {
   if (process.env.NODE_ENV === "production") {
     console.log("Production mode");
     return;
   }
   else {
     fillProducts()
+  }
+  if(!await UserService.getUserByEmail(envconf.adminEmail)){
+    addDefualtAdmin();
   }
 }
 
