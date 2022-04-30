@@ -1,6 +1,7 @@
 import ProductService from "../services/ProductService";
 import { Request, Response } from "express";
-const { ajv } = require("../Utils/validate");
+import ajv from "../Utils/validate";
+
 
 class ProductController {
   static POSTProduct = POSTProduct;
@@ -8,12 +9,13 @@ class ProductController {
   static GETProductById = GETProductById;
   static DELETEProductById = DELETEProductById;
   static UPDATEProductById = UPDATEProductById;
+  static GETProductByName = GETProductByName;
 }
 
 async function POSTProduct(req: Request, res: Response) {
   try {
     const validate = ajv.getSchema("product");
-    const valid = validate(req.body);
+    const valid = validate!(req.body);
 
     if (!valid) return res.status(400).send();
 
@@ -55,6 +57,22 @@ async function GETProductById(req: Request, res: Response) {
   }
 }
 
+async function GETProductByName(req: Request, res: Response) {
+  try {
+    const product = await ProductService.getProductByName(req.params.name);
+    if (!product) {
+      return res
+        .status(404)
+        .send(
+          `Coudln't find product with the provided Name --> ${req.params.id}`
+        );
+    }
+    res.send(product).status(200);
+  } catch (err) {
+    res.status(404).send(err);
+  }
+}
+
 async function DELETEProductById(req: Request, res: Response) {
   try {
     const product = ProductService.deleteProduct(req.params.id);
@@ -74,7 +92,7 @@ async function DELETEProductById(req: Request, res: Response) {
 async function UPDATEProductById(req: Request, res: Response) {
   try {
     const validate = ajv.getSchema("product");
-    const valid = validate(req.body);
+    const valid = validate!(req.body);
 
     if (!valid) return res.status(400).send();
 

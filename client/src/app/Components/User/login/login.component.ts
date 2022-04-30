@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/Services/auth.service';
+import { UserService } from 'src/app/Services/UserServices/user.service';
 
 @Component({
   selector: 'app-login',
@@ -9,10 +12,13 @@ import { FormGroup, Validators, FormControl } from '@angular/forms';
 export class LoginComponent implements OnInit {
   validClass = ' is-valid ';
   invalidClass = ' is-invalid ';
-
   myForm: FormGroup;
 
-  constructor() {
+  constructor(
+    private userService: UserService,
+    private router: Router,
+    private auth: AuthService
+  ) {
     this.myForm = new FormGroup({
       email: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required),
@@ -21,9 +27,14 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     if (this.myForm.valid) {
-      console.log('submitting...');
-      //TODO add login logic
-      //to be changed later once the api is created
+      this.userService.loginUser(this.myForm.value).subscribe(
+        (data) => {
+          this.auth.login(data.headers.get('x-auth-token'));
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
     }
   }
 

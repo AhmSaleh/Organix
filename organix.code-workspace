@@ -13,10 +13,14 @@
       "path": ".",
       "name": "root"
     },
+    {
+      "path": "template",
+      "name": "template"
+    }
   ],
   "settings": {
     "files.exclude": {
       "**/node_modules/*/**": true
     }
-  },
+  }
 }
