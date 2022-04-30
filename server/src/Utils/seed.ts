@@ -33,7 +33,7 @@ async function fillProducts() {
         price: randNumber({ min: 10, max: 1000 }),
         shortDescription: randSentence(),
         availability: randBoolean(),
-        imgURL: randImg(),
+        imgURL: `http://localhost:3000/img/random.png?seed=${randFood().replaceAll(' ', '+')}`,
         weight: randNumber({ min: 1, max: 1000 }),
         availableInventory: randNumber({ min: 0, max: 100 }),
         longDescription: randParagraph(),
