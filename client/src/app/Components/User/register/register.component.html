@@ -1,10 +1,10 @@
-<section class="jumbotron container-img vertical-center">
+<section class="jumbotron my-form-color container-img vertical-center my-3 col-lg-7 col-md-9 col-sm-11">
   <h1 class="text-center text-black bold" style="font-size: 60px;">Register</h1>
-  <div class="container col-lg-8 col-md-9 col-sm-10 ">
-    <form [formGroup]="myRegisterForm" class="row" novalidate (ngSubmit)="onSubmit()">
+  <div class="container col-lg-8 col-md-9 col-sm-10">
+    <form [formGroup]="myRegisterForm" novalidate (ngSubmit)="onSubmit()">
       <fieldset formGroupName="name" class="container-fluid">
         <div class="row">
-          <div class="form-group mt-3 col">
+          <div class="form-group mt-3 col p-0 pr-1">
             <label for="register-firstname">First Name</label>
             <input type="text" id="register-firstname" class="form-control {{firstnameOpacity()}} {{firstNameClass()}}"
               formControlName="firstName" placeholder="First Name" />
@@ -13,7 +13,7 @@
               name is required.</span>
           </div>
 
-          <div class="form-group mt-3 col">
+          <div class="form-group mt-3 col p-0 pl-1">
             <label for="register-lastname">Last Name</label>
             <input type="text" id="register-lastname" class="form-control {{lastnameOpacity()}} {{lastNameClass()}}"
               formControlName="lastName" placeholder="Last Name" />
@@ -71,9 +71,9 @@
         </span>
       </div>
 
-      <div class="d-flex gap-2 mb-3 justify-content-center">
-        <button type="submit" class="site-btn ">Register</button>
-        <button type="reset" class="site-btn btn-secondary" (click)="onReset()">Reset</button>
+      <div class="d-flex justify-content-center pb-3">
+        <button type="submit" class="site-btn mx-1 col-xl-2 col-lg-3 col-md-4 col-sm-5 col-6">Register</button>
+        <button type="reset" class="site-btn btn-secondary mx-1 col-xl-2 col-lg-3 col-md-4 col-sm-5 col-6" (click)="onReset()">Reset</button>
       </div>
 
     </form>
