@@ -36,8 +36,8 @@ async function GETProducts(req: Request, res: Response) {
     const products = await ProductService.getAllProducts();
     res.send(products).status(200);
   } catch (err) {
-    console.log(ProductService);
     res.status(500).send(err);
+    //WARN error shouldn't be send in production
   }
 }
 
