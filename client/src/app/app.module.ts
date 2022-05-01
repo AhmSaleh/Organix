@@ -22,6 +22,7 @@ import { ReviewsComponent } from './Components/shop/productDetails/reviews/revie
 import { ReviewsItemComponent } from './Components/shop/productDetails/reviews-item/reviews-item.component';
 import { RatingStarsComponent } from './Components/shop/productDetails/rating-stars/rating-stars.component';
 import { CategoriesComponent } from './Components/shop/categories/categories.component';
+import { AddProductComponent } from './Components/Trader/add-product/add-product.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { CategoriesComponent } from './Components/shop/categories/categories.com
     ReviewsItemComponent,
     RatingStarsComponent,
     CategoriesComponent,
+    AddProductComponent,
   ],
   imports: [
     BrowserModule,
