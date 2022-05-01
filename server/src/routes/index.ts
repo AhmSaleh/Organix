@@ -1,12 +1,12 @@
 import express from "express";
 import user from "./user";
 import category from "./Category";
-import product from "./Proudct"
-import order from "./order";
+
 const router = express.Router();
 
+const product = require("./proudct");
 
-
+const order = require("./order");
 //api/Product
 router.use("/product", product);
 router.use("/user", user);

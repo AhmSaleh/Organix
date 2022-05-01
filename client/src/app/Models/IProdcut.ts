@@ -11,8 +11,3 @@ export interface IProduct {
     longDescription: string;
     productInformation: string;
   }
-
-export interface productFetchParamters {
-    categorey?: string;
-    searchTerm?: string;
-  }

@@ -48,6 +48,10 @@ class CategoerySerice {
         return category;
     }
 
+    async getProductByCategory(categoryName: string) {
+        return await CategoryModel.findOne({ name: categoryName }).populate("products");
+    }
+
 
     async addProduct(productId: Types.ObjectId, categoryName: string) {
         CategoryModel.updateOne({ name: categoryName }, { $push: { products: productId } })
