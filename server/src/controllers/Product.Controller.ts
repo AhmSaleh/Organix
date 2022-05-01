@@ -10,6 +10,7 @@ class ProductController {
   static DELETEProductById = DELETEProductById;
   static UPDATEProductById = UPDATEProductById;
   static GETProductByName = GETProductByName;
+  static GETProductByCategory = GETProductByCategory;
 }
 
 async function POSTProduct(req: Request, res: Response) {
@@ -106,6 +107,22 @@ async function UPDATEProductById(req: Request, res: Response) {
         );
     }
     res.send(product);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+}
+
+async function GETProductByCategory(req: Request, res: Response) {
+  try {
+    const products = await ProductService.getProductByCategory(req.params.id);
+    if (!products) {
+      return res
+        .status(404)
+        .send(
+          `Coudln't find product with the provided Category --> ${req.params.id}`
+        );
+    }
+    res.send(products);
   } catch (err) {
     res.status(500).send(err);
   }
