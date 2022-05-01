@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { IProduct, productFetchParamters } from 'src/app/Models/IProdcut';
-import { ProductService } from 'src/app/Services/ProductServices/get-all.service';
+import { ProductServices } from 'src/app/Services/ProductServices/product-services.service';
 
 
 @Component({
@@ -10,7 +10,7 @@ import { ProductService } from 'src/app/Services/ProductServices/get-all.service
 })
 export class ProductGridComponent implements OnInit {
   @Input() fetchParamters?: productFetchParamters;
-  constructor(private productService:ProductService) { }
+  constructor(private productService: ProductServices) { }
 
   ngOnInit(): void {
     console.log(this.fetchParamters);
