@@ -8,6 +8,7 @@ const router = express.Router();
 router.get("/", ProductController.GETProducts);
 router.get("/:id", ProductController.GETProductById);
 router.get("/search/:name", ProductController.GETProductByName);
+router.get("/category/:category", ProductController.GETProductByCategory);
 router.post("/", checkRole(RoleEnum.admin), ProductController.POSTProduct);
 router.delete(
   "/:id",
@@ -20,4 +21,5 @@ router.patch(
   ProductController.UPDATEProductById
 );
 
-module.exports = router;
+
+export default router;
