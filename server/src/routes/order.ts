@@ -8,4 +8,4 @@ router.get("/one/:id",OrderController.getOne)
 router.get("/userorders/:id",OrderController.getAllUserID)
 router.post("/addorder",OrderController.addOrder);
 
-module.exports = router;
+export default router;
