@@ -1,3 +1,4 @@
+import CategoryModel from "../model/Categoery";
 import { IProduct, ProductModel } from "../model/Product.Model";
 import CategoeryService from "./CategoeryService";
 
@@ -44,9 +45,14 @@ class ProductService {
     }
   }
 
-  async getProductByCategory(_category: string) {
+  async getProductByCategory_noRef(_category: string) {
     return await ProductModel.find({ categoryName: _category });
   }
+  
+  async getProductByCategory(categoryName: string) {
+    return await CategoryModel.findOne({ name: categoryName }).populate("products");
+  }
+
 }
 
 export default new ProductService();
