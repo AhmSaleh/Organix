@@ -8,11 +8,14 @@ import { IProduct } from '../Models/IProdcut';
   providedIn: 'root'
 })
 export class ProductServicesService {
-  UserUrl = 'http://localhost:3000/api/product';
+  ProductUrl = 'http://localhost:3000/api/product';
   constructor(private http:HttpClient) { }
 
   getProduct(id: string): Observable<IProduct>{
-    console.log(id);
-    return this.http.get<IProduct>(`${this.UserUrl}/${id}`);
+    return this.http.get<IProduct>(`${this.ProductUrl}/${id}`);
+  }
+
+  getProductByCategory(name: string):Observable<IProduct[]>{
+    return this.http.get<IProduct[]>(`${this.ProductUrl}/category/${name}`);
   }
 }
