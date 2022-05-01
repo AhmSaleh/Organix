@@ -114,12 +114,12 @@ async function UPDATEProductById(req: Request, res: Response) {
 
 async function GETProductByCategory(req: Request, res: Response) {
   try {
-    const products = await ProductService.getProductByCategory(req.params.id);
+    const products = await ProductService.getProductByCategory(req.params.category);
     if (!products) {
       return res
         .status(404)
         .send(
-          `Coudln't find product with the provided Category --> ${req.params.id}`
+          `Coudln't find product with the provided Category --> ${req.params.category}`
         );
     }
     res.send(products);
