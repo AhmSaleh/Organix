@@ -13,6 +13,6 @@ export interface IProduct {
   }
 
 export interface productFetchParamters {
-    categorey?: string;
+    category?: string;
     searchTerm?: string;
   }

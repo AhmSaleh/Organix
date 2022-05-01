@@ -9,12 +9,13 @@ class ProductService {
     // update category
     if (new_product.categoryName.length) {
       await CategoeryService.getORCreateCategory(product.categoryName);
-      CategoeryService.addProduct(new_product._id, product.categoryName);
+      await CategoeryService.addProduct(new_product._id, product.categoryName);
     }
   }
 
   async getAllProducts() {
-    return await ProductModel.find({});
+    //TODO remove limit add pagination
+    return await ProductModel.find({}).limit(40);
   }
 
   async getProductById(_id: string) {
@@ -26,15 +27,18 @@ class ProductService {
   }
 
   async updateProduct(_id: string, product:  Partial<IProduct>) {
-    let new_product =  await ProductModel.findByIdAndUpdate(_id, product , {
-      new: true,
+    let old_product =  await ProductModel.findByIdAndUpdate(_id, product , {
       runValidators: true,
     });
-    if (new_product?.categoryName.length) {
-      await CategoeryService.getORCreateCategory(new_product.categoryName);
-      CategoeryService.addProduct(new_product._id, new_product.categoryName);
+    if (product?.categoryName?.length && old_product) {
+      await CategoeryService.getORCreateCategory(product.categoryName);
+      await CategoeryService.addProduct(old_product._id, product.categoryName);
     }
-    return new_product;
+    if(!product?.categoryName?.length && old_product) {
+      await CategoeryService.removeProduct(old_product._id, old_product.categoryName);
+    }
+    return old_product;
+
   }
 
   async deleteProduct(_id: string) {
@@ -46,11 +50,13 @@ class ProductService {
   }
 
   async getProductByCategory_noRef(_category: string) {
-    return await ProductModel.find({ categoryName: _category });
+    //TODO remove limit add pagination
+    return await ProductModel.find({ categoryName: _category }).limit(30);
   }
   
   async getProductByCategory(categoryName: string) {
-    return await CategoryModel.findOne({ name: categoryName }).populate("products");
+    //TODO remove limit add pagination
+    return await CategoryModel.findOne({ name: categoryName },{products : {$slice:30}}).populate("products");
   }
 
 }

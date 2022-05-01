@@ -1,5 +1,8 @@
 <h4>Department</h4>
         <ul>
+            <li>
+                <a routerLink="/shop" >all</a>
+            </li>
             <li *ngFor="let category of categories">
                 <a routerLink="/shop" [queryParams]={category:category.name}>{{category.name}}</a>
             </li>

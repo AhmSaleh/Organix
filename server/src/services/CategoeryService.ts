@@ -50,10 +50,10 @@ class CategoerySerice {
 
 
     async addProduct(productId: Types.ObjectId, categoryName: string) {
-        CategoryModel.updateOne({ name: categoryName }, { $push: { products: productId } })
+        await CategoryModel.updateOne({ name: categoryName }, { $push: { products: productId } })
     }
     async removeProduct(productId: Types.ObjectId, categoryName: string) {
-        CategoryModel.updateOne({ name: categoryName }, { $pull: { products: productId } })
+        await CategoryModel.updateOne({ name: categoryName }, { $pull: { products: productId } })
     }
 }
 
