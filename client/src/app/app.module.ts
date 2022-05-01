@@ -21,6 +21,7 @@ import { ProductDetailsComponent } from './Components/shop/product-details/produ
 import { ReviewsComponent } from './Components/shop/productDetails/reviews/reviews.component';
 import { ReviewsItemComponent } from './Components/shop/productDetails/reviews-item/reviews-item.component';
 import { RatingStarsComponent } from './Components/shop/productDetails/rating-stars/rating-stars.component';
+import { CategoriesComponent } from './Components/shop/categories/categories.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { RatingStarsComponent } from './Components/shop/productDetails/rating-st
     ReviewsComponent,
     ReviewsItemComponent,
     RatingStarsComponent,
+    CategoriesComponent,
   ],
   imports: [
     BrowserModule,
