@@ -23,10 +23,6 @@ const procut_schema: JSONSchemaType<IProduct> = {
         "availability": {
             "type": "boolean"
         },
-        "imgURL": {
-            "type": "string",
-            "format": "uri"
-        },
         "weight": {
             "type": "number",
             "minimum": 0
@@ -43,6 +39,17 @@ const procut_schema: JSONSchemaType<IProduct> = {
         },
         "categoryName": {
             "type": "string"
+        },
+        "imagesURL": {
+            "type": "array",
+            "items": {
+                "type": "string",
+                "format": "uri"
+            }
+        },
+        "imgURL": {
+            "type": "string",
+            "format": "uri"
         }
     },
     "required": [

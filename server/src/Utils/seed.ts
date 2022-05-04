@@ -23,6 +23,16 @@ let categories = [
 ]
 
 
+function randImgLocal(seed:string = "") {
+  if(!seed){
+    seed = randFood();
+  }
+  //encoding the seed to url
+  const encodedSeed = encodeURIComponent(seed);
+  
+  return `http://localhost:3000/img/random.png?seed=${encodedSeed}`
+}
+
 
 async function fillProducts() {
   const allProducts = await ProductService.getAllProducts();
@@ -34,9 +44,10 @@ async function fillProducts() {
         name: randFood(),
         rate: randNumber({ min: 1, max: 5 }),
         price: randNumber({ min: 10, max: 1000 }),
-        shortDescription: randSentence(),
+        shortDescription: randParagraph(),
         availability: randBoolean(),
-        imgURL: `http://localhost:3000/img/random.png?seed=${randFood().replaceAll(' ', '+')}`,
+        imgURL: randImgLocal(),
+        imagesURL: Array(randNumber({ min: 1, max: 5 })).fill(1).map(x => randImgLocal()),
         weight: randNumber({ min: 1, max: 1000 }),
         availableInventory: randNumber({ min: 0, max: 100 }),
         longDescription: randParagraph(),
