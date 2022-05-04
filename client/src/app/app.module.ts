@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { RegisterComponent } from './Components/User/register/register.component';
@@ -23,6 +24,7 @@ import { ReviewsItemComponent } from './Components/shop/productDetails/reviews-i
 import { RatingStarsComponent } from './Components/shop/productDetails/rating-stars/rating-stars.component';
 import { CategoriesComponent } from './Components/shop/categories/categories.component';
 import { AddProductComponent } from './Components/Trader/add-product/add-product.component';
+import { CarouselModule } from 'ngx-owl-carousel-o';
 
 @NgModule({
   declarations: [
@@ -48,10 +50,12 @@ import { AddProductComponent } from './Components/Trader/add-product/add-product
     AddProductComponent,
   ],
   imports: [
+    BrowserAnimationsModule,
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    CarouselModule
   ],
   providers: [],
   bootstrap: [AppComponent],
