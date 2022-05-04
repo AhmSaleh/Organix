@@ -3,7 +3,7 @@ import { JSONSchemaType } from "ajv"
 
 
 
-export interface IRegesterData {
+export interface IRegesterDataForUser {
     email: string;
     password: string;
     name: {
@@ -12,7 +12,7 @@ export interface IRegesterData {
     },
 
 }
-const regester_schema_user: JSONSchemaType<IRegesterData> = {
+const regester_schema_user: JSONSchemaType<IRegesterDataForUser> = {
     "type": "object",
     "properties": {
         "email": {

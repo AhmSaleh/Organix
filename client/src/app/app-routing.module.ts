@@ -11,6 +11,7 @@ import { ShopComponent } from './Components/shop/shop.component';
 import { UserDetailsComponent } from './Components/User/user-details/user-details.component';
 import { ProductDetailsComponent } from './Components/shop/product-details/product-details.component';
 import { AuthGuard } from './core/guards/auth.guard';
+import { AddProductComponent } from './Components/Trader/add-product/add-product.component';
 
 const routes: Routes = [
   {
@@ -24,6 +25,7 @@ const routes: Routes = [
       { path: 'user/details', component: UserDetailsComponent },
       { path: 'shop', component: ShopComponent },
       { path: 'product/:id', component: ProductDetailsComponent },
+      { path: 'add-product', component: AddProductComponent },
       // { path: 'cart', component: CartComponent }
     ],
   },
