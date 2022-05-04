@@ -6,6 +6,7 @@ export interface IProduct {
     shortDescription: string;
     availability: boolean;
     imgURL: string;
+    imagesURL: string[];
     weight: number;
     availableInventory: number;
     longDescription: string;

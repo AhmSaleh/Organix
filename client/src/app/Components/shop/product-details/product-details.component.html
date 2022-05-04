@@ -6,19 +6,16 @@
                     <div class="product__details__pic">
                         <div class="product__details__pic__item">
                             <img class="product__details__pic__item--large"
-                                src="{{product.imgURL}}" alt="">
+                                [src]="selectedImage" alt="">
                         </div>
                         <!-- TODO support multiple images -->
-                        <!-- <div class="product__details__pic__slider owl-carousel">
-                            <img data-imgbigurl="img/product/details/product-details-2.jpg"
-                                src="img/product/details/thumb-1.jpg" alt="">
-                            <img data-imgbigurl="img/product/details/product-details-3.jpg"
-                                src="img/product/details/thumb-2.jpg" alt="">
-                            <img data-imgbigurl="img/product/details/product-details-5.jpg"
-                                src="img/product/details/thumb-3.jpg" alt="">
-                            <img data-imgbigurl="img/product/details/product-details-4.jpg"
-                                src="img/product/details/thumb-4.jpg" alt="">
-                        </div> -->
+                        <owl-carousel-o class="product__details__pic__slider">
+                            <ng-container *ngFor="let slide of product.imagesURL">
+                              <ng-template carouselSlide >
+                                <img [src]="slide" (click)="updateSelected($event)">
+                              </ng-template>
+                            </ng-container>
+                          </owl-carousel-o>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6">

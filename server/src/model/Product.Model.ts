@@ -6,6 +6,7 @@ export interface IProduct {
   price: number;
   shortDescription: string;
   availability: boolean;
+  imagesURL: string[];
   imgURL: string;
   weight: number;
   availableInventory: number;
@@ -38,6 +39,9 @@ var ProductSchema = new mongoose.Schema<IProduct>({
   availability: Boolean,
   imgURL: {
     type: String,
+  },
+  imagesURL: {
+    type: [String],
   },
   weight: {
     type: Number,
