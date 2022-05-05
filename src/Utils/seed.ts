@@ -7,7 +7,6 @@ import { IUser, RoleEnum } from "../model/UserModel";
 import UserService from "../services/UserService";
 import { IRegesterData } from "./SchemaRegester";
 
-
 let categories = [
   "Fruits",
   "Vegetables",
@@ -34,7 +33,7 @@ function randImgLocal(seed: string = "") {
 }
 
 
-async function fillIfEmptyProducts() {
+async function fillIfEmptyProducts(merchants_ids: mongoose.Types.ObjectId[]) {
   const allProducts = await ProductService.getAllProducts();
 
   if (allProducts.length === 0) {
@@ -53,6 +52,7 @@ async function fillIfEmptyProducts() {
         longDescription: randParagraph(),
         productInformation: randParagraph(),
         categoryName: rand(categories),
+        merchantId: rand(merchants_ids),
       }
 
       await ProductService.createProduct(randProduct);
@@ -80,7 +80,7 @@ async function addDefualtAdmin() {
 
 async function fillIfEmptyUsers(count: number, role: RoleEnum) {
   const allUsers = await UserService.getAllUsers();
-  const specificRole = allUsers.filter(x => x.role === role);
+  let specificRole = allUsers.filter(x => x.role === role);
   if (specificRole.length === 0) {
     for (const i of Array(count).fill(1).map((x, i) => i + 1)) {
       const randUser: IRegesterData = {
@@ -93,17 +93,18 @@ async function fillIfEmptyUsers(count: number, role: RoleEnum) {
         role: role,
       }
 
-      await UserService.createUser(randUser);
+      specificRole.push(await UserService.createUser(randUser));
     }
     console.debug(`${count} ${role} users added`);
   }
+  return specificRole;
 }
 
 
 
 async function filldummyData() {
-  await fillIfEmptyProducts()
-  await fillIfEmptyUsers(10, RoleEnum.merchant);
+  const merchants = await fillIfEmptyUsers(10, RoleEnum.merchant);
+  await fillIfEmptyProducts(merchants.map(x => x._id));
   await fillIfEmptyUsers(30, RoleEnum.user);
 }
 
