@@ -13,7 +13,7 @@ class UserService {
 
     async createUser(user: IRegesterData) {
         const hash = await bcrypt.hash(user.password, envconf.SaltRounds);
-        return await mongoose.model('User').create({
+        return await mongoose.model<IUser>('User').create({
             email: user.email,
             hash: hash,
             name: user.name,

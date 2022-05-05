@@ -13,6 +13,7 @@ export interface IProduct {
   longDescription: string;
   productInformation: string;
   categoryName: string;
+  merchantId: mongoose.Types.ObjectId;
 }
 
 var ProductSchema = new mongoose.Schema<IProduct>({
@@ -64,6 +65,10 @@ var ProductSchema = new mongoose.Schema<IProduct>({
   categoryName: {
     type: String,
     required: true,
+  },
+  merchantId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Merchant",
   },
 });
 
