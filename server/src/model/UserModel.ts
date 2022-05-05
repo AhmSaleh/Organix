@@ -8,7 +8,7 @@ export interface IUser {
     role: RoleEnum;
 }
 
-export enum RoleEnum { user="user", merchent="merchent", admin="admin" }
+export enum RoleEnum { user="user", merchant="merchant", admin="admin" }
 
 
 const UserSchema = new Schema<IUser>({
