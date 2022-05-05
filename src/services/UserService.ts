@@ -4,7 +4,7 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import envconf from "../envconf";
-import {IUser} from "../model/UserModel";
+import {IUser, RoleEnum} from "../model/UserModel";
 import { IRegesterData } from "../Utils/SchemaRegester";
 
 
@@ -26,6 +26,18 @@ class UserService {
             email: email    
         });
     };
+
+    async getMerchantInfo(id: string) {
+        return await mongoose.model<IUser>('User').findOne({
+            _id: id,
+            role: RoleEnum.merchant
+        },
+        {
+            name: 1,
+            email: 1,
+            role: 1
+        });
+    }
 
     async getAllUsers() {
         return await mongoose.model<IUser>('User').find({});
