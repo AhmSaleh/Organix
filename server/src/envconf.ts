@@ -3,8 +3,9 @@ const SALTROUNDS = "13"
 const MONGO_URI = "mongodb://localhost:27017/Users"
 const JWT_SECRET = "secret"
 const JWT_EXPIRES = "3600" // in seconds = 1 hour
-const DEFAULTADMINEMAIL = "admin@email.com"
-const DEFAULTADMINPASSWORD = "admin"
+const DEFAULT_ADMIN_EMAIL = "admin@email.com"
+const DEFAULT_ADMIN_PASSWORD = "admin"
+const DEFAUKT_DUMMYUSER_EMAIL = "1234"
 /* ------------------------------ end defaults ------------------------------ */
 
 
@@ -41,11 +42,14 @@ class envconf{
     }
     get adminEmail():string {
         throwIfMissing("production", "adminEmail");
-        return process.env.adminEmail ?? DEFAULTADMINEMAIL;
+        return process.env.adminEmail ?? DEFAULT_ADMIN_EMAIL;
     }
     get adminPassword():string {
         throwIfMissing("production", "adminPassword");
-        return process.env.adminPassword ?? DEFAULTADMINPASSWORD;
+        return process.env.adminPassword ?? DEFAULT_ADMIN_PASSWORD;
+    }
+    get DummyUsersPassword():string {
+        return process.env.DummyUsersPassword ?? DEFAUKT_DUMMYUSER_EMAIL;
     }
 }
 

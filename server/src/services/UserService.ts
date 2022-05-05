@@ -28,7 +28,7 @@ class UserService {
     };
 
     async getAllUsers() {
-        return await mongoose.model('User').find({});
+        return await mongoose.model<IUser>('User').find({});
     };
 
     async comparePassword(password: string, hash: string) {
