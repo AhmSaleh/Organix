@@ -11,6 +11,7 @@ export interface IProduct {
     availableInventory: number;
     longDescription: string;
     productInformation: string;
+    merchantId: string;
   }
 
 export interface productFetchParamters {
