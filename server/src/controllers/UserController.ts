@@ -19,6 +19,7 @@ class UserController {
   static postRegister = postRegister;
   static getAll = getAll;
   static getProfile = getProfile;
+  static getMerchant = getMerchant;
 }
 
 async function postLogin(r: Request, res: Response) {
@@ -80,5 +81,14 @@ async function getProfile(r: any, res: Response) {
     res.status(403).send("Access Denied");
   }
 }
+
+async function getMerchant(r: Request, res: Response) {
+  const user = await UserService.getMerchantInfo(r.params.id);
+  if (user) {
+    res.send(user);
+  } else {
+    res.status(404).send("Merchant not found");
+  }
+}  
 
 export default UserController;
