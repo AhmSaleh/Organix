@@ -25,6 +25,8 @@ import { RatingStarsComponent } from './Components/shop/productDetails/rating-st
 import { CategoriesComponent } from './Components/shop/categories/categories.component';
 import { AddProductComponent } from './Components/Trader/add-product/add-product.component';
 import { CarouselModule } from 'ngx-owl-carousel-o';
+import { HeroComponent } from './Components/home/hero/hero.component';
+import { SearchComponent } from './Components/home/hero/search/search.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +50,8 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
     RatingStarsComponent,
     CategoriesComponent,
     AddProductComponent,
+    HeroComponent,
+    SearchComponent,
   ],
   imports: [
     BrowserAnimationsModule,
