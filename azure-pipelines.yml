@@ -25,17 +25,18 @@ steps:
 
 - task: Npm@1
   inputs:
+    command: 'install'
+    workingDir: 'client'
+    verbose: true
+  displayName: client npm install
+
+- task: Npm@1
+  inputs:
     command: 'custom'
     workingDir: 'server'
     customCommand: 'run build'
   displayName: server build
 
-- task: Npm@1
-  inputs:
-    command: 'install'
-    workingDir: 'client'
-    verbose: true
-  displayName: client npm install
 
 - task: Npm@1
   inputs:
