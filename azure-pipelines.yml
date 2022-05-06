@@ -15,14 +15,31 @@ steps:
     versionSpec: '16.x'
   displayName: 'Install Node.js'
 
-- script: |
-    cd server
-    npm install
-    npm run build
-  displayName: 'npm install and build server'
 
-- script: |
-    cd client
-    npm install
-    npm run build
-  displayName: 'npm install and build client'
+- task: Npm@1
+  inputs:
+    command: 'install'
+    workingDir: 'server'
+    verbose: true
+  displayName: server npm install
+
+- task: Npm@1
+  inputs:
+    command: 'custom'
+    workingDir: 'server'
+    customCommand: 'run build'
+  displayName: server build
+
+- task: Npm@1
+  inputs:
+    command: 'install'
+    workingDir: 'client'
+    verbose: true
+  displayName: client npm install
+
+- task: Npm@1
+  inputs:
+    command: custom
+    workingDir: client
+    customCommand: 'run build'
+  displayName: client build
