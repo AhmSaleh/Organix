@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, Validators, FormControl } from '@angular/forms';
+import {
+  FormGroup,
+  Validators,
+  FormControl,
+  ValidatorFn,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-add-product',
@@ -17,11 +22,10 @@ export class AddProductComponent implements OnInit {
         Validators.minLength(0),
         Validators.required,
       ]),
-      imgURL: new FormControl(),
-      weight: new FormControl(),
+      imgURL: new FormControl('', Validators.required),
+      weight: new FormControl(0, [Validators.required, Validators.min(0)]),
       availableInventory: new FormControl(),
       longDescription: new FormControl(),
-      productInformation: new FormControl(), //what is the point of this?
     });
   }
 
