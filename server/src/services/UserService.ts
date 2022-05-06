@@ -3,8 +3,8 @@
 
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
-import conf from "../conf";
-import {IUser} from "../model/UserModel";
+import envconf from "../envconf";
+import {IUser, RoleEnum} from "../model/UserModel";
 import { IRegesterData } from "../Utils/SchemaRegester";
 
 
@@ -12,8 +12,8 @@ import { IRegesterData } from "../Utils/SchemaRegester";
 class UserService {
 
     async createUser(user: IRegesterData) {
-        const hash = await bcrypt.hash(user.password, conf.SaltRounds);
-        return await mongoose.model('User').create({
+        const hash = await bcrypt.hash(user.password, envconf.SaltRounds);
+        return await mongoose.model<IUser>('User').create({
             email: user.email,
             hash: hash,
             name: user.name,
@@ -27,8 +27,20 @@ class UserService {
         });
     };
 
+    async getMerchantInfo(id: string) {
+        return await mongoose.model<IUser>('User').findOne({
+            _id: id,
+            role: RoleEnum.merchant
+        },
+        {
+            name: 1,
+            email: 1,
+            role: 1
+        });
+    }
+
     async getAllUsers() {
-        return await mongoose.model('User').find({});
+        return await mongoose.model<IUser>('User').find({});
     };
 
     async comparePassword(password: string, hash: string) {

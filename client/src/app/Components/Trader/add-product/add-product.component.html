@@ -1,0 +1,61 @@
+<section class="jumbotron my-form-color mx-auto container-img vertical-center col-lg-7 col-md-9 col-sm-11 p-0 pb-3">
+  <h1 class="text-center text-black bold" style="font-size: 60px;">Add Product</h1>
+  <div class="container col-lg-8 col-md-9 col-sm-10">
+    <form [formGroup]="myForm">
+      <div class="form-group">
+        <label for="add-product-name">Name</label>
+        <input type="text" id="add-product-name" class="form-control" placeholder="Name" />
+      </div>
+
+      <div class="form-group">
+        <label for="add-product-price">Price</label>
+        <input type="number" id="add-product-name" class="form-control" placeholder="Price" />
+      </div>
+
+      <div class="form-group">
+        <label for="add-product-short-description">Short Description</label>
+        <input type="text" id="add-product-short-description" class="form-control" placeholder="Short Description"
+          maxlength="70" />
+      </div>
+
+      <div class="form-group">
+        <label for="add-product-image-url">Image URL</label>
+        <input type="file" id="add-product-image-url" class="form-control" placeholder="Image URL" />
+      </div>
+
+      <div class="form-group">
+        <label for="add-product-weight">Weight</label>
+        <div class="input-group">
+          <input type="number" id="add-product-weight" class="form-control" style="display: inline;"
+            placeholder="Weight in KG" />
+          <div class="input-group-append">
+            <div class="input-group-text">KG</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="add-product-available-inventory">Available Inventory</label>
+        <input type="number" id="add-product-available-inventory" class="form-control"
+          placeholder="Available Inventory" />
+      </div>
+
+      <div class="form-group">
+        <label for="add-product-long-Description">Long Description</label>
+        <textarea id="add-product-long-Description" class="form-control" placeholder="Long Description"></textarea>
+      </div>
+
+      <!-- <div class="form-group">
+        <label for="add-product-product-information">Product Information</label>
+        <input type="text" id="add-product-product-information" class="form-control"
+          placeholder="Product Information" />
+      </div> -->
+
+      <div class="d-flex justify-content-center">
+        <button type="submit" class="site-btn mx-1 col-xl-3 col-lg-4 col-md-5 col-sm-6 col-6">Add Product</button>
+        <button type="reset" class="site-btn btn-secondary mx-1 col-xl-3 col-lg-4 col-md-5 col-sm-6 col-6"
+          (click)="onReset()">Reset</button>
+      </div>
+    </form>
+  </div>
+</section>

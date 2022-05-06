@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { RegisterComponent } from './Components/User/register/register.component';
@@ -21,6 +22,11 @@ import { ProductDetailsComponent } from './Components/shop/product-details/produ
 import { ReviewsComponent } from './Components/shop/productDetails/reviews/reviews.component';
 import { ReviewsItemComponent } from './Components/shop/productDetails/reviews-item/reviews-item.component';
 import { RatingStarsComponent } from './Components/shop/productDetails/rating-stars/rating-stars.component';
+import { CategoriesComponent } from './Components/shop/categories/categories.component';
+import { AddProductComponent } from './Components/Trader/add-product/add-product.component';
+import { CarouselModule } from 'ngx-owl-carousel-o';
+import { HeroComponent } from './Components/home/hero/hero.component';
+import { SearchComponent } from './Components/home/hero/search/search.component';
 
 @NgModule({
   declarations: [
@@ -42,12 +48,18 @@ import { RatingStarsComponent } from './Components/shop/productDetails/rating-st
     ReviewsComponent,
     ReviewsItemComponent,
     RatingStarsComponent,
+    CategoriesComponent,
+    AddProductComponent,
+    HeroComponent,
+    SearchComponent,
   ],
   imports: [
+    BrowserAnimationsModule,
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    CarouselModule
   ],
   providers: [],
   bootstrap: [AppComponent],

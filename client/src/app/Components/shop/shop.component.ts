@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { productFetchParamters } from 'src/app/Models/IProdcut';
 
 @Component({
   selector: 'app-shop',
@@ -7,9 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ShopComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private route: ActivatedRoute,
+  ) { }
 
+  productFetchParamters?: productFetchParamters
   ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      this.productFetchParamters = params
+    })
   }
-
 }

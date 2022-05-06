@@ -20,6 +20,7 @@ router.post("/register/admin",
 router.get("/all",checkRole(RoleEnum.admin),UserController.getAll);
 
 
-router.get("/:email",checkRole(RoleEnum.admin,RoleEnum.merchent,RoleEnum.user),UserController.getProfile);
+router.get("/:email",checkRole(RoleEnum.admin,RoleEnum.merchant,RoleEnum.user),UserController.getProfile);
+router.get("/merchant/:id",UserController.getMerchant);
 
 export default router;
