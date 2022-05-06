@@ -7,7 +7,7 @@ trigger:
 - main
 
 pool:
-  name: abdo_laptop
+  name: abdo_pc
 
 steps:
 - task: NodeTool@0
