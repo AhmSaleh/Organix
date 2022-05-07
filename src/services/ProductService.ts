@@ -64,7 +64,6 @@ class ProductService {
     }
   }
 
-  // Haven't tested this method yet.
   async getProductByCategory_noRef(_category: string, page: any = undefined) {
     if (!page) return await ProductModel.find({});
     let skip = (parseInt(page) - 1) * +envconf.ProductsLimit;
@@ -87,13 +86,18 @@ class ProductService {
   }
 
   async getAllProductsCount() {
-    return await ProductModel.countDocuments();
+    const count =
+      (await ProductModel.countDocuments()) / +envconf.ProductsLimit;
+    return Math.floor(count);
   }
 
   async getProductByCategoryCount(categoryName: any) {
-    return await ProductModel.find({
-      categoryName,
-    }).countDocuments();
+    const count =
+      (await ProductModel.find({
+        categoryName,
+      }).countDocuments()) / +envconf.ProductsLimit;
+
+    return Math.floor(count);
   }
 }
 
