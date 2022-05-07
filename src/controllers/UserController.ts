@@ -89,6 +89,6 @@ async function getMerchant(r: Request, res: Response) {
   } else {
     res.status(404).send("Merchant not found");
   }
-}  
+}
 
 export default UserController;

@@ -2,7 +2,6 @@ import ProductService from "../services/ProductService";
 import { Request, Response } from "express";
 import ajv from "../Utils/validate";
 
-
 class ProductController {
   static POSTProduct = POSTProduct;
   static GETProducts = GETProducts;
@@ -34,11 +33,13 @@ async function POSTProduct(req: Request, res: Response) {
 
 async function GETProducts(req: Request, res: Response) {
   try {
-    const products = await ProductService.getAllProducts();
+    let { page } = req.query;
+    if (!page) page = "1";
+
+    const products = await ProductService.getAllProducts(page);
     res.send(products).status(200);
   } catch (err) {
-    res.status(500).send(err);
-    //WARN error shouldn't be send in production
+    res.status(500).send();
   }
 }
 
@@ -114,7 +115,13 @@ async function UPDATEProductById(req: Request, res: Response) {
 
 async function GETProductByCategory(req: Request, res: Response) {
   try {
-    const products = await ProductService.getProductByCategory(req.params.category);
+    let { page } = req.query;
+    if (!page) page = "1";
+
+    const products = await ProductService.getProductByCategory(
+      req.params.category,
+      page
+    );
     if (!products) {
       return res
         .status(404)
