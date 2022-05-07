@@ -6,12 +6,14 @@ export interface IProduct {
   price: number;
   shortDescription: string;
   availability: boolean;
+  imagesURL: string[];
   imgURL: string;
   weight: number;
   availableInventory: number;
   longDescription: string;
   productInformation: string;
   categoryName: string;
+  merchantId: mongoose.Types.ObjectId;
 }
 
 var ProductSchema = new mongoose.Schema<IProduct>({
@@ -39,6 +41,9 @@ var ProductSchema = new mongoose.Schema<IProduct>({
   imgURL: {
     type: String,
   },
+  imagesURL: {
+    type: [String],
+  },
   weight: {
     type: Number,
     validate(value: number) {
@@ -60,6 +65,10 @@ var ProductSchema = new mongoose.Schema<IProduct>({
   categoryName: {
     type: String,
     required: true,
+  },
+  merchantId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Merchant",
   },
 });
 

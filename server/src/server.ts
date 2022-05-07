@@ -21,9 +21,12 @@ app.get("/status", (req, res) => {
 });
 
 app.get("/img/random.png", (req, res) => {
-  const value = req.query.seed = req.query.seed || Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+  const value = (req.query.seed =
+    req.query.seed ||
+    Math.random().toString(36).substring(2, 15) +
+      Math.random().toString(36).substring(2, 15));
   const size = 400;
-  
+
   const png = jdenticon.toPng(value, size);
   res.send(png);
 });
