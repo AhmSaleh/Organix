@@ -1,6 +1,6 @@
 import UserService from "../services/UserService";
 import { Request, Response } from "express";
-import conf from "../conf";
+import envconf from "../envconf";
 
 import jwt from "jsonwebtoken";
 import { IRegesterData } from "../Utils/SchemaRegester";
@@ -19,6 +19,7 @@ class UserController {
   static postRegister = postRegister;
   static getAll = getAll;
   static getProfile = getProfile;
+  static getMerchant = getMerchant;
 }
 
 async function postLogin(r: Request, res: Response) {
@@ -39,8 +40,8 @@ async function postLogin(r: Request, res: Response) {
     role: userExist.role,
   };
 
-  var Token = await jwt.sign(tokenPayload, conf.JWT_SECRET, {
-    expiresIn: conf.jwtExpire,
+  var Token = await jwt.sign(tokenPayload, envconf.JWT_SECRET, {
+    expiresIn: envconf.jwtExpire,
   });
   // add the tocken to cookies
   res.header("Access-Control-Expose-Headers", "*");
@@ -80,5 +81,14 @@ async function getProfile(r: any, res: Response) {
     res.status(403).send("Access Denied");
   }
 }
+
+async function getMerchant(r: Request, res: Response) {
+  const user = await UserService.getMerchantInfo(r.params.id);
+  if (user) {
+    res.send(user);
+  } else {
+    res.status(404).send("Merchant not found");
+  }
+}  
 
 export default UserController;

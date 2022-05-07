@@ -11,6 +11,7 @@ class ProductController {
   static UPDATEProductById = UPDATEProductById;
   static GETProductByName = GETProductByName;
   static  GETProductList = getProductList
+  static GETProductByCategory = GETProductByCategory;
 }
 
 async function POSTProduct(req: Request, res: Response) {
@@ -37,8 +38,8 @@ async function GETProducts(req: Request, res: Response) {
     const products = await ProductService.getAllProducts();
     res.send(products).status(200);
   } catch (err) {
-    console.log(ProductService);
     res.status(500).send(err);
+    //WARN error shouldn't be send in production
   }
 }
 
@@ -120,6 +121,22 @@ async function UPDATEProductById(req: Request, res: Response) {
         );
     }
     res.send(product);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+}
+
+async function GETProductByCategory(req: Request, res: Response) {
+  try {
+    const products = await ProductService.getProductByCategory(req.params.category);
+    if (!products) {
+      return res
+        .status(404)
+        .send(
+          `Coudln't find product with the provided Category --> ${req.params.category}`
+        );
+    }
+    res.send(products);
   } catch (err) {
     res.status(500).send(err);
   }
