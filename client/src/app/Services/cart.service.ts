@@ -10,6 +10,7 @@ import { AuthService } from './auth.service';
 import { ICartView } from '../Interfaces/ICartView';
 
 import * as _ from "lodash";
+import { ICart } from '../Interfaces/ICart';
 
 @Injectable({
   providedIn: 'root',
@@ -69,19 +70,17 @@ export class CartService {
     this.syncItems();
   }
 
-  // get Length(): Observable<number> {
-  //   this.products.subscribe(p=>{
-  //     return of( p.Products!.length);
-  //   })
-  // }
-
-  // get Products():Observable<ICartView> {
-  //   return this.Products;
-  // }
-
   syncItems() {
     if (this.auth.isLoggedIn()) {
       // TODO: replace array in database with product list
+      let cart: ICart ={UserID:this.auth.getUserId(),Products:[]}
+      this.products.subscribe(res=>{
+        res.Products?.map((p)=>{
+          cart.Products.push({ProductID:p.product._id,Count:p.Count})
+        })
+      })
+      //save cart in database
+      this.http.post<ICart>('http://localhost:3000/api/cart/',cart);
     } else {
        let cart :ICartView = {};
        this.products.subscribe(res=>{cart = res})
