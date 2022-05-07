@@ -1,6 +1,7 @@
 import CategoryModel from "../model/Categoery";
 import { IProduct, ProductModel } from "../model/Product.Model";
 import CategoeryService from "./CategoeryService";
+import envconf from "../envconf";
 
 class ProductService {
   async createProduct(product: IProduct) {
@@ -14,9 +15,13 @@ class ProductService {
 
   async getAllProducts(page: any = undefined) {
     if (!page) return await ProductModel.find({});
-    let skip = (parseInt(page) - 1) * 12;
+    let skip = (parseInt(page) - 1) * +envconf.ProductsLimit;
 
-    return await ProductModel.find({}, {}, { limit: 12, skip: skip });
+    return await ProductModel.find(
+      {},
+      {},
+      { limit: +envconf.ProductsLimit, skip: skip }
+    );
   }
 
   async getProductById(_id: string) {
@@ -25,12 +30,12 @@ class ProductService {
 
   async getProductByName(_name: string, page: any = undefined) {
     if (!page) return await ProductModel.find({});
-    let skip = (parseInt(page) - 1) * 12;
+    let skip = (parseInt(page) - 1) * +envconf.ProductsLimit;
 
     return await ProductModel.find(
       { name: _name },
       {},
-      { limit: 12, skip: skip }
+      { limit: +envconf.ProductsLimit, skip: skip }
     );
   }
 
@@ -62,23 +67,33 @@ class ProductService {
   // Haven't tested this method yet.
   async getProductByCategory_noRef(_category: string, page: any = undefined) {
     if (!page) return await ProductModel.find({});
-    let skip = (parseInt(page) - 1) * 12;
+    let skip = (parseInt(page) - 1) * +envconf.ProductsLimit;
 
     return await ProductModel.find(
       { categoryName: _category },
       {},
-      { limit: 12, skip: skip }
+      { limit: +envconf.ProductsLimit, skip: skip }
     );
   }
 
   async getProductByCategory(categoryName: string, page: any = undefined) {
     if (!page) return await ProductModel.find({});
-    let start = (parseInt(page) - 1) * 12 + 1;
+    let start = (parseInt(page) - 1) * +envconf.ProductsLimit + 1;
 
     return await CategoryModel.findOne(
       { name: categoryName },
-      { products: { $slice: [start, 12] } }
+      { products: { $slice: [start, +envconf.ProductsLimit] } }
     ).populate("products");
+  }
+
+  async getAllProductsCount() {
+    return await ProductModel.countDocuments();
+  }
+
+  async getProductByCategoryCount(categoryName: any) {
+    return await ProductModel.find({
+      categoryName,
+    }).countDocuments();
   }
 }
 
