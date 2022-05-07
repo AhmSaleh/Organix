@@ -61,7 +61,13 @@ async function GETProductById(req: Request, res: Response) {
 
 async function GETProductByName(req: Request, res: Response) {
   try {
-    const product = await ProductService.getProductByName(req.params.name);
+    let { page } = req.query;
+    if (!page) page = "1";
+
+    const product = await ProductService.getProductByName(
+      req.params.name,
+      page
+    );
     if (!product) {
       return res
         .status(404)
