@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CartComponent } from './Components/cart/cart.component';
+// import { CartComponent } from './Components/cart/cart.component';
 import { HomeComponent } from './Components/home/home.component';
 import { LoginComponent } from './Components/User/login/login.component';
 import { MainLayoutComponent } from './Components/main-layout/main-layout.component';
@@ -11,6 +11,7 @@ import { ShopComponent } from './Components/shop/shop.component';
 import { UserDetailsComponent } from './Components/User/user-details/user-details.component';
 import { ProductDetailsComponent } from './Components/shop/product-details/product-details.component';
 import { AuthGuard } from './core/guards/auth.guard';
+import { AddProductComponent } from './Components/Trader/add-product/add-product.component';
 
 const routes: Routes = [
   {
@@ -24,7 +25,8 @@ const routes: Routes = [
       { path: 'user/details', component: UserDetailsComponent },
       { path: 'shop', component: ShopComponent },
       { path: 'product/:id', component: ProductDetailsComponent },
-      { path: 'cart', component: CartComponent }
+      { path: 'add-product', component: AddProductComponent },
+      // { path: 'cart', component: CartComponent }
     ],
   },
   { path: '**', component: NotFoundComponentComponent },

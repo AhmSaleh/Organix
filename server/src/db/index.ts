@@ -1,9 +1,9 @@
 
 const path = require("path");
 import mongoose from "mongoose";
-import conf  from "../conf";
+import envconf  from "../envconf";
 
-mongoose.connect(conf.MongoDB, () => {
+mongoose.connect(envconf.MongoDB, () => {
   console.log("Connected to MongoDB successfully.");
 });
 

@@ -1,7 +1,7 @@
 import { JSONSchemaType } from "ajv"
 import { IProduct } from "../model/Product.Model";
 
-const procut_schema: JSONSchemaType<IProduct> = {
+const procut_schema: JSONSchemaType<IProduct & {merchantId:string}> = {
     "type": "object",
     "properties": {
         "name": {
@@ -23,10 +23,6 @@ const procut_schema: JSONSchemaType<IProduct> = {
         "availability": {
             "type": "boolean"
         },
-        "imgURL": {
-            "type": "string",
-            "format": "uri"
-        },
         "weight": {
             "type": "number",
             "minimum": 0
@@ -40,6 +36,24 @@ const procut_schema: JSONSchemaType<IProduct> = {
         },
         "productInformation": {
             "type": "string"
+        },
+        "categoryName": {
+            "type": "string"
+        },
+        "imagesURL": {
+            "type": "array",
+            "items": {
+                "type": "string",
+                "format": "uri"
+            }
+        },
+        "imgURL": {
+            "type": "string",
+            "format": "uri"
+        },
+        "merchantId": {
+            "type": "string",
+            "pattern": "^[0-9a-fA-F]{24}$"
         }
     },
     "required": [
@@ -49,7 +63,9 @@ const procut_schema: JSONSchemaType<IProduct> = {
         "availability",
         "weight",
         "longDescription",
-        "productInformation"
+        "productInformation",
+        "categoryName",
+        "merchantId"
     ]
 }
 
