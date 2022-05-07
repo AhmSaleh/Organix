@@ -23,8 +23,15 @@ class ProductService {
     return await ProductModel.findById(_id);
   }
 
-  async getProductByName(_name: string) {
-    return await ProductModel.find({ name: _name });
+  async getProductByName(_name: string, page: any = undefined) {
+    if (!page) return await ProductModel.find({});
+    let skip = (parseInt(page) - 1) * 12;
+
+    return await ProductModel.find(
+      { name: _name },
+      {},
+      { limit: 12, skip: skip }
+    );
   }
 
   async updateProduct(_id: string, product: Partial<IProduct>) {
