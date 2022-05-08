@@ -73,7 +73,11 @@ export class UserService {
   getAllUsers(): Observable<IUser[]>
   {
     return this.http
-      .get<IUser[]>(this.UserUrl + '/all')
+      .get<IUser[]>(this.UserUrl + '/all', {
+        headers: {
+          'x-auth-token': this.auth.getToken(),
+        },
+      })
       .pipe(catchError(this.handleError));
   }
 
