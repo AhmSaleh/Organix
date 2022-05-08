@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import envconf from "../envconf";
-import { IUser, RoleEnum } from "../model/UserModel";
+import UserModel, { IUser, RoleEnum } from "../model/UserModel";
 import { IRegesterData } from "../Utils/SchemaRegester";
 
 class UserService {
@@ -49,6 +49,12 @@ class UserService {
 
   async comparePassword(password: string, hash: string) {
     return await bcrypt.compare(password, hash);
+  }
+
+  async updateUserProfile(email: string, obj: any) {
+    const user = await UserModel.findOneAndUpdate({ email: email }, obj, {
+      runValidators: true,
+    });
   }
 }
 
