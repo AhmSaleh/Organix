@@ -10,6 +10,8 @@ class ProductController {
   static UPDATEProductById = UPDATEProductById;
   static GETProductByName = GETProductByName;
   static GETProductByCategory = GETProductByCategory;
+  static GETProductsCount = GETProductsCount;
+  static GETProductsByCatCount = GETProductsByCatCount;
 }
 
 async function POSTProduct(req: Request, res: Response) {
@@ -38,6 +40,25 @@ async function GETProducts(req: Request, res: Response) {
 
     const products = await ProductService.getAllProducts(page);
     res.send(products).status(200);
+  } catch (err) {
+    res.status(500).send();
+  }
+}
+
+async function GETProductsCount(req: Request, res: Response) {
+  try {
+    const productsCount = await ProductService.getAllProductsCount();
+    res.send({ productsCount }).status(200);
+  } catch (err) {
+    res.status(500).send();
+  }
+}
+async function GETProductsByCatCount(req: Request, res: Response) {
+  try {
+    const productsCount = await ProductService.getProductByCategoryCount(
+      req.query.category
+    );
+    res.send({ productsCount }).status(200);
   } catch (err) {
     res.status(500).send();
   }

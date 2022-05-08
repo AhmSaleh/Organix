@@ -2,10 +2,11 @@ import express from "express";
 import ProductController from "../controllers/Product.Controller";
 import checkRole from "../middleware/authentication";
 import { RoleEnum } from "../model/UserModel";
-
 const router = express.Router();
 
 router.get("/", ProductController.GETProducts);
+router.get("/allCount", ProductController.GETProductsCount);
+router.get("/CatgCount", ProductController.GETProductsByCatCount);
 router.get("/:id", ProductController.GETProductById);
 router.get("/search/:name", ProductController.GETProductByName);
 router.get("/category/:category", ProductController.GETProductByCategory);
@@ -20,6 +21,5 @@ router.patch(
   checkRole(RoleEnum.admin),
   ProductController.UPDATEProductById
 );
-
 
 export default router;

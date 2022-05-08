@@ -6,6 +6,8 @@ const JWT_EXPIRES = "3600"; // in seconds = 1 hour
 const DEFAULT_ADMIN_EMAIL = "admin@email.com";
 const DEFAULT_ADMIN_PASSWORD = "admin";
 const DEFAUKT_DUMMYUSER_EMAIL = "1234";
+const PRODUCTS_LIMIT = 12;
+const USERS_PFP_PATH = "uploads/UsersPFP";
 /* ------------------------------ end defaults ------------------------------ */
 
 function throwIfMissing(env: string, name: string) {
@@ -22,7 +24,6 @@ class envconf {
   get SaltRounds(): number {
     return parseInt(process.env.salt_rounds ?? SALTROUNDS);
   }
-
   get JWT_SECRET(): string {
     throwIfMissing("production", "JWT_SECRET");
     return process.env.JWT_SECRET ?? JWT_SECRET;
@@ -43,6 +44,12 @@ class envconf {
   }
   get DummyUsersPassword(): string {
     return process.env.DummyUsersPassword ?? DEFAUKT_DUMMYUSER_EMAIL;
+  }
+  get ProductsLimit(): Number {
+    return PRODUCTS_LIMIT;
+  }
+  get UsersPfpPath(): string {
+    return USERS_PFP_PATH;
   }
 }
 
