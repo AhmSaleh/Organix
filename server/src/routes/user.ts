@@ -53,7 +53,11 @@ router.get(
   checkRole(RoleEnum.admin, RoleEnum.merchant, RoleEnum.user),
   UserController.getPFP
 );
-
+router.patch(
+  "/:email",
+  checkRole(RoleEnum.admin, RoleEnum.merchant, RoleEnum.user),
+  UserController.UPDATEUserProfileByEmail
+);
 router.get("/merchant/:id", UserController.getMerchant);
 
 export default router;

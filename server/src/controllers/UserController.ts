@@ -10,6 +10,7 @@ import { RequestWithSchema } from "../middleware/validation";
 import { Types } from "mongoose";
 import { RequestWithAuth } from "../middleware/authentication";
 import path from "path";
+import ajv from "../Utils/validate";
 
 export interface ITockeBayload {
   UserId: Types.ObjectId;
@@ -22,6 +23,7 @@ class UserController {
   static getProfile = getProfile;
   static getMerchant = getMerchant;
   static getPFP = getPFP;
+  static UPDATEUserProfileByEmail = UPDATEUserProfileByEmail;
 }
 
 async function postLogin(r: Request, res: Response) {
@@ -105,6 +107,28 @@ async function getPFP(r: Request, res: Response) {
     res.sendFile(path.join(__dirname, imgPath));
   } else {
     res.status(403).send("Access Denied");
+  }
+}
+async function UPDATEUserProfileByEmail(r: Request, res: Response) {
+  let req = r as RequestWithAuth;
+
+  try {
+    const user = await UserService.getUserByEmail(req.params.email);
+    if (!user) res.status(401).send();
+    if (
+      user?.id !== req.tockenInfo.UserId ||
+      req.tockenInfo.role == RoleEnum.admin
+    )
+      res.status(403).send("Access Denied");
+
+    const validate = ajv.getSchema("SchemaUpdateUser");
+    const valid = validate!(req.body);
+    if (!valid) return res.status(400).send();
+
+    await UserService.updateUserProfile(req.params.email, req.body);
+    res.status(201).send();
+  } catch (err) {
+    res.status(500).send(err);
   }
 }
 
