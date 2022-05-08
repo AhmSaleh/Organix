@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+} from '@angular/common/http';
 import { IUser } from 'src/app/Models/IUser';
 import { AuthService } from '../auth.service';
 
@@ -43,6 +47,19 @@ export class UserService {
           'x-auth-token': this.auth.getToken(),
         },
       })
+      .pipe(catchError(this.handleError));
+  }
+
+  getUserPFP(): Observable<any> {
+    const httpOptions: Object = {
+      headers: new HttpHeaders({
+        'x-auth-token': this.auth.getToken(),
+      }),
+      responseType: 'blob',
+    };
+
+    return this.http
+      .get<IUser>(this.UserUrl + '/pfp/' + this.auth.getEmail(), httpOptions)
       .pipe(catchError(this.handleError));
   }
 

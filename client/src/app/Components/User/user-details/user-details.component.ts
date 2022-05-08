@@ -17,8 +17,17 @@ export class UserDetailsComponent implements OnInit {
     phone: '',
     addresses: [],
   };
-  addressesCounter = 0;
+  img: any;
+
   constructor(UserService: UserService) {
+    UserService.getUserPFP().subscribe(
+      (response) => {
+        this.createImageFromBlob(response);
+      },
+      (error) => {
+        console.error('Request failed with error');
+      }
+    );
     UserService.getUser().subscribe(
       (response) => {
         this.User = response;
@@ -28,11 +37,20 @@ export class UserDetailsComponent implements OnInit {
       }
     );
   }
-  getAddressesCounter(): Number {
-    console.log(this.addressesCounter);
-    this.addressesCounter++;
-    return this.addressesCounter;
-  }
-
   ngOnInit(): void {}
+
+  createImageFromBlob(image: Blob) {
+    let reader = new FileReader();
+    reader.addEventListener(
+      'load',
+      () => {
+        this.img = reader.result;
+      },
+      false
+    );
+
+    if (image) {
+      reader.readAsDataURL(image);
+    }
+  }
 }
