@@ -2,7 +2,6 @@ import ProductService from "../services/ProductService";
 import { Request, Response } from "express";
 import ajv from "../Utils/validate";
 
-
 class ProductController {
   static POSTProduct = POSTProduct;
   static GETProducts = GETProducts;
@@ -11,6 +10,8 @@ class ProductController {
   static UPDATEProductById = UPDATEProductById;
   static GETProductByName = GETProductByName;
   static GETProductByCategory = GETProductByCategory;
+  static GETProductsCount = GETProductsCount;
+  static GETProductsByCatCount = GETProductsByCatCount;
 }
 
 async function POSTProduct(req: Request, res: Response) {
@@ -34,11 +35,32 @@ async function POSTProduct(req: Request, res: Response) {
 
 async function GETProducts(req: Request, res: Response) {
   try {
-    const products = await ProductService.getAllProducts();
+    let { page } = req.query;
+    if (!page) page = "1";
+
+    const products = await ProductService.getAllProducts(page);
     res.send(products).status(200);
   } catch (err) {
-    res.status(500).send(err);
-    //WARN error shouldn't be send in production
+    res.status(500).send();
+  }
+}
+
+async function GETProductsCount(req: Request, res: Response) {
+  try {
+    const productsCount = await ProductService.getAllProductsCount();
+    res.send({ productsCount }).status(200);
+  } catch (err) {
+    res.status(500).send();
+  }
+}
+async function GETProductsByCatCount(req: Request, res: Response) {
+  try {
+    const productsCount = await ProductService.getProductByCategoryCount(
+      req.query.category
+    );
+    res.send({ productsCount }).status(200);
+  } catch (err) {
+    res.status(500).send();
   }
 }
 
@@ -60,7 +82,13 @@ async function GETProductById(req: Request, res: Response) {
 
 async function GETProductByName(req: Request, res: Response) {
   try {
-    const product = await ProductService.getProductByName(req.params.name);
+    let { page } = req.query;
+    if (!page) page = "1";
+
+    const product = await ProductService.getProductByName(
+      req.params.name,
+      page
+    );
     if (!product) {
       return res
         .status(404)
@@ -114,7 +142,13 @@ async function UPDATEProductById(req: Request, res: Response) {
 
 async function GETProductByCategory(req: Request, res: Response) {
   try {
-    const products = await ProductService.getProductByCategory(req.params.category);
+    let { page } = req.query;
+    if (!page) page = "1";
+
+    const products = await ProductService.getProductByCategory(
+      req.params.category,
+      page
+    );
     if (!products) {
       return res
         .status(404)
