@@ -4,7 +4,7 @@
     <form [formGroup]="myRegisterForm" novalidate (ngSubmit)="onSubmit()">
       <fieldset formGroupName="name" class="container-fluid">
         <div class="row">
-          <div class="form-group mt-3 col p-0 pr-1">
+          <div class="form-group mt-3 col p-0 pr-1 mb-0">
             <label for="register-firstname">First Name</label>
             <input type="text" id="register-firstname" class="form-control {{firstnameOpacity()}} {{firstNameClass()}}"
               formControlName="firstName" placeholder="First Name" />
@@ -13,7 +13,7 @@
               name is required.</span>
           </div>
 
-          <div class="form-group mt-3 col p-0 pl-1">
+          <div class="form-group mt-3 col p-0 pl-1 mb-0">
             <label for="register-lastname">Last Name</label>
             <input type="text" id="register-lastname" class="form-control {{lastnameOpacity()}} {{lastNameClass()}}"
               formControlName="lastName" placeholder="Last Name" />
@@ -24,56 +24,99 @@
         </div>
       </fieldset>
 
-
-      <div class="form-group">
+      <div class="form-group mb-0">
         <label for="register-email">Email</label>
         <input type="email" id="register-email" class="form-control {{emailOpacity()}} {{emailClass()}}"
-          formControlName="email" placeholder="Email" />
+          formControlName="email" placeholder="Email" [ngClass]="{'mb-4':(emailClass() == 'validClass')}" />
         <span [ngClass]="{'visible': (emailClass() == invalidClass), 'invisible' :(emailClass()!= invalidClass)}">
-          <p class="form-text form-control-feedback m-0" style="color: #dc3545;" *ngIf="emailErrors() == 'required'">
+          <p class="form-text form-control-feedback m-0" style="color: #dc3545;"
+            *ngIf="emailErrors() == 'required'; else elseEmail">
             Email is required.</p>
-          <p class="form-text form-control-feedback m-0" style="color: #dc3545;" *ngIf="emailErrors() == 'pattern'">
-            Email
-            format is incorrect.</p>
+          <ng-template #elseEmail>
+            <p class="form-text form-control-feedback m-0" style="color: #dc3545;">
+              Email
+              format is incorrect.</p>
+          </ng-template>
         </span>
       </div>
 
-      <div class="form-group">
+      <div class="form-group mb-0">
         <label for="register-password">Password</label>
         <input type="password" id="register-password" class="form-control {{passwordOpacity()}} {{passwordClass()}}"
-          formControlName="password" placeholder="Password" />
+          formControlName="password" placeholder="Password" [ngClass]="{'mb-4':(passwordClass() == 'validClass')}" />
         <small id="passwordHelpBlock" class="form-text text-muted opacity-75">
           Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special
           characters, or emoji.
         </small>
         <span
           [ngClass]="{'visible': (passwordClass() == invalidClass), 'invisible' :(passwordClass() != invalidClass)}">
-          <p class="form-text form-control-feedback m-0" style="color: #dc3545;" *ngIf="passwordErrors() == 'required'">
+          <p class="form-text form-control-feedback m-0" style="color: #dc3545;"
+            *ngIf="passwordErrors() == 'required'; else elsePassword">
             Password is required.</p>
-          <p class="form-text form-control-feedback m-0" style="color: #dc3545;"
-            *ngIf="passwordErrors() == 'minlength'">
-            Password is too short.</p>
-          <p class="form-text form-control-feedback m-0" style="color: #dc3545;"
-            *ngIf="passwordErrors() == 'maxlength'">
-            Password is too long.</p>
+          <ng-template #elsePassword>
+            <p class="form-text form-control-feedback m-0" style="color: #dc3545;">Password is too long.</p>
+          </ng-template>
         </span>
       </div>
 
-      <div class="form-group">
+      <div class="form-group mb-0">
         <label for="register-role">Role</label>
-        <select class="form-control form-select {{roleOpacity()}} {{roleClass()}}" formControlName="role"
-          style="cursor: pointer;">
+        <select id="register-role" class="form-control form-select {{roleOpacity()}} {{roleClass()}}"
+          formControlName="role" style="cursor: pointer;">
           <option value="" hidden selected>Please select a role</option>
-          <option *ngFor="let role of availableRoles" [value]="role">{{role}}</option>
+          <option *ngFor="let role of availableRoles" [value]="role.toLowerCase()">{{role}}</option>
         </select>
         <span [ngClass]="{'visible': (roleClass() == invalidClass), 'invisible' :(roleClass() != invalidClass)}">
           <p class="form-text form-control-feedback m-0" style="color: #dc3545;">Role is required.</p>
         </span>
       </div>
 
+      <div class="form-group mb-0">
+        <label for="register-phone">Phone</label>
+        <input type="text" id="register-phone" class="form-control {{phoneOpacity()}} {{phoneClass()}}"
+          formControlName="phone" placeholder="Phone" [ngClass]="{'mb-4':(phoneClass() == 'validClass')}" />
+        <span [ngClass]="{'visible': (phoneClass() == invalidClass), 'invisible' :(phoneClass()!= invalidClass)}">
+          <p class="form-text form-control-feedback m-0" style="color: #dc3545;"
+            *ngIf="phoneErrors() == 'required'; else elsePhone">
+            Phone is required.</p>
+          <ng-template #elsePhone>
+            <p class="form-text form-control-feedback m-0" style="color: #dc3545;">
+              Phone format is incorrect.</p>
+          </ng-template>
+        </span>
+      </div>
+
+      <div class="form-group mb-0">
+        <label for="register-address">Address</label>
+        <input type="text" id="register-address" class="form-control {{addressOpacity()}} {{addressClass()}}"
+          formControlName="address" placeholder="Address" [ngClass]="{'mb-4':(addressClass() == 'validClass')}" />
+        <span [ngClass]="{'visible': (addressClass() == invalidClass), 'invisible' :(addressClass()!= invalidClass)}">
+          <p class="form-text form-control-feedback m-0" style="color: #dc3545;">address is required.</p>
+        </span>
+      </div>
+
+      <div class="form-group mb-0">
+        <label for="add-product-image">Image</label>
+        <div class="input-group" (click)="imgInput.click()">
+          <input type="text" class="form-control {{imgClass()}} {{imgOpacity()}}" id="add-product-image"
+            placeholder="Choose file..." style="display: inline;"
+            value="{{this.myRegisterForm.controls['img'].value?.split('\\')[this.myRegisterForm.controls['img'].value?.split('\\').length - 1]||'Choose file...'}}">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button">Button</button>
+          </div>
+        </div>
+        <input #imgInput type="file" class="form-control {{imgClass()}}" style="display:none;"
+          id="add-product-image-hidden" formControlName="img" (change)="selectImage($event)">
+        <span [ngClass]="{'visible': (imgClass() == invalidClass), 'invisible' :(imgClass() != invalidClass)}">
+          <p class="form-text form-control-feedback m-0" style="color: #dc3545;">
+            Image is required.</p>
+        </span>
+      </div>
+
       <div class="d-flex justify-content-center pb-3">
         <button type="submit" class="site-btn mx-1 col-xl-2 col-lg-3 col-md-4 col-sm-5 col-6">Register</button>
-        <button type="reset" class="site-btn btn-secondary mx-1 col-xl-2 col-lg-3 col-md-4 col-sm-5 col-6" (click)="onReset()">Reset</button>
+        <button type="reset" class="site-btn btn-secondary mx-1 col-xl-2 col-lg-3 col-md-4 col-sm-5 col-6"
+          (click)="onReset()">Reset</button>
       </div>
 
     </form>
