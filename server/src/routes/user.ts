@@ -33,6 +33,7 @@ router.post(
   checkSchema("userRegestraion"),
   UserController.postRegister
 );
+
 router.post(
   "/register/admin",
   checkRole(RoleEnum.admin),
@@ -47,6 +48,12 @@ router.get(
   checkRole(RoleEnum.admin, RoleEnum.merchant, RoleEnum.user),
   UserController.getProfile
 );
+router.get(
+  "/pfp/:email",
+  checkRole(RoleEnum.admin, RoleEnum.merchant, RoleEnum.user),
+  UserController.getPFP
+);
+
 router.get("/merchant/:id", UserController.getMerchant);
 
 export default router;
