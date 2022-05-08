@@ -15,9 +15,6 @@ const regester_schema: JSONSchemaType<ILoginData> = {
     },
     "password": {
       "type": "string",
-      "minLength": 8,
-      "maxLength": 20,
-      "format": "password"
     }
   },
   "required": ["email", "password"]

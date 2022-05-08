@@ -1,7 +1,13 @@
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+} from '@angular/common/http';
 import { IUser } from 'src/app/Models/IUser';
+import { observableToBeFn } from 'rxjs/internal/testing/TestScheduler';
+import { AuthService } from '../auth.service';
 
 export interface IRegesterData {
   email: string;
@@ -21,7 +27,7 @@ export interface ILoginData {
 })
 export class UserService {
   UserUrl = 'http://localhost:3000/api/user';
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private auth: AuthService) {}
 
   addUser(user: IRegesterData): Observable<IRegesterData> {
     return this.http
@@ -37,11 +43,24 @@ export class UserService {
 
   getUser(): Observable<IUser> {
     return this.http
-      .get<IUser>(this.UserUrl + '/Email address to be inserted here', {
+      .get<IUser>(this.UserUrl + '/' + this.auth.getEmail(), {
         headers: {
-          'x-auth-token': 'Token to be inserted here',
+          'x-auth-token': this.auth.getToken(),
         },
       })
+      .pipe(catchError(this.handleError));
+  }
+
+  getUserPFP(): Observable<any> {
+    const httpOptions: Object = {
+      headers: new HttpHeaders({
+        'x-auth-token': this.auth.getToken(),
+      }),
+      responseType: 'blob',
+    };
+
+    return this.http
+      .get<IUser>(this.UserUrl + '/pfp/' + this.auth.getEmail(), httpOptions)
       .pipe(catchError(this.handleError));
   }
 
@@ -51,6 +70,12 @@ export class UserService {
       .pipe(catchError(this.handleError));
   }
 
+  getAllUsers(): Observable<IUser[]>
+  {
+    return this.http
+      .get<IUser[]>(this.UserUrl + '/all')
+      .pipe(catchError(this.handleError));
+  }
 
   private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {

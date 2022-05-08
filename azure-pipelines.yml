@@ -1,0 +1,46 @@
+# Node.js
+# Build a general Node.js project with npm.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+
+trigger:
+- main
+
+pool:
+  name: abdo_pc
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '16.x'
+  displayName: 'Install Node.js'
+
+
+- task: Npm@1
+  inputs:
+    command: 'install'
+    workingDir: 'server'
+    verbose: true
+  displayName: server npm install
+
+- task: Npm@1
+  inputs:
+    command: 'install'
+    workingDir: 'client'
+    verbose: true
+  displayName: client npm install
+
+- task: Npm@1
+  inputs:
+    command: 'custom'
+    workingDir: 'server'
+    customCommand: 'run build'
+  displayName: server build
+
+
+- task: Npm@1
+  inputs:
+    command: custom
+    workingDir: client
+    customCommand: 'run build'
+  displayName: client build
