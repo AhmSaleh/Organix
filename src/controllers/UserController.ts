@@ -9,6 +9,7 @@ import { ILoginData } from "../Utils/SchemaLogin";
 import { RequestWithSchema } from "../middleware/validation";
 import { Types } from "mongoose";
 import { RequestWithAuth } from "../middleware/authentication";
+import path from "path";
 
 export interface ITockeBayload {
   UserId: Types.ObjectId;
@@ -20,6 +21,7 @@ class UserController {
   static getAll = getAll;
   static getProfile = getProfile;
   static getMerchant = getMerchant;
+  static getPFP = getPFP;
 }
 
 async function postLogin(r: Request, res: Response) {
@@ -88,6 +90,21 @@ async function getMerchant(r: Request, res: Response) {
     res.send(user);
   } else {
     res.status(404).send("Merchant not found");
+  }
+}
+
+async function getPFP(r: Request, res: Response) {
+  let req = r as RequestWithAuth;
+  const user = await UserService.gePFPByEmail(req.params.email);
+
+  if (
+    req.tockenInfo.role == RoleEnum.admin ||
+    user?.id == req.tockenInfo.UserId
+  ) {
+    const imgPath = "../../" + user?.img;
+    res.sendFile(path.join(__dirname, imgPath));
+  } else {
+    res.status(403).send("Access Denied");
   }
 }
 

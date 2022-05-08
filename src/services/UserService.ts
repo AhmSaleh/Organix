@@ -23,6 +23,11 @@ class UserService {
       email: email,
     });
   }
+  async gePFPByEmail(email: string) {
+    return await mongoose.model<IUser>("User").findOne({
+      email: email,
+    });
+  }
 
   async getMerchantInfo(id: string) {
     return await mongoose.model<IUser>("User").findOne(
