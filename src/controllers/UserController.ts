@@ -49,7 +49,7 @@ async function postLogin(r: Request, res: Response) {
   res.header("Access-Control-Expose-Headers", "*");
   res.header("x-auth-token", Token);
   // login success
-  res.send("Login success");
+  res.send();
 }
 
 async function postRegister(r: any, res: Response) {
