@@ -2,7 +2,6 @@ import express from "express";
 import ProductController from "../controllers/Product.Controller";
 import checkRole from "../middleware/authentication";
 import { RoleEnum } from "../model/UserModel";
-import fs from "fs";
 const router = express.Router();
 
 router.get("/", ProductController.GETProducts);
