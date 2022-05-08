@@ -29,7 +29,11 @@ export class LoginComponent implements OnInit {
     if (this.myForm.valid) {
       this.userService.loginUser(this.myForm.value).subscribe(
         (data) => {
-          this.auth.login(data.headers.get('x-auth-token'));
+          this.auth.login(
+            data.headers.get('x-auth-token'),
+            this.myForm.value.email
+          );
+          this.router.navigate(['./home']);
         },
         (error) => {
           console.log(error);

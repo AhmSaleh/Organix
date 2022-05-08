@@ -4,4 +4,6 @@ export interface IUser {
   hash: string;
   name: { first: string; last: string };
   role: string;
+  phone: string;
+  addresses: string[];
 }

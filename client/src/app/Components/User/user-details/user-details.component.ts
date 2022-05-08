@@ -14,18 +14,24 @@ export class UserDetailsComponent implements OnInit {
     hash: '',
     name: { first: '', last: '' },
     role: '',
+    phone: '',
+    addresses: [],
   };
+  addressesCounter = 0;
   constructor(UserService: UserService) {
     UserService.getUser().subscribe(
       (response) => {
-        console.log('response received');
         this.User = response;
-        console.log(this.User);
       },
       (error) => {
         console.error('Request failed with error');
       }
     );
+  }
+  getAddressesCounter(): Number {
+    console.log(this.addressesCounter);
+    this.addressesCounter++;
+    return this.addressesCounter;
   }
 
   ngOnInit(): void {}
