@@ -1,8 +1,9 @@
 import mongoose from "mongoose";
-import bcrypt from "bcrypt";
+import bcrypt, { compareSync } from "bcrypt";
 import envconf from "../envconf";
-import { IUser, RoleEnum } from "../model/UserModel";
+import UserModel, { IUser, RoleEnum } from "../model/UserModel";
 import { IRegesterData } from "../Utils/SchemaRegester";
+import fs from "fs";
 
 class UserService {
   async createUser(user: IRegesterData) {
@@ -19,6 +20,11 @@ class UserService {
   }
 
   async getUserByEmail(email: string) {
+    return await mongoose.model<IUser>("User").findOne({
+      email: email,
+    });
+  }
+  async gePFPByEmail(email: string) {
     return await mongoose.model<IUser>("User").findOne({
       email: email,
     });
@@ -44,6 +50,19 @@ class UserService {
 
   async comparePassword(password: string, hash: string) {
     return await bcrypt.compare(password, hash);
+  }
+
+  async updateUserProfile(email: string, obj: any) {
+    const user = await UserModel.findOneAndUpdate({ email: email }, obj, {
+      runValidators: true,
+      new: false,
+    });
+
+    if (obj.img) {
+      fs.unlink(user?.img || "", () => {
+        console.log("File Removed");
+      });
+    }
   }
 }
 

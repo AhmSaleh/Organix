@@ -10,8 +10,9 @@ export class AuthService {
     return localStorage.getItem('token');
   }
 
-  login(token: string) {
+  login(token: string, email: string) {
     localStorage.setItem('token', token);
+    localStorage.setItem('email', email);
   }
 
   logout() {
@@ -20,6 +21,10 @@ export class AuthService {
 
   getToken() {
     return localStorage.getItem('token') || '';
+  }
+
+  getEmail() {
+    return localStorage.getItem('email') || '';
   }
 
   getRole() {

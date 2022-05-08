@@ -1,0 +1,24 @@
+<div class="container table-responsive">
+    <table class="table table-bordered border-success table-hover">
+        <thead class="table-success">
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Role</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody >
+            <!-- need to complete the service code to write users loop -->
+            <tr *ngFor="let user of Users">
+                <td>{{user.name.first + ' ' + user.name.last}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.role}}</td>
+                <td>
+                    <a href="" class="btn user-link">Orders</a> |
+                    <a href="" class="btn user-link">Role</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

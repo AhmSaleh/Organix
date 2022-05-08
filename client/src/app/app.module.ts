@@ -27,6 +27,8 @@ import { AddProductComponent } from './Components/Trader/add-product/add-product
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { HeroComponent } from './Components/home/hero/hero.component';
 import { SearchComponent } from './Components/home/hero/search/search.component';
+import { AboutComponent } from './Components/about/about.component';
+import { UsersListComponent } from './Components/User/users-list/users-list.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +54,8 @@ import { SearchComponent } from './Components/home/hero/search/search.component'
     AddProductComponent,
     HeroComponent,
     SearchComponent,
+    AboutComponent,
+    UsersListComponent,
   ],
   imports: [
     BrowserAnimationsModule,
