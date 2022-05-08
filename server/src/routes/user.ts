@@ -55,6 +55,8 @@ router.get(
 );
 router.patch(
   "/:email",
+  upload.single("img"),
+  rowData,
   checkRole(RoleEnum.admin, RoleEnum.merchant, RoleEnum.user),
   UserController.UPDATEUserProfileByEmail
 );
