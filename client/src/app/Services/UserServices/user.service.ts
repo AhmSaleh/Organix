@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { IUser } from 'src/app/Models/IUser';
+import { observableToBeFn } from 'rxjs/internal/testing/TestScheduler';
 
 export interface IRegesterData {
   email: string;
@@ -51,6 +52,12 @@ export class UserService {
       .pipe(catchError(this.handleError));
   }
 
+  getAllUsers(): Observable<IUser[]>
+  {
+    return this.http
+      .get<IUser[]>(this.UserUrl + '/all')
+      .pipe(catchError(this.handleError));
+  }
 
   private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {

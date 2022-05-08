@@ -17,7 +17,7 @@ router.post("/register/admin",
             UserController.postRegister);
 
 
-router.get("/all",checkRole(RoleEnum.admin),UserController.getAll);
+router.get("/all", checkRole(RoleEnum.admin),UserController.getAll);
 
 
 router.get("/:email",checkRole(RoleEnum.admin,RoleEnum.merchant,RoleEnum.user),UserController.getProfile);
