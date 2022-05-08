@@ -4,16 +4,21 @@ const router = express.Router();
 import UserController from "../controllers/UserController";
 import checkRole from "../middleware/authentication";
 import checkSchema from "../middleware/validation";
+import rowData from "../middleware/rowData";
 import { RoleEnum } from "../model/UserModel";
+import envconf from "../envconf";
 
 const multer = require("multer");
 
 const storage = multer.diskStorage({
   destination: (req: any, file: any, cb: any) => {
-    cb(null, "uploads");
+    cb(null, envconf.UsersPfpPath);
   },
   filename: (req: any, file: any, cb: any) => {
-    cb(null, file.originalnamer);
+    cb(
+      null,
+      new Date().toISOString().replace(/[\/\\:]/g, "_") + file.originalname
+    );
   },
 });
 
@@ -24,7 +29,8 @@ router.post("/", checkSchema("userLogin"), UserController.postLogin);
 router.post(
   "/register",
   upload.single("img"),
-  // checkSchema("userRegestraion"),
+  rowData,
+  checkSchema("userRegestraion"),
   UserController.postRegister
 );
 router.post(
