@@ -18,8 +18,9 @@ export class UserDetailsComponent implements OnInit {
     addresses: [],
   };
   img: any;
+  newImg: any;
 
-  constructor(UserService: UserService) {
+  constructor(private UserService: UserService) {
     UserService.getUserPFP().subscribe(
       (response) => {
         this.createImageFromBlob(response);
@@ -52,5 +53,28 @@ export class UserDetailsComponent implements OnInit {
     if (image) {
       reader.readAsDataURL(image);
     }
+  }
+  trackByFn(index: number, item: any) {
+    return index;
+  }
+  imageSelected(event: any) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.newImg = file;
+      this.createImageFromBlob(this.newImg);
+    }
+  }
+  onSubmit() {
+    const formData = new FormData();
+    if (this.newImg) formData.append('img', this.newImg);
+    formData.append('phone', this.User.phone);
+    formData.append('addresses', JSON.stringify(this.User.addresses));
+    formData.append('name', JSON.stringify(this.User.name));
+
+    console.log('Hnaa');
+    this.UserService.updateUser(formData).subscribe(
+      (res) => console.log(res),
+      (err) => console.log(err)
+    );
   }
 }

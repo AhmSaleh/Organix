@@ -70,8 +70,18 @@ export class UserService {
       .pipe(catchError(this.handleError));
   }
 
-  getAllUsers(): Observable<IUser[]>
-  {
+  updateUser(user: any): Observable<any> {
+    const httpOptions: Object = {
+      headers: new HttpHeaders({
+        'x-auth-token': this.auth.getToken(),
+      }),
+    };
+    return this.http
+      .patch(this.UserUrl + '/' + this.auth.getEmail(), user, httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
+  getAllUsers(): Observable<IUser[]> {
     return this.http
       .get<IUser[]>(this.UserUrl + '/all')
       .pipe(catchError(this.handleError));
