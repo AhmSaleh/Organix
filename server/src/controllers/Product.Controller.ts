@@ -9,6 +9,7 @@ class ProductController {
   static DELETEProductById = DELETEProductById;
   static UPDATEProductById = UPDATEProductById;
   static GETProductByName = GETProductByName;
+  static GETProductBySearch = GETProductBySearch;
   static GETProductByCategory = GETProductByCategory;
   static GETProductsCount = GETProductsCount;
   static GETProductsByCatCount = GETProductsByCatCount;
@@ -162,4 +163,21 @@ async function GETProductByCategory(req: Request, res: Response) {
   }
 }
 
+async function GETProductBySearch(req:Request, res:Response){
+  try {
+    let { page } = req.query;
+    if (!page) page = "1";
+    const products = await ProductService.getProductBySearch(req.params.search, page);
+    if (!products) {
+      return res
+        .status(404)
+        .send(
+          `Coudln't find product with the provided Search --> ${req.params.search}`
+        );
+        }
+    res.send(products);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+}
 export default ProductController;
