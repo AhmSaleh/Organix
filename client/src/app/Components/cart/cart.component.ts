@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/Services/auth.service';
 import { CartService } from 'src/app/Services/cart.service';
 
 @Component({
@@ -7,12 +8,16 @@ import { CartService } from 'src/app/Services/cart.service';
   styleUrls: ['./cart.component.css'],
 })
 export class CartComponent implements OnInit {
-  constructor(private cart: CartService) {}
+  constructor(private cart: CartService, private auth: AuthService) {}
 
   ngOnInit(): void {
-    this.cart.getCart().subscribe(
-      (res) => console.log(res),
-      (err) => console.log(err)
-    );
+    if (this.auth.isLoggedIn())
+      this.cart.getCart().subscribe(
+        (res: any) => console.log(res),
+        (err: any) => console.log(err)
+      );
+    else {
+      console.log(this.cart.getCart());
+    }
   }
 }
