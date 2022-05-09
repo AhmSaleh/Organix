@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IUser } from 'src/app/Models/IUser';
 import { UserService } from 'src/app/Services/UserServices/user.service';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 @Component({
   selector: 'app-user-details',
@@ -73,8 +74,11 @@ export class UserDetailsComponent implements OnInit {
 
     console.log('Hnaa');
     this.UserService.updateUser(formData).subscribe(
-      (res) => console.log(res),
-      (err) => console.log(err)
+      (res) => {
+        if (!res)
+          Notify.success('Updated Successfully!', { closeButton: true });
+      },
+      (err) => Notify.failure("Coudn't update!", { closeButton: true })
     );
   }
 }
