@@ -24,7 +24,12 @@ class UserController {
   static getMerchant = getMerchant;
   static getPFP = getPFP;
   static UPDATEUserProfileByEmail = UPDATEUserProfileByEmail;
+  // static postRegisterPFP = registerPFP;
 }
+
+// async function registerPFP(req: Request, res: Response) {
+//   //somelogic
+// }
 
 async function postLogin(r: Request, res: Response) {
   let req = r as RequestWithSchema<ILoginData>;
