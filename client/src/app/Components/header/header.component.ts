@@ -6,14 +6,19 @@ import { CartService } from 'src/app/Services/cart.service';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  styleUrls: ['./header.component.css'],
 })
-export class HeaderComponent  {
-  val:number = 0;
-  cart:ICartView;
-  constructor(private cartService:CartService) { 
-    this.cart =this.cartService.getCart();
+export class HeaderComponent {
+  val: number = 0;
+  cart: ICartView | undefined;
+  constructor(private cartService: CartService) {
+    this.cartService.getCart().subscribe(
+      (res) => {
+        this.cart = res;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
-
-  
 }

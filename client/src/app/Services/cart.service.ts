@@ -3,13 +3,13 @@ import { Injectable } from '@angular/core';
 import { IProduct } from '../Interfaces/IProduct';
 import { HttpClient } from '@angular/common/http';
 
-import { catchError, Observable,of } from 'rxjs';
+import { catchError, Observable, of } from 'rxjs';
 
 import { AuthService } from './auth.service';
 
 import { ICartView } from '../Interfaces/ICartView';
 
-import * as _ from "lodash";
+import * as _ from 'lodash';
 import { ICart } from '../Interfaces/ICart';
 
 @Injectable({
@@ -17,35 +17,39 @@ import { ICart } from '../Interfaces/ICart';
 })
 export class CartService {
   //private products: Observable<ICartView>;
-  private cart :ICartView;
+  private cart: ICartView;
 
   constructor(private http: HttpClient, private auth: AuthService) {
-
     if (this.auth.isLoggedIn()) {
       //get cart from database
       //this.products = this.http.get<ICartView>('http://localhost:3000/api/cart/' + this.auth.getUserId());
       this.cart = {};
-      this.http.get<ICartView>('http://localhost:3000/api/cart/' + this.auth.getUserId()).subscribe(
-        res =>{
-          this.cart = res
-        }
+      // this.http
+      // .get<ICartView>(
+      //   'http://localhost:3000/api/cart/' + this.auth.getUserId()
+      // )
+      // .subscribe((res) => {
+      //   this.cart = res;
+      // });
+    } else {
+      let empty = JSON.stringify({ Products: [] });
+      let newCart: ICartView = JSON.parse(
+        localStorage.getItem('Cart') || empty
       );
-    }else {
-      let empty = JSON.stringify({Products:[]});
-      let newCart:ICartView = JSON.parse(localStorage.getItem('Cart')||empty);
-       if(newCart.Products?.length == 0){
-         localStorage.setItem('Cart',empty)
-       }
+      if (newCart.Products?.length == 0) {
+        localStorage.setItem('Cart', empty);
+      }
       //this.products = of(newCart);
-      this.cart = newCart
-  }
-
+      this.cart = newCart;
+    }
   }
   // getCart():Observable<ICartView>{
   //   return this.products;
   // }
-  getCart():ICartView{
-    return this.cart;
+  getCart(): Observable<ICartView> {
+    return this.http.get<ICartView>(
+      'http://localhost:3000/api/cart/' + this.auth.getUserId()
+    );
   }
 
   // add(product: IProduct) {
@@ -62,7 +66,6 @@ export class CartService {
   //     // console.log(obj);
   //     // console.log(c.Products?.length)
 
-      
   //   })
   //   this.syncItems();
   // }
@@ -78,7 +81,6 @@ export class CartService {
   //       c.Products?.splice(index!,1);
   //     }
 
-      
   //   })
   //   this.syncItems();
   // }
@@ -86,33 +88,36 @@ export class CartService {
   //TODO: check availability
 
   add(product: IProduct) {
-
-      let obj  = this.cart.Products?.find(i => _.isEqualWith(i.product,product))
-      if(obj){
-        obj.Count++;
-      }else{
-        this.cart.Products?.push({product:product,Count:1})
-      }
+    let obj = this.cart.Products?.find((i) =>
+      _.isEqualWith(i.product, product)
+    );
+    if (obj) {
+      obj.Count++;
+    } else {
+      this.cart.Products?.push({ product: product, Count: 1 });
+    }
     //console.log(this.cart);
-    
+
     this.syncItems();
   }
   remove(product: IProduct) {
-
-      let index  = this.cart.Products?.findIndex(i => _.isEqualWith(i.product,product))
-      if(index == -1)return;
-      if(this.cart.Products![index!].Count > 1)
-      {
-        this.cart.Products![index!].Count--;
-      }else{
-        this.cart.Products?.splice(index!,1);
-      } 
+    let index = this.cart.Products?.findIndex((i) =>
+      _.isEqualWith(i.product, product)
+    );
+    if (index == -1) return;
+    if (this.cart.Products![index!].Count > 1) {
+      this.cart.Products![index!].Count--;
+    } else {
+      this.cart.Products?.splice(index!, 1);
+    }
     this.syncItems();
   }
 
-  removeAll(product: IProduct){
-    let index  = this.cart.Products?.findIndex(i => _.isEqualWith(i.product,product))
-    this.cart.Products?.splice(index!,1);
+  removeAll(product: IProduct) {
+    let index = this.cart.Products?.findIndex((i) =>
+      _.isEqualWith(i.product, product)
+    );
+    this.cart.Products?.splice(index!, 1);
     this.syncItems();
   }
 
@@ -137,10 +142,22 @@ export class CartService {
 
   syncItems() {
     if (this.auth.isLoggedIn()) {
-      let mapped = this.cart.Products?.map(p =>{
-        return {ProductID:p.product._id ,Count:p.Count}
-      })
-      this.http.post<ICart>('http://localhost:3000/api/cart',{UserID:this.auth.getUserId(),Products:mapped}).subscribe(data=>{console.log(data)},err=>{console.log(err)});
+      let mapped = this.cart.Products?.map((p) => {
+        return { ProductID: p.product._id, Count: p.Count };
+      });
+      this.http
+        .post<ICart>('http://localhost:3000/api/cart', {
+          UserID: this.auth.getUserId(),
+          Products: mapped,
+        })
+        .subscribe(
+          (data) => {
+            console.log(data);
+          },
+          (err) => {
+            console.log(err);
+          }
+        );
     } else {
       localStorage.setItem('Cart', JSON.stringify(this.cart)); // sync the data
     }
