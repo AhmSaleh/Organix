@@ -39,6 +39,22 @@ class ProductService {
     );
   }
 
+  async getProductBySearch(search: string, page: any = undefined) {
+    if (!page) page = 1;
+    let skip = (parseInt(page) - 1) * +envconf.ProductsLimit;
+    let regex = new RegExp(search, "i");
+    const products =  await ProductModel.find(
+      { $text: {
+        $search: search,
+      } },
+      { score: { $meta: "textScore" } },
+      { limit: +envconf.ProductsLimit, skip: skip }
+    ).sort( { score: { $meta: "textScore" } } );
+
+    return products
+  }
+
+
   async updateProduct(_id: string, product: Partial<IProduct>) {
     let old_product = await ProductModel.findByIdAndUpdate(_id, product, {
       runValidators: true,
