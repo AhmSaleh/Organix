@@ -52,6 +52,18 @@ class UserService {
     return await bcrypt.compare(password, hash);
   }
 
+  async updateUserPassword(email: string, password: string) {
+    const hash = await bcrypt.hash(password, envconf.SaltRounds);
+    await mongoose.model<IUser>("User").updateOne(
+      {
+        email: email,
+      },
+      {
+        hash: hash,
+      }
+    );
+  }
+
   async updateUserProfile(email: string, obj: any) {
     const user = await UserModel.findOneAndUpdate({ email: email }, obj, {
       runValidators: true,
@@ -65,5 +77,6 @@ class UserService {
     }
   }
 }
+
 
 export default new UserService();
