@@ -43,13 +43,14 @@ export class RegisterComponent implements OnInit {
 
   selectImage(event: any) {
     if (event.target.files.length > 0) {
-      this.imageFile = (event.target as HTMLInputElement).files![0];
+      this.imageFile = event.target.files[0];
+      // this.imageFile = (event.target as HTMLInputElement).files![0];
       this.imageString = this.imageFile.name;
-      //this.formdata.append('img', this.imageFile);
-      this.myRegisterForm.patchValue({
-        img: this.imageFile,
-      });
-      this.myRegisterForm.updateValueAndValidity();
+      // //this.formdata.append('img', this.imageFile);
+      // this.myRegisterForm.patchValue({
+      //   img: this.imageFile,
+      // });
+      // this.myRegisterForm.updateValueAndValidity();
     }
   }
 
@@ -130,44 +131,42 @@ export class RegisterComponent implements OnInit {
     )[0].toString();
   }
 
-  //(){
-  //{{this.myRegisterForm.controls['img'].value?.split('\\')[this.myRegisterForm.controls['img'].value?.split('\\').length - 1]||'Choose file...'}}
-  //}
-
   onSubmit(): void {
-    console.log(this.myRegisterForm.value);
+    this.formdata = new FormData();
+    this.formdata.append('img', this.imageFile);
+    this.formdata.append(
+      'name',
+      JSON.stringify(this.myRegisterForm.value['name'])
+    );
+    this.formdata.append('email', this.myRegisterForm.value['email']);
+    this.formdata.append('password', this.myRegisterForm.value['password']);
+    this.formdata.append('phone', this.myRegisterForm.value['phone']);
+    this.formdata.append(
+      'addresses',
+      JSON.stringify([this.myRegisterForm.value['address']])
+    );
+
+    this.userService.addUserTemp(this.formdata).subscribe(
+      (data) => {
+        console.log('Form service in r c success', data);
+      },
+      (err) => console.log('Form service in r c err' + err)
+    );
+
     if (this.myRegisterForm.valid) {
       for (let key in this.myRegisterForm.value)
         this.formdata.append(key, this.myRegisterForm.controls[key].value);
-      // this.myRegisterForm.removeControl('role');
-      // this.myRegisterForm.removeControl('img');
-      // this.myRegisterForm.removeControl('address');
+
+      this.myRegisterForm.removeControl('img');
+      this.formdata.append('img', this.imageFile);
+      console.log('ads');
 
       this.userService.addUserTemp(this.formdata).subscribe(
         (data) => {
           console.log('Form service in r c success', data);
-          // this.userService.addUserImage(this.formdata).subscribe(
-          //   (data) => console.log(data),
-          //   (err) => console.log(err)
-          // );
         },
         (err) => console.log('Form service in r c err' + err)
       );
-
-      // console.log('submitting...');
-      // console.log(this.formdata);
-      // console.log(Object.keys(this.myRegisterForm.value));
-      // console.log(this.myRegisterForm.value);
-
-      //TODO add submit logic
-      // this.userService.addUser(this.myRegisterForm.value).subscribe(
-      //   (data) => {
-      //     console.log(data);
-      //   },
-      //   (error) => {
-      //     console.log(error);
-      //   }
-      // );
     }
   }
 
@@ -176,10 +175,11 @@ export class RegisterComponent implements OnInit {
   }
 
   imgClass(): String {
-    if (this.myRegisterForm.controls['img'].untouched) return '';
-    return this.myRegisterForm.controls['img'].valid
-      ? this.validClass
-      : this.invalidClass;
+    // if (this.myRegisterForm.controls['img'].untouched) return '';
+    // return this.myRegisterForm.controls['img'].valid
+    //   ? this.validClass
+    //   : this.invalidClass;
+    return this.validClass;
   }
 
   phoneClass(): String {
