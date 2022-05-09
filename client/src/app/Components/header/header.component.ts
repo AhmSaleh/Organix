@@ -10,7 +10,7 @@ import { CartService } from 'src/app/Services/cart.service';
 })
 export class HeaderComponent  {
   val:number = 0;
-  cart:Observable<ICartView>;
+  cart:ICartView;
   constructor(private cartService:CartService) { 
     this.cart =this.cartService.getCart();
   }

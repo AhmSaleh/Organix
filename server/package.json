@@ -14,6 +14,8 @@
   "license": "ISC",
   "dependencies": {
     "@ngneat/falso": "^5.0.0",
+    "@paypal/checkout-server-sdk": "^1.0.3",
+    "@types/paypal__checkout-server-sdk": "^1.0.4",
     "ajv": "^8.11.0",
     "ajv-formats": "^2.1.1",
     "ajv-keywords": "^5.1.0",

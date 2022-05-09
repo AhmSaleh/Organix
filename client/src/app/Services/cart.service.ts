@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { IProduct } from '../Interfaces/IProduct';
 import { HttpClient } from '@angular/common/http';
 
-import { Observable,of } from 'rxjs';
+import { catchError, Observable,of } from 'rxjs';
 
 import { AuthService } from './auth.service';
 
@@ -16,75 +16,133 @@ import { ICart } from '../Interfaces/ICart';
   providedIn: 'root',
 })
 export class CartService {
-  private products: Observable<ICartView> ;
+  //private products: Observable<ICartView>;
+  private cart :ICartView;
 
   constructor(private http: HttpClient, private auth: AuthService) {
 
     if (this.auth.isLoggedIn()) {
       //get cart from database
-       this.products = this.http.get<ICartView>('http://localhost:3000/api/cart/' + this.auth.getUserId());
-      
+      //this.products = this.http.get<ICartView>('http://localhost:3000/api/cart/' + this.auth.getUserId());
+      this.cart = {};
+      this.http.get<ICartView>('http://localhost:3000/api/cart/' + this.auth.getUserId()).subscribe(
+        res =>{
+          this.cart = res
+        }
+      );
     }else {
       let empty = JSON.stringify({Products:[]});
       let newCart:ICartView = JSON.parse(localStorage.getItem('Cart')||empty);
        if(newCart.Products?.length == 0){
          localStorage.setItem('Cart',empty)
        }
-      this.products = of(newCart);
-    
+      //this.products = of(newCart);
+      this.cart = newCart
   }
 
   }
-  getCart():Observable<ICartView>{
-    return this.products;
+  // getCart():Observable<ICartView>{
+  //   return this.products;
+  // }
+  getCart():ICartView{
+    return this.cart;
   }
+
+  // add(product: IProduct) {
+  //   this.products.subscribe(c=>{
+
+  //     let obj  = c.Products?.find(i => _.isEqualWith(i.product,product))
+  //     if(obj){
+  //       obj.Count++;
+  //     }else{
+  //       c.Products?.push({product:product,Count:1})
+  //     }
+  //     //TODO:debug
+  //     // console.log(c.Products);
+  //     // console.log(obj);
+  //     // console.log(c.Products?.length)
+
+      
+  //   })
+  //   this.syncItems();
+  // }
+  // remove(product: IProduct) {
+  //   this.products.subscribe(c=>{
+
+  //     let index  = c.Products?.findIndex(i => _.isEqualWith(i.product,product))
+  //     if(index == -1)return;
+  //     if(c.Products![index!].Count > 1)
+  //     {
+  //       c.Products![index!].Count--;
+  //     }else{
+  //       c.Products?.splice(index!,1);
+  //     }
+
+      
+  //   })
+  //   this.syncItems();
+  // }
+
+  //TODO: check availability
 
   add(product: IProduct) {
-    this.products.subscribe(c=>{
 
-      let obj  = c.Products?.find(i => _.isEqualWith(i.product,product))
+      let obj  = this.cart.Products?.find(i => _.isEqualWith(i.product,product))
       if(obj){
         obj.Count++;
       }else{
-        c.Products?.push({product:product,Count:1})
+        this.cart.Products?.push({product:product,Count:1})
       }
-
-      
-    })
+    //console.log(this.cart);
+    
     this.syncItems();
   }
   remove(product: IProduct) {
-    this.products.subscribe(c=>{
 
-      let index  = c.Products?.findIndex(i => _.isEqualWith(i.product,product))
+      let index  = this.cart.Products?.findIndex(i => _.isEqualWith(i.product,product))
       if(index == -1)return;
-      if(c.Products![index!].Count > 1)
+      if(this.cart.Products![index!].Count > 1)
       {
-        c.Products![index!].Count--;
+        this.cart.Products![index!].Count--;
       }else{
-        c.Products?.splice(index!,1);
-      }
-
-      
-    })
+        this.cart.Products?.splice(index!,1);
+      } 
     this.syncItems();
   }
 
+  removeAll(product: IProduct){
+    let index  = this.cart.Products?.findIndex(i => _.isEqualWith(i.product,product))
+    this.cart.Products?.splice(index!,1);
+    this.syncItems();
+  }
+
+  // syncItems() {
+  //   if (this.auth.isLoggedIn()) {
+  //     TODO: replace array in database with product list
+  //     let cart: ICart ={UserID:this.auth.getUserId(),Products:[]}
+  //     this.products.subscribe(res=>{
+  //       res.Products?.map((p)=>{
+  //         cart.Products.push({ProductID:p.product._id,Count:p.Count});
+  //       })
+  //     })
+  //     //save cart in database
+
+  //     this.http.post<ICart>('http://localhost:3000/api/cart/',cart);
+  //   } else {
+  //      let cart :ICartView = {};
+  //      this.products.subscribe(res=>{cart = res})
+  //     localStorage.setItem('Cart', JSON.stringify(cart)); // sync the data
+  //   }
+  // }
+
   syncItems() {
     if (this.auth.isLoggedIn()) {
-      // TODO: replace array in database with product list
-      let cart: ICart ={UserID:this.auth.getUserId(),Products:[]}
-      this.products.subscribe(res=>{
-        res.Products?.map((p)=>{
-          cart.Products.push({ProductID:p.product._id,Count:p.Count})
-        })
+      let mapped = this.cart.Products?.map(p =>{
+        return {ProductID:p.product._id ,Count:p.Count}
       })
-      //save cart in database
-      this.http.post<ICart>('http://localhost:3000/api/cart/',cart);
+      this.http.post<ICart>('http://localhost:3000/api/cart',{UserID:this.auth.getUserId(),Products:mapped}).subscribe(data=>{console.log(data)},err=>{console.log(err)});
     } else {
-       let cart :ICartView = {};
-       this.products.subscribe(res=>{cart = res})
-      localStorage.setItem('Cart', JSON.stringify(cart)); // sync the data
+      localStorage.setItem('Cart', JSON.stringify(this.cart)); // sync the data
     }
   }
 }

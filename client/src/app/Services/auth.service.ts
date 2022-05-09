@@ -37,7 +37,7 @@ export class AuthService {
   //get user id
   getUserId(){
     if (this.isLoggedIn())
-    return JSON.parse(atob(this.getToken().split('.')[0])).UserID;
+    return JSON.parse(atob(this.getToken().split('.')[1])).UserId;
     throw new Error('Not logged in');
   }
 }

@@ -4,7 +4,7 @@ const MONGO_URI = "mongodb://localhost:27017/Users"
 const JWT_SECRET = "secret"
 const JWT_EXPIRES = "3600" // in seconds = 1 hour
 const DEFAULT_ADMIN_EMAIL = "admin@email.com"
-const DEFAULT_ADMIN_PASSWORD = "admin"
+const DEFAULT_ADMIN_PASSWORD = "adminadmin"
 const DEFAUKT_DUMMYUSER_EMAIL = "1234"
 /* ------------------------------ end defaults ------------------------------ */
 

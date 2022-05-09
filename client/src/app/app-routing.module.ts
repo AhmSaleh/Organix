@@ -12,6 +12,7 @@ import { UserDetailsComponent } from './Components/User/user-details/user-detail
 import { ProductDetailsComponent } from './Components/shop/product-details/product-details.component';
 import { AuthGuard } from './core/guards/auth.guard';
 import { AddProductComponent } from './Components/Trader/add-product/add-product.component';
+import { CheckoutComponent } from './Components/checkout/checkout.component';
 
 const routes: Routes = [
   {
@@ -26,7 +27,8 @@ const routes: Routes = [
       { path: 'shop', component: ShopComponent },
       { path: 'product/:id', component: ProductDetailsComponent },
       { path: 'add-product', component: AddProductComponent },
-      // { path: 'cart', component: CartComponent }
+      // { path: 'cart', component: CartComponent },
+      {path:'checkout',component:CheckoutComponent}
     ],
   },
   { path: '**', component: NotFoundComponentComponent },
