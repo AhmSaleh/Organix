@@ -19,24 +19,29 @@ const getCart = async (UserID:string)=>{
     let productsIdList:string[] = cart?.Products?.map(p=> p.ProductID) ?? [];
 
     if(productsIdList.length == 0){
-        return {} as ICartView
+        return {Products:[]} as ICartView
     }
     
     //get products 
     var products = await ProductService.getProductList(productsIdList);
 
     //map with count
-    var cartView = products.map((product,index) =>
+    var productArray = products.map((product,index) =>
     {
-        return {product:product,Count: cart?.Products[index].Count} as ICartView
+        return {product:product,Count: cart?.Products[index].Count} //as ICartView
     })
 
-    return cartView;
+    return {Products:productArray} as ICartView
+
+    //return productArray;
 }
 
 
 const UpdateCart = async(cart:ICart)=>{
-    CartModel.findOneAndReplace({"UserID":cart.UserID},{UserID:cart.UserID,Products:cart.Products} as ICart);
+    CartModel.findOneAndReplace({"UserID":cart.UserID},{UserID:cart.UserID,Products:cart.Products} as ICart,null,(err,doc)=>{
+        console.log(err);
+        console.log(doc);
+    });
 }
 
 //add to registeration

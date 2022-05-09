@@ -24,3 +24,27 @@ Content-Type: application/json
 }
 
 ###
+GET  http://localhost:3000/api/cart/6275e8e46fdc949e1552d853
+Content-Type: application/json
+
+### 
+POST http://localhost:3000/api/cart HTTP/1.1
+Content-Type: application/json
+
+{
+    "UserID": "6275e8e46fdc949e1552d853",
+    "Products": [
+        {
+            "ProductID": "626c8e6db4573ed088c213de",
+            "Count": 9
+        },
+        {
+            "ProductID": "626c8e6db4573ed088c213df",
+            "Count": 5
+        },
+        {
+            "ProductID": "1",
+            "Count": 3
+        }
+    ]
+}

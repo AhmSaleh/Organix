@@ -9,8 +9,6 @@ import order from "./order";
 const router = express.Router();
 
 
-const order = require("./order");
-
 //Product
 
 //api/Product
