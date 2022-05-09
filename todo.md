@@ -2,10 +2,10 @@ Project Requirements
 • Admin
 - [X] Can login with his pre-registered email and password.
 - [x] Can view products page.
-- [-] Search by name. (abdo)
+- [x] Search by name.
 - [X] View all products.
-- [-] Create, update, edit and delete any product (front only).(hatem)
-- [-] Create product with title, image, price, details.(hatem)
+- [ ] Create, update, edit and delete any product (front only).(hatem)
+- [ ] Create product with title, image, price, details.(hatem)
 - [ ] Can view orders page (Pending, Accepted, Shipped, Delivered and Canceled).(mostafa)
 - [ ] View all orders (username, date, total price, product titles ((mostafa))
 only).
@@ -18,7 +18,7 @@ only).
 gender). (hatem)
 - [-] Can view [products page and profile] on login.(saleh)
 - [x] Products page
-- [-] Search by name.(abdo)
+- [x] Search by name.(abdo)
 - [x] View all products.
 - [x] Add products to his cart.
 - [-] View added products and checkout to make order.(mostafa)
