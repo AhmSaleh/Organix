@@ -5,20 +5,20 @@
       <fieldset formGroupName="name" class="container-fluid">
         <div class="row">
           <div class="form-group mt-3 col p-0 pr-1 mb-0">
-            <label for="register-firstname">First Name</label>
-            <input type="text" id="register-firstname" class="form-control {{firstnameOpacity()}} {{firstNameClass()}}"
-              formControlName="firstName" placeholder="First Name" />
+            <label for="register-first">First Name</label>
+            <input type="text" id="register-first" class="form-control {{firstOpacity()}} {{firstClass()}}"
+              formControlName="first" placeholder="First Name" />
             <span class="form-text form-control-feedback" style="color: #dc3545;"
-              [ngClass]="{'visible': (firstNameClass() == invalidClass), 'invisible' :(firstNameClass() != invalidClass)}">First
+              [ngClass]="{'visible': (firstClass() == invalidClass), 'invisible' :(firstClass() != invalidClass)}">First
               name is required.</span>
           </div>
 
           <div class="form-group mt-3 col p-0 pl-1 mb-0">
-            <label for="register-lastname">Last Name</label>
-            <input type="text" id="register-lastname" class="form-control {{lastnameOpacity()}} {{lastNameClass()}}"
-              formControlName="lastName" placeholder="Last Name" />
+            <label for="register-last">Last Name</label>
+            <input type="text" id="register-last" class="form-control {{lastOpacity()}} {{lastClass()}}"
+              formControlName="last" placeholder="Last Name" />
             <span class="form-text form-control-feedback" style="color: #dc3545;"
-              [ngClass]="{'visible': (lastNameClass() == invalidClass), 'invisible' :(lastNameClass() != invalidClass)}">Last
+              [ngClass]="{'visible': (lastClass() == invalidClass), 'invisible' :(lastClass() != invalidClass)}">Last
               name is required.</span>
           </div>
         </div>
@@ -99,14 +99,13 @@
         <label for="add-product-image">Image</label>
         <div class="input-group" (click)="imgInput.click()">
           <input type="text" class="form-control {{imgClass()}} {{imgOpacity()}}" id="add-product-image"
-            placeholder="Choose file..." style="display: inline;"
-            value="{{this.myRegisterForm.controls['img'].value?.split('\\')[this.myRegisterForm.controls['img'].value?.split('\\').length - 1]||'Choose file...'}}">
+            placeholder="Choose file..." style="display: inline;" [value]="imageString">
           <div class="input-group-append">
             <button class="btn btn-outline-secondary" type="button">Button</button>
           </div>
         </div>
         <input #imgInput type="file" class="form-control {{imgClass()}}" style="display:none;"
-          id="add-product-image-hidden" formControlName="img" (change)="selectImage($event)">
+          id="add-product-image-hidden" name="img" (change)="selectImage($event)">
         <span [ngClass]="{'visible': (imgClass() == invalidClass), 'invisible' :(imgClass() != invalidClass)}">
           <p class="form-text form-control-feedback m-0" style="color: #dc3545;">
             Image is required.</p>

@@ -14,12 +14,13 @@ export class RegisterComponent implements OnInit {
   availableRoles: String[] = ['User', 'Merchant'];
   imageFile: any;
   formdata: FormData = new FormData();
+  imageString: String = '';
 
   constructor(private userService: UserService) {
     this.myRegisterForm = new FormGroup({
       name: new FormGroup({
-        firstName: new FormControl('', Validators.required),
-        lastName: new FormControl('', Validators.required),
+        first: new FormControl('', Validators.required),
+        last: new FormControl('', Validators.required),
       }),
       email: new FormControl('', [
         Validators.required,
@@ -42,7 +43,13 @@ export class RegisterComponent implements OnInit {
 
   selectImage(event: any) {
     if (event.target.files.length > 0) {
-      this.imageFile = <File>event.target.files[0];
+      this.imageFile = (event.target as HTMLInputElement).files![0];
+      this.imageString = this.imageFile.name;
+      //this.formdata.append('img', this.imageFile);
+      this.myRegisterForm.patchValue({
+        img: this.imageFile,
+      });
+      this.myRegisterForm.updateValueAndValidity();
     }
   }
 
@@ -67,16 +74,16 @@ export class RegisterComponent implements OnInit {
       : '';
   }
 
-  firstnameOpacity() {
-    return this.myRegisterForm.get(`name.firstName`)?.pristine ||
-      this.myRegisterForm.get(`name.firstName`)?.invalid
+  firstOpacity() {
+    return this.myRegisterForm.get(`name.first`)?.pristine ||
+      this.myRegisterForm.get(`name.first`)?.invalid
       ? 'opacity-75'
       : '';
   }
 
-  lastnameOpacity() {
-    return this.myRegisterForm.get(`name.lastName`)?.pristine ||
-      this.myRegisterForm.get(`name.lastName`)?.invalid
+  lastOpacity() {
+    return this.myRegisterForm.get(`name.last`)?.pristine ||
+      this.myRegisterForm.get(`name.last`)?.invalid
       ? 'opacity-75'
       : '';
   }
@@ -123,15 +130,30 @@ export class RegisterComponent implements OnInit {
     )[0].toString();
   }
 
-  onSubmit(): void {
-    if (this.myRegisterForm.valid) {
-      this.formdata.append('img', this.imageFile);
-      for (let key in this.myRegisterForm.value) {
-        if(key != 'img')
-          this.formdata.append(key, this.myRegisterForm.value[key]);
-      }
+  //(){
+  //{{this.myRegisterForm.controls['img'].value?.split('\\')[this.myRegisterForm.controls['img'].value?.split('\\').length - 1]||'Choose file...'}}
+  //}
 
-      // this.userService.addUser(this.formdata.)
+  onSubmit(): void {
+    console.log(this.myRegisterForm.value);
+    if (this.myRegisterForm.valid) {
+      for (let key in this.myRegisterForm.value)
+        this.formdata.append(key, this.myRegisterForm.controls[key].value);
+      // this.myRegisterForm.removeControl('role');
+      // this.myRegisterForm.removeControl('img');
+      // this.myRegisterForm.removeControl('address');
+
+      this.userService.addUserTemp(this.formdata).subscribe(
+        (data) => {
+          console.log('Form service in r c success', data);
+          // this.userService.addUserImage(this.formdata).subscribe(
+          //   (data) => console.log(data),
+          //   (err) => console.log(err)
+          // );
+        },
+        (err) => console.log('Form service in r c err' + err)
+      );
+
       // console.log('submitting...');
       // console.log(this.formdata);
       // console.log(Object.keys(this.myRegisterForm.value));
@@ -188,16 +210,16 @@ export class RegisterComponent implements OnInit {
       : this.invalidClass;
   }
 
-  firstNameClass(): String {
-    if (this.myRegisterForm.get(`name.firstName`)!.untouched) return '';
-    return this.myRegisterForm.get(`name.firstName`)!.valid
+  firstClass(): String {
+    if (this.myRegisterForm.get(`name.first`)!.untouched) return '';
+    return this.myRegisterForm.get(`name.first`)!.valid
       ? this.validClass
       : this.invalidClass;
   }
 
-  lastNameClass(): String {
-    if (this.myRegisterForm.get(`name.lastName`)!.untouched) return '';
-    return this.myRegisterForm.get(`name.lastName`)!.valid
+  lastClass(): String {
+    if (this.myRegisterForm.get(`name.last`)!.untouched) return '';
+    return this.myRegisterForm.get(`name.last`)!.valid
       ? this.validClass
       : this.invalidClass;
   }
