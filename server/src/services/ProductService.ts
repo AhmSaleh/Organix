@@ -104,7 +104,7 @@ class ProductService {
   async getAllProductsCount() {
     const count =
       (await ProductModel.countDocuments()) / +envconf.ProductsLimit;
-    return Math.ceil(count);
+    return Math.floor(count);
   }
 
   async getProductByCategoryCount(categoryName: any) {
@@ -113,7 +113,9 @@ class ProductService {
         categoryName,
       }).countDocuments()) / +envconf.ProductsLimit;
 
-    return Math.ceil(count);
+    return Math.floor(count);
+  }
+
   }
 }
 
