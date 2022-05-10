@@ -13,23 +13,8 @@ export class HeaderComponent {
   val: number = 0;
   cart: ICartView | undefined;
   constructor(private cartService: CartService, private auth: AuthService) {
-    if (this.auth.isLoggedIn())
-      this.cartService.getCart().subscribe(
-        (res: any) => {
-          this.cart = res;
-        },
-        (err: any) => console.log(err)
-      );
-    else {
-      this.cart = this.cartService.getCart();
-    }
-    // this.cartService.getCart().subscribe(
-    //   (res: any) => {
-    //     this.cart = res;
-    //   },
-    //   (err: any) => {
-    //     console.log(err);
-    //   }
-    // );
+    this.cartService.getCart((data: any) => {
+      this.cart = data;
+    });
   }
 }

@@ -40,12 +40,16 @@ export class CartService {
     }
   }
 
-  getCart(): any {
+  getCart(cb: any) {
     if (this.auth.isLoggedIn()) {
-      const temp = this.http.get<ICartView>(
-        'http://localhost:3000/api/cart/' + this.auth.getUserId()
-      );
-      return temp;
+      const temp = this.http
+        .get<ICartView>(
+          'http://localhost:3000/api/cart/' + this.auth.getUserId()
+        )
+        .subscribe((data) => {
+          cb(data);
+          this.cart = data;
+        });
     } else {
       let empty = JSON.stringify({ Products: [] });
       let newCart: ICartView = JSON.parse(
@@ -54,9 +58,8 @@ export class CartService {
       if (newCart.Products?.length == 0) {
         localStorage.setItem('Cart', empty);
       }
-      //this.products = of(newCart);
       this.cart = newCart;
-      return newCart;
+      cb(newCart);
     }
   }
 

@@ -14,40 +14,42 @@ export class CartComponent implements OnInit {
   Products: { product: IProduct; Count: number }[] = [];
 
   ngOnInit(): void {
-    console.log('Dkhl hnaaa');
-    if (this.auth.isLoggedIn())
-      this.cart.getCart().subscribe(
-        (res: any) => {
-          this.Products = res.Products;
-        },
-        (err: any) => console.log(err)
-      );
-    else {
-      this.Products = this.cart.getCart().Products;
-    }
+    this.refreshData();
   }
+
   inc(itemIndex: number) {
     if (
       this.Products[itemIndex].Count + 1 <=
       this.Products[itemIndex].product.availableInventory
     ) {
       this.cart.add(this.Products[itemIndex].product);
+      this.refreshData();
     }
   }
+
   dec(itemIndex: number) {
     if (this.Products[itemIndex].Count > 1) {
       this.cart.remove(this.Products[itemIndex].product);
+      this.refreshData();
     }
   }
+
   removeItem(itemIndex: number) {
     this.cart.removeAll(this.Products[itemIndex].product);
+    this.refreshData();
   }
 
   calcCartTotal(): number {
-    let cartTotal1 = 0;
+    let cartTotal = 0;
     for (let product of this.Products) {
-      cartTotal1 += product.Count * product.product.price;
+      cartTotal += product.Count * product.product.price;
     }
-    return cartTotal1;
+    return cartTotal;
+  }
+
+  refreshData() {
+    this.cart.getCart((data: any) => {
+      this.Products = data.Products;
+    });
   }
 }
