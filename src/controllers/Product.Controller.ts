@@ -1,5 +1,5 @@
 import ProductService from "../services/ProductService";
-import { Request, Response } from "express";
+import { json, Request, Response } from "express";
 import ajv from "../Utils/validate";
 
 class ProductController {
@@ -10,6 +10,7 @@ class ProductController {
   static UPDATEProductById = UPDATEProductById;
   static GETProductByName = GETProductByName;
   static GETProductBySearch = GETProductBySearch;
+  static GETProductList = getProductList;
   static GETProductByCategory = GETProductByCategory;
   static GETProductsCount = GETProductsCount;
   static GETProductsByCatCount = GETProductsByCatCount;
@@ -62,6 +63,17 @@ async function GETProductsByCatCount(req: Request, res: Response) {
     res.send({ productsCount }).status(200);
   } catch (err) {
     res.status(500).send();
+  }
+}
+
+async function getProductList(req: Request, res: Response) {
+  try {
+    let arr: string[] = JSON.parse(req.params.list);
+    const list = await ProductService.getProductList(arr);
+    //validation....
+    res.send(list).status(200);
+  } catch (err) {
+    res.status(404).send(err);
   }
 }
 
@@ -163,18 +175,21 @@ async function GETProductByCategory(req: Request, res: Response) {
   }
 }
 
-async function GETProductBySearch(req:Request, res:Response){
+async function GETProductBySearch(req: Request, res: Response) {
   try {
     let { page } = req.query;
     if (!page) page = "1";
-    const products = await ProductService.getProductBySearch(req.params.search, page);
+    const products = await ProductService.getProductBySearch(
+      req.params.search,
+      page
+    );
     if (!products) {
       return res
         .status(404)
         .send(
           `Coudln't find product with the provided Search --> ${req.params.search}`
         );
-        }
+    }
     res.send(products);
   } catch (err) {
     res.status(500).send(err);

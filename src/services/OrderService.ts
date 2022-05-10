@@ -1,25 +1,39 @@
 import OrderModel from "../model/OrderModel";
-import {IOrder} from "../model/OrderModel";
+import { IOrder } from "../model/OrderModel";
+import paypal from '../services/PaypalService'
 
 
 //modify price
-const addOrder = (data:IOrder)=>{
+const insertOrder = (data: IOrder) => {
+
+
 var order = new OrderModel(data);
 order.save();
-}
+};
+
 //with user
-const getOne = (OrderID:string)=>{
-    return OrderModel.find({"_id":OrderID});
+const getOne = (OrderID: string) => {
+  return OrderModel.find({ _id: OrderID });
+};
+
+const getAll = () => {
+  return OrderModel.find({});
+};
+
+const getAllUserID = async (UserID: string) => {
+  return await OrderModel.find({ UserID: UserID });
+};
+
+
+//add data as post
+const createOrder = async (data:any)=>{
+   return await paypal.createOrder(data,false);
+   
 }
 
-const getAll =  ()=>{
-    return OrderModel.find({});
+//order id 
+const captureOrder = async(data:any)=>{
+    await paypal.captureOrder(data,false);
 }
 
-const getAllUserID = async (UserID:string)=>{
-    return await OrderModel.find({"UserID":UserID});
-}
-
-
-
-export default {addOrder,getOne,getAll,getAllUserID}
+export default { insertOrder, getOne, getAll, getAllUserID,createOrder,captureOrder };
