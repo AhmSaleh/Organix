@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SearchComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router:Router) { }
 
   ngOnInit(): void {
   }
@@ -15,5 +16,8 @@ export class SearchComponent implements OnInit {
   searchTerm: string = "";
   search(searchTerm: string) {
     console.log("search term", searchTerm)
+  }
+  submit(){
+    this.router.navigate(['/shop'],{queryParams:{searchTerm:this.searchTerm}}) //your router URL need to pass it here
   }
 }
