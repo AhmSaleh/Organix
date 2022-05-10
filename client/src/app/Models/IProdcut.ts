@@ -17,4 +17,5 @@ export interface IProduct {
 export interface productFetchParamters {
     category?: string;
     searchTerm?: string;
+    page?: number;
   }

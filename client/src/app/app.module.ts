@@ -29,6 +29,7 @@ import { HeroComponent } from './Components/home/hero/hero.component';
 import { SearchComponent } from './Components/home/hero/search/search.component';
 import { AboutComponent } from './Components/about/about.component';
 import { UsersListComponent } from './Components/User/users-list/users-list.component';
+import { PaginationComponent } from './Components/shop/pagination/pagination.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { UsersListComponent } from './Components/User/users-list/users-list.comp
     SearchComponent,
     AboutComponent,
     UsersListComponent,
+    PaginationComponent,
   ],
   imports: [
     BrowserAnimationsModule,
