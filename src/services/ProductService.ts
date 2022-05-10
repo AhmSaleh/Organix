@@ -42,7 +42,6 @@ class ProductService {
   async getProductBySearch(search: string, page: any = undefined) {
     if (!page) page = 1;
     let skip = (parseInt(page) - 1) * +envconf.ProductsLimit;
-    let regex = new RegExp(search, "i");
     const products =  await ProductModel.find(
       { $text: {
         $search: search,
