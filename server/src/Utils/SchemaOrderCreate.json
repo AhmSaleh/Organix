@@ -4,19 +4,14 @@
     "UserID": {
       "type": "string"
     },
-    "Date": {
-      "type": "string",
-      "format": "date"
-    },
     "Products": {
       "type": "array",
-      "uniqueItemProperties": ["ProductID"],
+      "uniqueItemProperties": ["ID"],
       "items": {
         "type": "object",
         "properties": {
-          "ProductID": { "type": "string" },
-          "Count": { "type": "number" },
-          "Price": { "type": "number" }
+          "ID": { "type": "string" },
+          "Count": { "type": "number" }
         }
       }
     }

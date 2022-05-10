@@ -5,7 +5,7 @@
         <div class="col-lg-6 col-md-6">
           <div class="header__top__left">
             <ul>
-              <li><i class="fa fa-envelope"></i> hello@colorlib.com</li>
+              <li><i class="fa fa-envelope"></i> hello@organix.com</li>
               <li>Free Shipping for all Order of $99</li>
             </ul>
           </div>
@@ -64,11 +64,9 @@
         <div class="header__cart">
           <ul>
             <li>
-              <a href="#"><i class="fa fa-heart"></i> <span>1</span></a>
-            </li>
-            <li>
               <a routerLink="/cart"
-                ><i class="fa fa-shopping-bag"></i> <span>3</span></a
+                ><i class="fa fa-shopping-bag"></i>
+                <span>{{ cart?.Products?.length }}</span></a
               >
             </li>
           </ul>

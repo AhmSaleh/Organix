@@ -38,4 +38,11 @@ export class AuthService {
 
     throw new Error('No logged in user to find if admin or not.');
   }
+
+  //get user id
+  getUserId(){
+    if (this.isLoggedIn())
+    return JSON.parse(atob(this.getToken().split('.')[1])).UserId;
+    throw new Error('Not logged in');
+  }
 }

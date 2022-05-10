@@ -14,6 +14,8 @@ import { AuthGuard } from './core/guards/auth.guard';
 import { AddProductComponent } from './Components/Trader/add-product/add-product.component';
 import { AboutComponent } from './Components/about/about.component';
 import { UsersListComponent } from './Components/User/users-list/users-list.component';
+import { CheckoutComponent } from './Components/checkout/checkout.component';
+import { CartComponent } from './Components/cart/cart.component';
 
 const routes: Routes = [
   {
@@ -31,6 +33,8 @@ const routes: Routes = [
       { path: 'about-us', component: AboutComponent},
       { path: 'users-list', component: UsersListComponent}
       // { path: 'cart', component: CartComponent }
+      { path: 'cart', component: CartComponent },
+      { path: 'checkout', component: CheckoutComponent },
     ],
   },
   { path: '**', component: NotFoundComponentComponent },

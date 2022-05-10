@@ -102,7 +102,7 @@ async function fillIfEmptyUsers(count: number, role: RoleEnum) {
           last: randFirstName(),
         },
         email: randEmail(),
-        password: "1234",
+        password: "12345678",
         role: role,
         phone: "01112020153",
         img: "imgSrc",
