@@ -116,6 +116,15 @@ class ProductService {
     return Math.floor(count);
   }
 
+  async getProductBySearchCount(search: string) {
+    const count =
+      (await ProductModel.find({
+        $text: {
+          $search: search,
+        },
+      }).countDocuments()) / +envconf.ProductsLimit;
+
+    return Math.floor(count);
   }
 }
 
