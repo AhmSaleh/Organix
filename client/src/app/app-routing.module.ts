@@ -30,8 +30,8 @@ const routes: Routes = [
       { path: 'shop', component: ShopComponent },
       { path: 'product/:id', component: ProductDetailsComponent },
       { path: 'add-product', component: AddProductComponent },
-      { path: 'about-us', component: AboutComponent},
-      { path: 'users-list', component: UsersListComponent}
+      { path: 'about-us', component: AboutComponent },
+      { path: 'users-list', component: UsersListComponent },
       // { path: 'cart', component: CartComponent }
       { path: 'cart', component: CartComponent },
       { path: 'checkout', component: CheckoutComponent },
