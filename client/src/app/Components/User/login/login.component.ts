@@ -4,6 +4,10 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/Services/auth.service';
 import { UserService } from 'src/app/Services/UserServices/user.service';
 
+
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import { Report } from 'notiflix/build/notiflix-report-aio';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -27,17 +31,24 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     if (this.myForm.valid) {
-      this.userService.loginUser(this.myForm.value).subscribe(
-        (data) => {
+      this.userService.loginUser(this.myForm.value).subscribe({
+        next: (data) => {
           this.auth.login(
             data.headers.get('x-auth-token'),
             this.myForm.value.email
           );
+          Notify.success('Login Successful');
           this.router.navigate(['./home']);
         },
-        (error) => {
-          console.log(error);
+        error: (error) => {
+          if(error.status == 401) {
+            Report.failure('Login Failed', 'Invalid Email or Password',"try again");
+          }
+          else {
+            Notify.failure('Something went wrong');
+          }
         }
+      }
       );
     }
   }

@@ -72,6 +72,25 @@ var ProductSchema = new mongoose.Schema<IProduct>({
   },
 });
 
-// ProductSchema.virtual('abailability').get(()=> this.availableInventory != 0);
+
+ProductSchema.index({
+  name: "text",
+  shortDescription: "text",
+  longDescription: "text",
+  productInformation: "text",
+  categoryName: "text"
+  },
+  {
+    weights: {
+      name: 5,
+      shortDescription: 2,
+      longDescription: 1,
+      productInformation: 1,
+      categoryName: 1,
+    },
+  })
+
+
+  // ProductSchema.virtual('abailability').get(()=> this.availableInventory != 0);
 const ProductModel = mongoose.model<IProduct>("Product", ProductSchema);
 export { ProductModel, ProductSchema };

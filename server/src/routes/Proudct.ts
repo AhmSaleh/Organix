@@ -8,7 +8,8 @@ router.get("/", ProductController.GETProducts);
 router.get("/allCount", ProductController.GETProductsCount);
 router.get("/CatgCount", ProductController.GETProductsByCatCount);
 router.get("/:id", ProductController.GETProductById);
-router.get("/search/:name", ProductController.GETProductByName);
+router.get("/name/:name", ProductController.GETProductByName);
+router.get("/search/:search", ProductController.GETProductBySearch);
 router.get("/category/:category", ProductController.GETProductByCategory);
 router.post("/", checkRole(RoleEnum.admin), ProductController.POSTProduct);
 router.delete(
