@@ -1,6 +1,9 @@
 import OrderModel from "../model/OrderModel";
 import { IOrder } from "../model/OrderModel";
 import paypal from '../services/PaypalService'
+import CashService from "./CashService";
+import { IOrderData } from "./Order Interfaces/IOrderData";
+
 
 
 //modify price
@@ -26,9 +29,13 @@ const getAllUserID = async (UserID: string) => {
 
 
 //add data as post
-const createOrder = async (data:any)=>{
-   return await paypal.createOrder(data,false);
-   
+const createOrderCash = async (data:IOrderData)=>{
+
+    return await CashService.createOrder(data);
+}
+
+const createOrderPaypal = async (data:IOrderData)=>{
+    return await paypal.createOrder(data,false);
 }
 
 //order id 
@@ -36,4 +43,4 @@ const captureOrder = async(data:any)=>{
     await paypal.captureOrder(data,false);
 }
 
-export default { insertOrder, getOne, getAll, getAllUserID,createOrder,captureOrder };
+export default { insertOrder, getOne, getAll, getAllUserID,createOrderCash,createOrderPaypal,captureOrder };

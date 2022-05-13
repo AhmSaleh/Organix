@@ -8,17 +8,17 @@ import OrderService from '../services/OrderService';
 
 class OrderController{
 
-static addOrder(req:Request,res:Response){
-    var order = req.body;
-    const valid = validate(order);
-    if(valid){
-        OrderService.insertOrder(order);
-        res.status(201).json(order);
-    }else{
-        res.status(409).json(order);
-    }
+// static addOrder(req:Request,res:Response){
+//     var order = req.body;
+//     const valid = validate(order);
+//     if(valid){
+//         OrderService.insertOrder(order);
+//         res.status(201).json(order);
+//     }else{
+//         res.status(409).json(order);
+//     }
 
-}
+// }
 
 
 static async getAll(req:Request,res:Response){
@@ -52,12 +52,28 @@ static async createOrder(req:Request,res:Response){
     //create data interface here
     try{
     let data = req.body;
-    
     const valid = OrderCreateValidate(data)
     if(valid){
+        if(data.Method == 0){
+            let order = await OrderService.createOrderPaypal(data);
 
-    //TODO: add order to database without confirmation 
-    res.status(201).json(await OrderService.createOrder(data)); 
+            if(Array.isArray(order)){
+                res.status(409).json(order);
+            }else{
+
+                res.status(201).send(order);
+            }
+
+        }else{
+
+            let order =  await OrderService.createOrderCash(data)
+
+            if(typeof order == "string")
+             res.status(201).send(order);
+            else res.status(409).json(order);
+        }
+    
+    
     }else{
         res.status(409); 
     }

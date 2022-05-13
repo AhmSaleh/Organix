@@ -19,7 +19,6 @@ class CartController {
     try{
     var cart = req.body;
     const valid = validate(cart);
-    //console.log(validate.errors);
     if (valid) {
      await CartService.UpdateCart(cart);
       res.status(201).json(cart);
@@ -27,7 +26,7 @@ class CartController {
       res.status(409).json(cart);
     }
   } catch(err){
-    console.log(err)
+    //console.log(err)
     res.status(409);
   }
 }

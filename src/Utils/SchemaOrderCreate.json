@@ -14,7 +14,9 @@
           "Count": { "type": "number" }
         }
       }
-    }
+    },
+    "Address": { "type": "string" },
+    "Method": { "enum": [0, 1] }
   },
-  "required": ["UserID", "Products"]
+  "required": ["UserID", "Products", "Method"]
 }
