@@ -19,12 +19,10 @@ async function POSTProduct(req: Request, res: Response) {
   try {
     const validate = ajv.getSchema("product");
     const valid = validate!(req.body);
-
     if (!valid) return res.status(400).send();
-
     const product = await ProductService.createProduct(req.body);
     res.send(product).status(200);
-    res.send();
+    res.send(); // 2 res.send()???
   } catch (err: any) {
     if (err.name === "ValidationError") {
       res.status(400).send(err);
@@ -163,18 +161,21 @@ async function GETProductByCategory(req: Request, res: Response) {
   }
 }
 
-async function GETProductBySearch(req:Request, res:Response){
+async function GETProductBySearch(req: Request, res: Response) {
   try {
     let { page } = req.query;
     if (!page) page = "1";
-    const products = await ProductService.getProductBySearch(req.params.search, page);
+    const products = await ProductService.getProductBySearch(
+      req.params.search,
+      page
+    );
     if (!products) {
       return res
         .status(404)
         .send(
           `Coudln't find product with the provided Search --> ${req.params.search}`
         );
-        }
+    }
     res.send(products);
   } catch (err) {
     res.status(500).send(err);
