@@ -25,6 +25,14 @@ export class ProductServices {
     return this.http.post<IProduct>(this.ProductUrl, product);
   }
 
+  addProductAny(product: any, header: any) {
+    return this.http.post<any>(this.ProductUrl, product, {
+      headers: {
+        'x-auth-token': header,
+      },
+    });
+  }
+
   getAllProducts(): Observable<IProduct[]> {
     return this.http.get<IProduct[]>(this.ProductUrl);
   }

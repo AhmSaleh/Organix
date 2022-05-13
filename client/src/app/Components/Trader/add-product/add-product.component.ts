@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import ICategory from 'src/app/Models/ICategory';
+import { AuthService } from 'src/app/Services/auth.service';
 import { CategoryService } from 'src/app/Services/categoery.service';
 import { ProductServices } from 'src/app/Services/ProductServices/product-services.service';
 
@@ -14,10 +15,14 @@ export class AddProductComponent implements OnInit {
   invalidClass = ' is-invalid ';
   myForm: FormGroup;
   categories: ICategory[] = [];
+  imageFile: any;
+  formData: FormData = new FormData();
+  imageString = '';
 
   constructor(
     private categoryService: CategoryService,
-    private productService: ProductServices
+    private productService: ProductServices,
+    private authService: AuthService
   ) {
     this.myForm = new FormGroup({
       name: new FormControl(null, Validators.required),
@@ -39,6 +44,57 @@ export class AddProductComponent implements OnInit {
     });
   }
 
+  imgHasBeenTouched(event: any) {
+    this.myForm.controls['img'].markAsTouched();
+  }
+
+  selectImage(event: any) {
+    if (event.target.files.length > 0) {
+      this.imageFile = event.target.files[0];
+      this.myForm.patchValue({ img: this.imageFile });
+      this.imageString = this.imageFile.name;
+      this.myForm.controls['img'].markAsTouched();
+    }
+  }
+
+  onSubmit() {
+    if (this.myForm.valid) {
+      this.formData.append('imgURL', this.myForm.value['img']);
+      this.formData.append('name', this.myForm.value['name']);
+      this.formData.append('price', this.myForm.value['price']);
+      this.formData.append(
+        'shortDescription',
+        this.myForm.value['shortDescription']
+      );
+      this.formData.append(
+        'availableInventory',
+        this.myForm.value['availableInventory']
+      );
+      this.formData.append('weight', this.myForm.value['weight']);
+      this.formData.append(
+        'longDescription',
+        this.myForm.value['longDescription']
+      );
+      this.formData.append(
+        'productInformation',
+        this.myForm.value['productInformation']
+      );
+      this.formData.append('categoryName', this.myForm.value['categoryName']);
+
+      console.log('sending...');
+      this.productService
+        .addProductAny(this.formData, this.authService.isLoggedIn())
+        .subscribe(
+          (data) => console.log(data),
+          (err) => console.log(err)
+        );
+    }
+  }
+
+  onReset() {
+    this.myForm.reset();
+  }
+
   validationClass(str: string): String {
     if (this.myForm.controls[str].untouched) return '';
     return this.myForm.controls[str].valid
@@ -56,33 +112,6 @@ export class AddProductComponent implements OnInit {
   errorName(str: string): string {
     if (!this.myForm.controls[str].errors) return '';
     return Object.keys(this.myForm.controls[str].errors!)[0].toString();
-  }
-
-  imageFile: any;
-  formdata: FormData = new FormData();
-
-  selectImage(event: any) {
-    if (event.target.files.length > 0) {
-      this.imageFile = <File>event.target.files[0];
-    }
-  }
-
-  onSubmit() {
-    this.formdata.append('file', this.imageFile, this.imageFile.name);
-    console.log(this.formdata);
-    console.log(this.formdata.get('file'));
-    if (this.myForm.valid) {
-      console.log('sending...');
-      this.productService.addProduct(this.myForm.value).subscribe(
-        (data) => console.log(data),
-        (err) => console.log(err)
-      );
-      //''.split('').length
-    }
-  }
-
-  onReset() {
-    this.myForm.reset();
   }
 
   ngOnInit(): void {

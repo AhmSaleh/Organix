@@ -51,7 +51,6 @@ const procut_schema: JSONSchemaType<IProduct & { merchantId: string }> = {
     },
     imgURL: {
       type: "string",
-      format: "uri",
     },
     merchantId: {
       type: "string",
