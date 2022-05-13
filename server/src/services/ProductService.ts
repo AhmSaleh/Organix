@@ -49,6 +49,10 @@ class ProductService {
     }
   }
 
+  async updateBulk(arr:any){
+    return await ProductModel.bulkWrite(arr);
+  }
+
 
   async getProductList(ids:string[]){
     return await ProductModel.find().where('_id').in(ids);

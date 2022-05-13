@@ -67,7 +67,7 @@
             <li>
               <a routerLink="/cart"
                 ><i class="fa fa-shopping-bag"></i>
-                <span>{{ cart?.Products?.length }}</span></a
+                <span>{{ cartService.getCart()?.Products?.length }}</span></a
               >
             </li>
           </ul>

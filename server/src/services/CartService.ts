@@ -39,8 +39,8 @@ const getCart = async (UserID:string)=>{
 
 const UpdateCart = async(cart:ICart)=>{
     CartModel.findOneAndReplace({"UserID":cart.UserID},{UserID:cart.UserID,Products:cart.Products} as ICart,null,(err,doc)=>{
-        console.log(err);
-        console.log(doc);
+        //console.log(err);
+        //console.log(doc);
     });
 }
 
