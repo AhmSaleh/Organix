@@ -1,16 +1,31 @@
-<div class="container table-responsive">
-    <table class="table table-bordered border-success table-hover">
+<div class="container d-flex flex-row-reverse">
+    <!-- <form style="width: 300px;"> -->
+        <div class="input-group mb-3">
+            <ng-template #tipContent>search by name, email, or role. Clear the search Bar then search to get the whole list.</ng-template>
+            <i data-toggle="tooltip" placement="top" [ngbTooltip]="tipContent" 
+            class='fa fa-info-circle fa-pull-left fa-lg' style="color: #83BD75; margin-top: 10px;"></i>
+            <input type="text" #searchBar class="form-control" placeholder="Search by Name or Email">
+            <div class="input-group-append">
+                <button (click)="search(searchBar.value)" class="btn btn-outline-success" type="button">Search</button>
+            </div>
+          </div>
+    <!-- </form> -->
+</div>
+<div class="table-responsive container" style="height: 500px;">
+    <table class="table table-bordered border-success table-hover overflow-scroll">
         <thead class="table-success">
             <tr>
+                <th>#</th>
                 <th scope="col">Name</th>
                 <th scope="col">Email</th>
                 <th scope="col">Role</th>
                 <th></th>
             </tr>
         </thead>
-        <tbody >
+        <tbody>
             <!-- need to complete the service code to write users loop -->
-            <tr *ngFor="let user of Users">
+            <tr *ngFor="let user of Users | usersListFilter: searchBar.value; index as i">
+                <td scope = "row"> {{i + 1}}</td>
                 <td>{{user.name.first + ' ' + user.name.last}}</td>
                 <td>{{user.email}}</td>
                 <td>{{user.role}}</td>

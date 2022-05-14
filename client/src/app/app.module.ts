@@ -29,6 +29,8 @@ import { HeroComponent } from './Components/home/hero/hero.component';
 import { SearchComponent } from './Components/home/hero/search/search.component';
 import { AboutComponent } from './Components/about/about.component';
 import { UsersListComponent } from './Components/User/users-list/users-list.component';
+import { UsersListFilterPipe } from './Pipes/users-list/users-list-filter.pipe';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -56,6 +58,7 @@ import { UsersListComponent } from './Components/User/users-list/users-list.comp
     SearchComponent,
     AboutComponent,
     UsersListComponent,
+    UsersListFilterPipe,
   ],
   imports: [
     BrowserAnimationsModule,
@@ -63,7 +66,8 @@ import { UsersListComponent } from './Components/User/users-list/users-list.comp
     HttpClientModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    CarouselModule
+    CarouselModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent],

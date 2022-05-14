@@ -24,7 +24,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-router.get("/all", checkRole(RoleEnum.admin),UserController.getAll);
+router.get("/all",UserController.getAll); //, checkRole(RoleEnum.admin) => must be added after fixing the login api
 router.post("/", checkSchema("userLogin"), UserController.postLogin);
 
 router.post(
