@@ -1,0 +1,1 @@
+MONGO_URI='mongodb+srv://organix:organix@organixcluster.o4cbn.mongodb.net/organix?retryWrites=true&w=majority'
