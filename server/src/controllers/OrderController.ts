@@ -5,6 +5,9 @@ import validate from "../Utils/OrderValidation";
 import OrderCreateValidate from '../Utils/OrderCreateValidation';
 
 import OrderService from '../services/OrderService';
+import { RequestWithAuth } from '../middleware/authentication';
+import { RoleEnum } from '../model/UserModel';
+import ProductService from '../services/ProductService';
 
 class OrderController{
 
@@ -20,6 +23,26 @@ class OrderController{
 
 // }
 
+static async getOrders(r:Request,res:Response){
+    let req = r as RequestWithAuth;
+
+    if (req.tockenInfo.role == RoleEnum.admin){
+        res.status(200).json(await OrderService.getAll()); 
+    }else{
+        res.status(500).send();
+    }
+
+    if(req.tockenInfo.role == RoleEnum.merchant){
+        ProductService.getProductByMerchant(req.tockenInfo.UserId.toHexString())
+        //check for orders with this products
+    }
+
+    if(req.tockenInfo.role == RoleEnum.user){
+
+    }
+
+    
+}
 
 static async getAll(req:Request,res:Response){
     try{

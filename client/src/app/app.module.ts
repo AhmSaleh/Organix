@@ -30,6 +30,7 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
 import { HeroComponent } from './Components/home/hero/hero.component';
 import { SearchComponent } from './Components/home/hero/search/search.component';
 import { CheckoutComponent } from './Components/checkout/checkout.component';
+import { OrdersComponent } from './Components/orders/orders.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { CheckoutComponent } from './Components/checkout/checkout.component';
     HeroComponent,
     SearchComponent,
     CheckoutComponent,
+    OrdersComponent,
   ],
   imports: [
     BrowserAnimationsModule,

@@ -1,12 +1,14 @@
+import types from "mongoose";
 import mongoose from "mongoose";
 
 export interface IOrder extends mongoose.Document{
     UserID:string,
     Date:Date,
-    Products:{ ProductID: string, Count: number,Price:number }[],
+    Products:{ ProductID: types.ObjectId, Count: number,Price:number }[],
     Address:string,
     OrderStatus:OrderStatus,
-    Payment:{Status:PaymentStatus,Method:PaymentMethod}
+    Payment:{Status:PaymentStatus,Method:PaymentMethod},
+    Gross:Number
 }
 
 export enum OrderStatus {
@@ -36,11 +38,13 @@ const OrderSchema = new mongoose.Schema<IOrder>({
         default:Date.now
     },
     Products:{
-        type:[{ ProductID: String, Count: Number ,Price:Number}]
+        type:[{ ProductID: {type:types.Types.ObjectId,ref:'Product'}, Count: Number ,Price:Number}],
+        
     },
     Address:{type:String},
     OrderStatus:{type:Number,enum:[0,1,2,3,4]},
-    Payment:{Status:{type:Number,enum:[0,1]},Method:{type:Number,enum:[0,1]}}
+    Payment:{Status:{type:Number,enum:[0,1]},Method:{type:Number,enum:[0,1]}},
+    Gross:{type:Number}
 })
 
 const OrderModel = mongoose.model<IOrder>('Order', OrderSchema);

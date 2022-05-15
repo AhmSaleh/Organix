@@ -18,15 +18,39 @@ export class CheckoutComponent implements OnInit {
   }
   products:any;
   cart:ICartView;
+
+CheckOut(){
+
+  let orderData :IOrderData = {
+    UserID:this.auth.getUserId(),
+    Products:this.products,
+    Address:'ddd',
+    Method:1
+  }
+   fetch("http://localhost:3000/api/order/create", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(orderData),
+        })
+          .then((res) => {
+            console.log(res)
+        }).catch((err)=>{
+          console.log(err)
+        })
+}
+
+
   ngOnInit(): void {
     this.products = this.cart.Products.map(p=>{
       return {ID:p.product._id,Count:p.Count}
     })
-
-    var orderData:IOrderData={
-      UserID:this.auth.getUserId(),
+    let UserID = this.auth.getUserId()
+    let orderData:IOrderData={
+      UserID:UserID,
       Products:this.products,
-      Address:'',
+      Address:'ddd',
       Method:0
     }
   
@@ -43,18 +67,13 @@ export class CheckoutComponent implements OnInit {
           headers: {
             "content-type": "application/json",
           },
-          body: JSON.stringify({
-            "UserID":"627b012461a3eff78257a464",
-            "Products":[{"ID": "626c8e6db4573ed088c213da", "Count": 500},{"ID": "626c8e6db4573ed088c213d9", "Count": 5}],
-            "Address":"my address",
-            "Method":0
-        
-        }),
+          body: JSON.stringify(orderData),
         })
           .then((res) => {
+            console.log(res);
             if (res.ok) return res.json();
             return res.json().then((json) => {
-              //alert(JSON.stringify(json));
+              alert(JSON.stringify(json));
               Promise.reject(json)});
           })
           .then(({ id }) => {
@@ -64,18 +83,30 @@ export class CheckoutComponent implements OnInit {
             console.log(e.error);
           });
       },
-      // Execute the payment:
-      // 1. Add an onAuthorize callback
-      onAuthorize: async function (data:any) {
+
+
+      onAuthorize: async function (data:any,actions:any) {
         // 2. Make a request to your server
         return fetch("http://localhost:3000/api/order/capture", {method:'POST',headers:{
                      "content-type": "application/json"},
-                    body:JSON.stringify({paymentID: data.paymentID,payerID:data.payerID,data})
+                    body:JSON.stringify({UserID:UserID,data})
                   ,})
                     .then(function(res) {
-                      alert(res);
+                      console.log(res);
                     });
       },
+      // onApprove: (data:any, actions:any) => {
+      //   return actions.order.capture().then(function(orderData:any) {
+      //     // Successful capture! For dev/demo purposes:
+      //     console.log(data)
+      //     console.log(actions)
+      //     console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+      //     const transaction = orderData.purchase_units[0].payments.captures[0];
+      //     alert(`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for all available details`);
+
+
+      //   });
+      // },
       style: {
         color: "gold",
         shape: "rect",

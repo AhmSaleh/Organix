@@ -54,7 +54,7 @@ ProductService.updateBulk(updateArr);
     Payment: {
       Status: PaymentStatus.Pending,
       Method: PaymentMethod.Cash,
-    },
+    },Gross:mapped.reduce((sum,p)=> sum + p.Price * p.Count,0)
   };
 
   var order = new OrderModel(newOrder);

@@ -165,7 +165,6 @@ export class CartService {
   }
 
   getCart() {
-    console.log('getcart function from service');
   let empty = JSON.stringify({ Products: [] });
    let newCart: ICartView = JSON.parse(
      localStorage.getItem('Cart') || empty

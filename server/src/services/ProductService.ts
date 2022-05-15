@@ -53,13 +53,17 @@ class ProductService {
     return await ProductModel.bulkWrite(arr);
   }
 
-
   async getProductList(ids:string[]){
     return await ProductModel.find().where('_id').in(ids);
   }
   async getProductByCategory_noRef(_category: string) {
     //TODO remove limit add pagination
     return await ProductModel.find({ categoryName: _category }).limit(30);
+  }
+
+
+  async getProductByMerchant(id:string){
+    return await ProductModel.find({"merchantId":id});
   }
   
   async getProductByCategory(categoryName: string) {

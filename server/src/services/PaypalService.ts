@@ -1,17 +1,7 @@
 import ProductService from "./ProductService";
 import {IOrderData} from './Order Interfaces/IOrderData'
-
-
-/**
- * PayPal SDK dependency
- */
+import OrderModel, { OrderStatus, PaymentMethod, PaymentStatus } from "../model/OrderModel";
 const checkoutNodeJssdk = require('@paypal/checkout-server-sdk');
-
-
-
-/**
- * PayPal HTTP client dependency
- */
 const paypalClient = require('./payPalClient');
 
 // const Environment =
@@ -26,10 +16,6 @@ const paypalClient = require('./payPalClient');
 // )
 
 
-
-
-//TODO: get user data from database and insert it
-
 const buildRequestBody = async (data:IOrderData)=> {
 
    let productsIDs = data.Products.map(p => {return p.ID});
@@ -37,7 +23,7 @@ const buildRequestBody = async (data:IOrderData)=> {
 
    let failed:any = [];
 
-   let mapped =  products.map((item,index)=>{
+   let items =  products.map((item,index)=>{
     if(item.availableInventory < data.Products[index].Count)
     failed.push(item);
     return {
@@ -61,11 +47,52 @@ const buildRequestBody = async (data:IOrderData)=> {
     if (failed.length > 0) {
         return failed;
     }
+
+    let mapped = products.map((p,i) =>{
+        return {
+          ProductID: p._id, Count: data.Products[i].Count ,Price:p.price
+        }
+      })
+
+    let updateArr = products.map((p, i) => {
+
+        return {
+          updateOne: {
+            filter: { "_id": p._id },
+            update: { $inc: { "availableInventory": - data.Products[i].Count } },
+          },
+        };
+      });
+    
+    
+    
+    ProductService.updateBulk(updateArr);
+    
+    
+
   
    
    const productsPrice = products.reduce((sum,item,index) => {
     return sum + item.price * data.Products[index].Count
   }, 0).toFixed(2);
+
+
+
+
+  var newOrder = {
+    UserID: data.UserID,
+    Date: new Date(),
+    Products: mapped,
+    Address:data.Address,
+    OrderStatus: OrderStatus.Pending,
+    Payment: {
+      Status: PaymentStatus.Pending,
+      Method: PaymentMethod.PayPal,
+    },Gross:productsPrice
+  };
+
+  var order = new OrderModel(newOrder);
+  order.save();
 
 //   const tax_total = data.Products.reduce((sum,item,index)=>{
 //     return sum + 10 * data.Products[index].Count
@@ -119,7 +146,7 @@ const buildRequestBody = async (data:IOrderData)=> {
                         // }
                     }
                 },
-                "items": mapped ,
+                "items": items ,
                 "shipping": {
                     "method": "United States Postal Service",
                     "name": {
@@ -193,7 +220,8 @@ async function createOrder(data:IOrderData,debug=false) {
         const request = new checkoutNodeJssdk.orders.OrdersCaptureRequest(data.data.orderID);
         request.requestBody({});
         const response = await paypalClient.client().execute(request);
-        if (debug){
+        console.log(response);
+        if (true){
             console.log("Status Code: " + response.statusCode);
             console.log("Status: " + response.result.status);
             console.log("Order ID: " + response.result.id);
@@ -214,6 +242,17 @@ async function createOrder(data:IOrderData,debug=false) {
             // To toggle print the whole body comment/uncomment the below line
             console.log(JSON.stringify(response.result, null, 4));
         }
+
+        if(response.result.status == 'COMPLETED'){
+            //find order with this id and this gross
+            //update order state
+            let gross = response.result.purchase_units[0].payments.captures[0].seller_receivable_breakdown.gross_amount.value
+            let UserID =data.UserID
+            OrderModel.updateOne({"UserID":UserID,"Payment.Status":PaymentStatus.Pending,"Payment.Method":PaymentMethod.PayPal,"Gross":gross},{"Payment.Status":PaymentStatus.Paid}).exec();
+        }else{
+            //revert state
+        }
+
         return response;
     }
     catch (e) {
@@ -221,6 +260,10 @@ async function createOrder(data:IOrderData,debug=false) {
         console.log('paypal service capture');
     }
 }
+
+
+
+
 
 
 

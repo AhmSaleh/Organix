@@ -20,7 +20,7 @@ const getOne = (OrderID: string) => {
 };
 
 const getAll = () => {
-  return OrderModel.find({});
+  return OrderModel.find({}).populate('Products.ProductID');
 };
 
 const getAllUserID = async (UserID: string) => {
