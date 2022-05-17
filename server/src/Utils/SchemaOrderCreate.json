@@ -13,7 +13,8 @@
           "ID": { "type": "string" },
           "Count": { "type": "number" }
         }
-      }
+      },
+      "minItems": 1
     },
     "Address": { "type": "string" },
     "Method": { "enum": [0, 1] }

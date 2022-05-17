@@ -125,7 +125,7 @@ class OrderController {
           else res.status(409).json(order);
         }
       } else {
-        res.status(409);
+        res.status(409).send();
       }
     } catch (err: any) {
       res.status(500).json({ error: err.message });
