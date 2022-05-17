@@ -221,6 +221,16 @@ export class CartService {
   }
 
 
+
+  calcCartTotal(): number {
+    let cartTotal = 0;
+    for (let product of this.getCart().Products) {
+      cartTotal += product.Count * product.product.price;
+    }
+    return cartTotal;
+  }
+
+
   syncItems(cart:ICartView) {
 
     localStorage.setItem('Cart', JSON.stringify(cart)); // sync the data
