@@ -31,6 +31,10 @@ import { HeroComponent } from './Components/home/hero/hero.component';
 import { SearchComponent } from './Components/home/hero/search/search.component';
 import { CheckoutComponent } from './Components/checkout/checkout.component';
 import { OrdersComponent } from './Components/orders/orders.component';
+import { AdminOrderComponent } from './Components/orders/admin-order/admin-order.component';
+import { MatDialogModule } from '@angular/material/dialog';
+// import {MatRadioModule} from '@angular/material/radio'
+// import {MatFormFieldModule} from '@angular/material/form-field'
 
 @NgModule({
   declarations: [
@@ -58,6 +62,7 @@ import { OrdersComponent } from './Components/orders/orders.component';
     SearchComponent,
     CheckoutComponent,
     OrdersComponent,
+    AdminOrderComponent,
   ],
   imports: [
     BrowserAnimationsModule,
@@ -67,8 +72,12 @@ import { OrdersComponent } from './Components/orders/orders.component';
     ReactiveFormsModule,
     CarouselModule,
     FormsModule,
+    MatDialogModule,
+    // MatRadioModule,
+    // MatFormFieldModule
   ],
   providers: [CartService, HttpClient, AuthService],
   bootstrap: [AppComponent],
+  entryComponents:[AdminOrderComponent]
 })
 export class AppModule {}

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { IOrder } from '../Interfaces/IOrder';
+import { IOrder, OrderStatus } from '../Interfaces/IOrder';
 import { AuthService } from './auth.service';
 
 @Injectable({
@@ -18,7 +18,13 @@ export class OrderService {
    });
   }
 
-  updateOrderStatus(){
-
+  updateOrderStatus(orderID:string,OrderStatus:OrderStatus){
+    this.http.patch('http://localhost:3000/api/order/updateorder',{orderID,OrderStatus},{
+      headers:{
+        'x-auth-token':this.auth.getToken()
+      }
+    }).subscribe((res)=>{
+      console.log(res);
+    },(err)=>{console.log(err)})
   }
 }

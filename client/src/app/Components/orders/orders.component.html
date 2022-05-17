@@ -13,6 +13,12 @@
                 <th>Order Status</th>
                 <th>Payment Status</th>
                 <th>Payment method</th>
+                <ng-container *ngIf="this.role == 'admin'">
+                  <th></th
+                ></ng-container>
+                <ng-container *ngIf="this.role == 'admin'">
+                  <th></th
+                ></ng-container>
               </tr>
             </thead>
             <tbody>
@@ -26,13 +32,35 @@
                   <h5>{{ product.Count }} {{ product.ProductID.name }}</h5>
                 </td>
                 <td class="shoping__cart__price">
-                  {{ order.Date }}
+                  {{ order.Date | date }}
                 </td>
                 <td>{{ order.Address }}</td>
                 <td>{{ order.Gross }}</td>
                 <td>{{ OrderStatus[order.OrderStatus] }}</td>
                 <td>{{ PaymentStatus[order.Payment.Status] }}</td>
                 <td>{{ PaymentMethod[order.Payment.Method] }}</td>
+                <ng-container *ngIf="this.role == 'admin'">
+                  <td>
+                    <button
+                      class="btn btn-light"
+                      [disabled]="OrderStatus[order.OrderStatus] == 'Canceled'"
+                      (click)="openDialog(order)"
+                    >
+                      Edit Status
+                    </button>
+                  </td></ng-container
+                >
+                <ng-container *ngIf="this.role == 'user'">
+                  <td>
+                    <button
+                      [disabled]="OrderStatus[order.OrderStatus] != 'Pending'"
+                      class="btn btn-danger"
+                      (click)="cancelOrder(order._id)"
+                    >
+                      Cancel
+                    </button>
+                  </td></ng-container
+                >
               </tr>
             </tbody>
           </table>
@@ -41,3 +69,46 @@
     </div>
   </div>
 </section>
+
+<!-- <ng-container *ngIf="this.role == 'admin'">
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">Modal title</h4>
+      <button
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      ></button>
+    </div>
+    <div class="modal-body">
+      <input type="radio" name="status" id="Pending" value="0" />
+      <label for="Pending"> Pending</label>
+      <br />
+      <input type="radio" name="status" id="Accepted" value="1" />
+      <label for="Accepted"> Accepted</label>
+      <br />
+
+      <input type="radio" name="status" id="Shipped" value="2" />
+      <label for="Shipped"> Shipped</label>
+      <br />
+
+      <input type="radio" name="status" id="Delivered" value="3" />
+      <label for="Delivered"> Delivered</label>
+      <br />
+
+      <input type="radio" name="status" id="Canceled" value="4" />
+      <label for="Canceled"> Canceled</label>
+      <br />
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-light"
+        (click)="modal.close('Close click')"
+      >
+        Close
+      </button>
+    </div>
+  </ng-template>
+</ng-container> -->

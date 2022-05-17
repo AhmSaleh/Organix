@@ -8,6 +8,7 @@ export interface IOrderData {
 }
 
 export interface IOrder {
+  _id:string
   UserID:string,
   Date:Date,
   Products:{ ProductID: IProduct, Count: number,Price:number }[],
