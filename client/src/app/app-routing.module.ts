@@ -16,6 +16,7 @@ import { AboutComponent } from './Components/about/about.component';
 import { UsersListComponent } from './Components/User/users-list/users-list.component';
 import { CheckoutComponent } from './Components/checkout/checkout.component';
 import { CartComponent } from './Components/cart/cart.component';
+import { OrdersComponent } from './Components/orders/orders.component';
 
 const routes: Routes = [
   {
@@ -34,7 +35,8 @@ const routes: Routes = [
       { path: 'users-list', component: UsersListComponent },
       // { path: 'cart', component: CartComponent }
       { path: 'cart', component: CartComponent },
-      { path: 'checkout', component: CheckoutComponent },
+      { path: 'checkout', component: CheckoutComponent,canActivate: [AuthGuard] },
+      {path:'orders',component:OrdersComponent,canActivate: [AuthGuard] }
     ],
   },
   { path: '**', component: NotFoundComponentComponent },

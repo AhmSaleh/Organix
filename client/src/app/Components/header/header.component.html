@@ -66,11 +66,13 @@
             <li>
               <a routerLink="/cart"
                 ><i class="fa fa-shopping-bag"></i>
-                <span>{{ cart?.Products?.length }}</span></a
+                <span>{{ cartService.getCart()?.Products?.length }}</span></a
               >
             </li>
           </ul>
-          <div class="header__cart__price">item: <span>$150.00</span></div>
+          <div class="header__cart__price">
+            Total: <span>EGP {{ cartService.calcCartTotal() }}</span>
+          </div>
         </div>
       </div>
     </div>

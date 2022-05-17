@@ -1,18 +1,7 @@
 import ProductService from "./ProductService";
-
-import OrderService from "./OrderService";
-
-
-/**
- * PayPal SDK dependency
- */
+import {IOrderData} from './Order Interfaces/IOrderData'
+import OrderModel, { OrderStatus, PaymentMethod, PaymentStatus } from "../model/OrderModel";
 const checkoutNodeJssdk = require('@paypal/checkout-server-sdk');
-
-
-
-/**
- * PayPal HTTP client dependency
- */
 const paypalClient = require('./payPalClient');
 
 // const Environment =
@@ -27,48 +16,16 @@ const paypalClient = require('./payPalClient');
 // )
 
 
-
-
-
-/**
- * Setting up the JSON request body for creating the Order. The Intent in the
- * request body should be set as "CAPTURE" for capture intent flow.
- * 
- */
-
-
-//  {
-//     "name": "T-Shirt",
-//     "description": "Green XL",
-//     "sku": "sku01",
-//     "unit_amount": {
-//         "currency_code": "USD",
-//         "value": "90.00"
-//     },
-//     "tax": {
-//         "currency_code": "USD",
-//         "value": "10.00"
-//     },
-//     "quantity": "1",
-//     "category": "PHYSICAL_GOODS"
-// }
-
-interface IOrderData {
-    UserID:string,
-   Products:{
-    ID:string,
-    Count:number}[],
-}
-//TODO: get user data from database and insert it
-
 const buildRequestBody = async (data:IOrderData)=> {
 
    let productsIDs = data.Products.map(p => {return p.ID});
    let products = await ProductService.getProductList(productsIDs);
 
-    //TODO: check availability
+   let failed:any = [];
 
-   let mapped =  products.map((item,index)=>{
+   let items =  products.map((item,index)=>{
+    if(item.availableInventory < data.Products[index].Count)
+    failed.push(item);
     return {
      "name":item.name,
      "description": item.shortDescription ,
@@ -77,45 +34,92 @@ const buildRequestBody = async (data:IOrderData)=> {
          "currency_code": "USD",
          "value":item.price
      },
-     "tax": {
-         "currency_code": "USD",
-         "value": "10.00"
-     },
+    //  "tax": {
+    //      "currency_code": "USD",
+    //      "value": "10.00"
+    //  },
      "quantity":data.Products[index].Count,
-     "category": "PHYSICAL_GOODS"
+    // "category": "PHYSICAL_GOODS"
  }
 })
+
+
+    if (failed.length > 0) {
+        return failed;
+    }
+
+    let mapped = products.map((p,i) =>{
+        return {
+          ProductID: p._id, Count: data.Products[i].Count ,Price:p.price
+        }
+      })
+
+    let updateArr = products.map((p, i) => {
+
+        return {
+          updateOne: {
+            filter: { "_id": p._id },
+            update: { $inc: { "availableInventory": - data.Products[i].Count } },
+          },
+        };
+      });
+    
+    
+    
+    ProductService.updateBulk(updateArr);
+    
+    
+
+  
    
    const productsPrice = products.reduce((sum,item,index) => {
     return sum + item.price * data.Products[index].Count
   }, 0).toFixed(2);
 
-  const tax_total = data.Products.reduce((sum,item,index)=>{
-    return sum + 10 * data.Products[index].Count
-  },0).toFixed(2);
 
-  const shipping = (10).toFixed(2);
-  const handling = (10).toFixed(2);
-  const discount = (10).toFixed(2);
-  const total =(parseFloat(productsPrice) + parseFloat(tax_total) + parseFloat(handling) + parseFloat(shipping) - parseFloat(discount)).toFixed(2);
 
+
+  var newOrder = {
+    UserID: data.UserID,
+    Date: new Date(),
+    Products: mapped,
+    Address:data.Address,
+    OrderStatus: OrderStatus.Pending,
+    Payment: {
+      Status: PaymentStatus.Pending,
+      Method: PaymentMethod.PayPal,
+    },Gross:productsPrice
+  };
+
+  var order = new OrderModel(newOrder);
+  order.save();
+
+//   const tax_total = data.Products.reduce((sum,item,index)=>{
+//     return sum + 10 * data.Products[index].Count
+//   },0).toFixed(2);
+
+//   const shipping = (10).toFixed(2);
+//   const handling = (10).toFixed(2);
+//   const discount = (10).toFixed(2);
+ // const total =(parseFloat(productsPrice) + parseFloat(tax_total) + parseFloat(handling) + parseFloat(shipping) - parseFloat(discount)).toFixed(2);
+  const total = parseFloat(productsPrice).toFixed(2)
     return {
         "intent": "CAPTURE",
-        "application_context": {
-            "return_url": "https://www.success.com",
-            "cancel_url": "https://www.fail.com",
-            "brand_name": "EXAMPLE INC",
-            "locale": "en-US",
-            "landing_page": "BILLING",
-            "shipping_preference": "SET_PROVIDED_ADDRESS",
-            "user_action": "CONTINUE"
-        },
+        // "application_context": {
+        //     "return_url": "https://www.success.com",
+        //     "cancel_url": "https://www.fail.com",
+        //     "brand_name": "EXAMPLE INC",
+        //     "locale": "en-US",
+        //     "landing_page": "BILLING",
+        //     "shipping_preference": "SET_PROVIDED_ADDRESS",
+        //     "user_action": "CONTINUE"
+        // },
         "purchase_units": [
             {
-                "reference_id": "PUHF",
-                "description": "Sporting Goods",
-                "custom_id": "CUST-HighFashions",
-                "soft_descriptor": "HighFashions",
+                // "reference_id": "PUHF",
+                // "description": "Sporting Goods",
+                // "custom_id": "CUST-HighFashions",
+                // "soft_descriptor": "HighFashions",
                 "amount": {
                     "currency_code": "USD",
                     "value":total,
@@ -124,25 +128,25 @@ const buildRequestBody = async (data:IOrderData)=> {
                             "currency_code": "USD",
                             "value": productsPrice
                         },
-                        "shipping": {
-                            "currency_code": "USD",
-                            "value": shipping
-                        },
-                        "handling": {
-                            "currency_code": "USD",
-                            "value": handling
-                        },
-                        "tax_total": {
-                            "currency_code": "USD",
-                            "value":tax_total
-                        },
-                        "discount": {
-                            "currency_code": "USD",
-                            "value": discount
-                        }
+                        // "shipping": {
+                        //     "currency_code": "USD",
+                        //     "value": shipping
+                        // },
+                        // "handling": {
+                        //     "currency_code": "USD",
+                        //     "value": handling
+                        // },
+                        // "tax_total": {
+                        //     "currency_code": "USD",
+                        //     "value":tax_total
+                        // },
+                        // "discount": {
+                        //     "currency_code": "USD",
+                        //     "value": discount
+                        // }
                     }
                 },
-                "items": mapped ,
+                "items": items ,
                 "shipping": {
                     "method": "United States Postal Service",
                     "name": {
@@ -150,9 +154,9 @@ const buildRequestBody = async (data:IOrderData)=> {
                     },
                     "address": {
                         "address_line_1": "123 Townsend St",
-                        "address_line_2": "Floor 6",
+                        //"address_line_2": "Floor 6",
                         "admin_area_2": "San Francisco",
-                        "admin_area_1": "CA",
+                        //"admin_area_1": "CA",
                         "postal_code": "94107",
                         "country_code": "US"
                     }
@@ -169,9 +173,15 @@ const buildRequestBody = async (data:IOrderData)=> {
  */
 async function createOrder(data:IOrderData,debug=false) {
     try {
+
+        let body = await buildRequestBody(data)
+        if(Array.isArray(body)){
+            return body;
+        }
+
         const request = new checkoutNodeJssdk.orders.OrdersCreateRequest();
         request.headers["prefer"] = "return=representation";
-        request.requestBody(await buildRequestBody(data));
+        request.requestBody(body);
         const response = await paypalClient.client().execute(request);
         if (debug){
             console.log("Status Code: " + response.statusCode);
@@ -207,11 +217,11 @@ async function createOrder(data:IOrderData,debug=false) {
 
  async function captureOrder(data:any, debug=false) {
     try {
-        console.log('?????????');
         const request = new checkoutNodeJssdk.orders.OrdersCaptureRequest(data.data.orderID);
         request.requestBody({});
         const response = await paypalClient.client().execute(request);
-        if (debug){
+        console.log(response);
+        if (true){
             console.log("Status Code: " + response.statusCode);
             console.log("Status: " + response.result.status);
             console.log("Order ID: " + response.result.id);
@@ -232,6 +242,17 @@ async function createOrder(data:IOrderData,debug=false) {
             // To toggle print the whole body comment/uncomment the below line
             console.log(JSON.stringify(response.result, null, 4));
         }
+
+        if(response.result.status == 'COMPLETED'){
+            //find order with this id and this gross
+            //update order state
+            let gross = response.result.purchase_units[0].payments.captures[0].seller_receivable_breakdown.gross_amount.value
+            let UserID =data.UserID
+            OrderModel.updateOne({"UserID":UserID,"Payment.Status":PaymentStatus.Pending,"Payment.Method":PaymentMethod.PayPal,"Gross":gross},{"Payment.Status":PaymentStatus.Paid}).exec();
+        }else{
+            //revert state
+        }
+
         return response;
     }
     catch (e) {
@@ -239,6 +260,10 @@ async function createOrder(data:IOrderData,debug=false) {
         console.log('paypal service capture');
     }
 }
+
+
+
+
 
 
 

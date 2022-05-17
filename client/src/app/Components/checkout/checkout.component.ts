@@ -1,4 +1,8 @@
 import { Component,  ElementRef,  OnInit, ViewChild } from '@angular/core';
+import { ICartView } from 'src/app/Interfaces/ICartView';
+import { IOrderData } from 'src/app/Interfaces/IOrder';
+import { AuthService } from 'src/app/Services/auth.service';
+import { CartService } from 'src/app/Services/cart.service';
 
 declare let paypal:any;
 
@@ -9,56 +13,47 @@ declare let paypal:any;
 })
 export class CheckoutComponent implements OnInit {
   @ViewChild('paypal',{static:true}) paypalElement! :ElementRef;
-  constructor() { 
-    
+  constructor(private cartService:CartService,private auth:AuthService) { 
+    this.cart = this.cartService.getCart();
   }
-  
+  products:any;
+  cart:ICartView;
+
+CheckOut(){
+
+  let orderData :IOrderData = {
+    UserID:this.auth.getUserId(),
+    Products:this.products,
+    Address:'ddd',
+    Method:1
+  }
+   fetch("http://localhost:3000/api/order/create", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(orderData),
+        })
+          .then((res) => {
+            console.log(res)
+        }).catch((err)=>{
+          console.log(err)
+        })
+}
+
 
   ngOnInit(): void {
-    var orderData = {
-      UserID:"id",
-      Products: [
-        { ID: "626c8e6db4573ed088c213d9", Count: 3 },
-        { ID: "626c8e6db4573ed088c213da", Count: 5 },
-      ]
-    };
+    this.products = this.cart.Products.map(p=>{
+      return {ID:p.product._id,Count:p.Count}
+    })
+    let UserID = this.auth.getUserId()
+    let orderData:IOrderData={
+      UserID:UserID,
+      Products:this.products,
+      Address:'ddd',
+      Method:0
+    }
   
-  //   paypal
-  //   .Buttons({
-  //       createOrder: () => {
-  //         fetch("http://localhost:3000/api/order/create", {
-  //         method: "POST",
-  //         headers: {
-  //           "content-type": "application/json",
-  //         },
-  //         body: JSON.stringify(orderData),
-  //       })
-  //         .then((res) => {
-  //           if (res.ok) return res.json();
-  //           return res.json().then((json) => Promise.reject(json));
-  //         })
-  //         .then(({ id }) => {
-  //           return id;
-  //         })
-  //         .catch((e) => {
-  //           console.log(e.error);
-  //         });
-  //       },
-  //       onApprove: async (data:any) => {
-  //         return fetch('http://localhost:3000/api/order/capture',{method:'POST',headers:{
-  //           "content-type": "application/json"},
-  //           body:JSON.stringify({paymentID: data.paymentID,payerID:data.payerID})
-  //         ,})
-  //           .then(function(res) {
-  //             alert(res);
-  //           });
-  //       },
-  //       onError: (err: any) => {
-  //         console.log(err);
-  //       },
-        
-  //     })
-  //     .render(this.paypalElement.nativeElement);
 
   paypal.Button.render(
     {
@@ -75,8 +70,11 @@ export class CheckoutComponent implements OnInit {
           body: JSON.stringify(orderData),
         })
           .then((res) => {
+            console.log(res);
             if (res.ok) return res.json();
-            return res.json().then((json) => Promise.reject(json));
+            return res.json().then((json) => {
+              alert(JSON.stringify(json));
+              Promise.reject(json)});
           })
           .then(({ id }) => {
             return id;
@@ -85,27 +83,49 @@ export class CheckoutComponent implements OnInit {
             console.log(e.error);
           });
       },
-      // Execute the payment:
-      // 1. Add an onAuthorize callback
-      onAuthorize: function (data:any) {
+
+
+      onAuthorize: async function (data:any,actions:any) {
         // 2. Make a request to your server
         return fetch("http://localhost:3000/api/order/capture", {method:'POST',headers:{
                      "content-type": "application/json"},
-                    body:JSON.stringify({paymentID: data.paymentID,payerID:data.payerID,data})
+                    body:JSON.stringify({UserID:UserID,data})
                   ,})
                     .then(function(res) {
-                      alert(res);
+                      console.log(res);
                     });
       },
+      // onApprove: (data:any, actions:any) => {
+      //   return actions.order.capture().then(function(orderData:any) {
+      //     // Successful capture! For dev/demo purposes:
+      //     console.log(data)
+      //     console.log(actions)
+      //     console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+      //     const transaction = orderData.purchase_units[0].payments.captures[0];
+      //     alert(`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for all available details`);
+
+
+      //   });
+      // },
       style: {
         color: "gold",
         shape: "rect",
-        layout: "vertical",
-      },
+        //layout: "vertical",
+        size:"responsive"
+      },commit: true,
     },
     "#paypal-button"
   );
 
 
+  }
+
+
+  calcCartTotal(): number {
+    let cartTotal = 0;
+    for (let product of this.cart.Products) {
+      cartTotal += product.Count * product.product.price;
+    }
+    return cartTotal;
   }
 }

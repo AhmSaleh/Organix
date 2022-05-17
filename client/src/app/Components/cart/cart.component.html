@@ -13,13 +13,15 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let product of Products; let itemIndex = index">
+              <tr
+                *ngFor="let product of Products.Products; let itemIndex = index"
+              >
                 <td class="shoping__cart__item">
                   <img src="assets/img/cart/cart-1.jpg" alt="" />
                   <h5>{{ product.product.name }}</h5>
                 </td>
                 <td class="shoping__cart__price">
-                  EGP {{ product.product.price }}
+                  EGP {{ product.product.price.toFixed(2) }}
                 </td>
                 <td class="shoping__cart__quantity">
                   <div class="quantity">
@@ -27,7 +29,7 @@
                       <span
                         [attr.disabled]="product.Count <= 1"
                         class="dec qtybtn"
-                        (click)="dec(itemIndex)"
+                        (click)="dec(product.product)"
                         >-</span
                       >
                       <input disabled type="text" [(ngModel)]="product.Count" />
@@ -37,19 +39,19 @@
                           product.product.availableInventory
                         "
                         class="inc qtybtn"
-                        (click)="inc(itemIndex)"
+                        (click)="inc(product.product)"
                         >+</span
                       >
                     </div>
                   </div>
                 </td>
                 <td class="shoping__cart__total">
-                  EGP {{ product.product.price * product.Count }}
+                  EGP {{ (product.product.price * product.Count).toFixed(2) }}
                 </td>
                 <td class="shoping__cart__item__close">
                   <span
                     class="icon_close"
-                    (click)="removeItem(itemIndex)"
+                    (click)="removeItem(product.product)"
                   ></span>
                 </td>
               </tr>
@@ -69,7 +71,7 @@
           <h5>Cart Total</h5>
           <ul>
             <li>
-              Total <span>EGP {{ calcCartTotal() }}</span>
+              Total <span>EGP {{ calcCartTotal().toFixed(2) }}</span>
             </li>
           </ul>
           <a href="/checkout" class="primary-btn">PROCEED TO CHECKOUT</a>

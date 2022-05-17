@@ -4,11 +4,12 @@ import envconf from "../envconf";
 import UserModel, { IUser, RoleEnum } from "../model/UserModel";
 import { IRegesterData } from "../Utils/SchemaRegester";
 import fs from "fs";
+import CartService from "./CartService";
 
 class UserService {
   async createUser(user: IRegesterData) {
     const hash = await bcrypt.hash(user.password, envconf.SaltRounds);
-    return await mongoose.model<IUser>("User").create({
+    let newUser = await mongoose.model<IUser>("User").create({
       email: user.email,
       hash: hash,
       name: user.name,
@@ -17,6 +18,11 @@ class UserService {
       img: user.img,
       addresses: user.addresses,
     });
+
+
+    CartService.addCart(newUser._id.toString());
+
+    return newUser;
   }
 
   async getUserByEmail(email: string) {

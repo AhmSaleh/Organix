@@ -1,0 +1,40 @@
+<h2 mat-dialog-title>status</h2>
+
+<form mat-dialog-content [formGroup]="form">
+  <!-- <mat-radio-group formControlName="status"> -->
+  <!-- <mat-radio-button value="0">Pending</mat-radio-button>
+
+    <br />
+    <mat-radio-button value="1">Accepted</mat-radio-button>
+    <br />
+    <mat-radio-button value="2">Shipped</mat-radio-button>
+    <br />
+    <mat-radio-button value="3">Delivered</mat-radio-button>
+    <br />
+    <mat-radio-button value="4">Canceled</mat-radio-button> -->
+
+  <input type="radio" formControlName="status" id="Pending" value="0" />
+  <label for="Pending"> Pending</label>
+  <br />
+  <input type="radio" formControlName="status" id="Accepted" value="1" />
+  <label for="Accepted"> Accepted</label>
+  <br />
+
+  <input type="radio" formControlName="status" id="Shipped" value="2" />
+  <label for="Shipped"> Shipped</label>
+  <br />
+
+  <input type="radio" formControlName="status" id="Delivered" value="3" />
+  <label for="Delivered"> Delivered</label>
+  <br />
+
+  <input type="radio" formControlName="status" id="Canceled" value="4" />
+  <label for="Canceled"> Canceled</label>
+  <br />
+  <!-- </mat-radio-group> -->
+</form>
+
+<mat-dialog-actions>
+  <button class="btn btn-light" (click)="close()">Close</button>
+  <button class="btn btn-success" (click)="save()">Save</button>
+</mat-dialog-actions>

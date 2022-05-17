@@ -10,11 +10,6 @@ import { CartService } from 'src/app/Services/cart.service';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent {
-  val: number = 0;
-  cart: ICartView | undefined;
-  constructor(private cartService: CartService, private auth: AuthService) {
-    this.cartService.getCart((data: any) => {
-      this.cart = data;
-    });
+  constructor(public cartService: CartService, private auth: AuthService) {
   }
 }
