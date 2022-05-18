@@ -17,7 +17,12 @@
                 *ngFor="let product of Products.Products; let itemIndex = index"
               >
                 <td class="shoping__cart__item">
-                  <img src="assets/img/cart/cart-1.jpg" alt="" />
+                  <img
+                    src="{{ product.product.imgURL }}"
+                    height="100px"
+                    width="100px"
+                    alt=""
+                  />
                   <h5>{{ product.product.name }}</h5>
                 </td>
                 <td class="shoping__cart__price">
