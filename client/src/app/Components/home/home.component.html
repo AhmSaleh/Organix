@@ -6,16 +6,25 @@
 <app-hero></app-hero>
 
 <!-- Categories Section Begin -->
+<ngb-carousel [interval]="5000" *ngIf="images" [showNavigationArrows]="showNavigationArrows" [showNavigationIndicators]="showNavigationIndicators">
+  <ng-template ngbSlide *ngFor="let image of images">
+    <div class="picsum-img-wrapper">
+      <img [src]="image" alt="Random slide">
+    </div>
+    <div class="carousel-caption">
+      <h3>No mouse navigation</h3>
+      <p>This carousel hides navigation arrows and indicators.</p>
+    </div>
+  </ng-template>
+</ngb-carousel>
+
 <section class="categories">
   <div class="container">
     <div class="row">
       <div class="categories__slider owl-carousel">
         <div class="col-lg-3">
-          <div
-            class="categories__item set-bg"
-            style="background-image: url('/assets/img/categories/cat-1.jpg')"
-          >
-            <h5><a href="#">Fresh Fruit</a></h5>
+          <div class="categories__item set-bg" data-setbg="/assets/img/categories/cat-1.jpg">
+              <h5><a href="#">Fresh Fruit</a></h5>
           </div>
         </div>
         <div class="col-lg-3">
@@ -45,7 +54,7 @@
         <div class="col-lg-3">
           <div
             class="categories__item set-bg"
-            data-setbg="img/categories/cat-5.jpg"
+            data-setbg="/assets/img/categories/cat-5.jpg"
           >
             <h5><a href="#">drink fruits</a></h5>
           </div>
@@ -299,7 +308,7 @@
 <!-- Banner End -->
 
 <!-- Latest Product Section Begin -->
-<section class="latest-product spad">
+<!-- <section class="latest-product spad">
   <div class="container">
     <div class="row">
       <div class="col-lg-4 col-md-6">
@@ -499,11 +508,11 @@
       </div>
     </div>
   </div>
-</section>
+</section> -->
 <!-- Latest Product Section End -->
 
 <!-- Blog Section Begin -->
-<section class="from-blog spad">
+<!-- <section class="from-blog spad">
   <div class="container">
     <div class="row">
       <div class="col-lg-12">
@@ -569,5 +578,5 @@
       </div>
     </div>
   </div>
-</section>
+</section> -->
 <!-- Blog Section End -->

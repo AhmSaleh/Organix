@@ -58,7 +58,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     SearchComponent,
     AboutComponent,
     UsersListComponent,
-    UsersListFilterPipe,
+    UsersListFilterPipe
   ],
   imports: [
     BrowserAnimationsModule,
