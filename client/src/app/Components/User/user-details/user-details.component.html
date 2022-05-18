@@ -10,58 +10,61 @@
     <div class="row">
       <div class="col-lg-12">
         <div class="contact__form__title">
-          <img
-            *ngIf="!img"
-            class="rounded-circle"
-            width="200px"
-            src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
-          />
-          <img *ngIf="img" class="rounded-circle" width="200px" [src]="img" />
+          <div class="image-upload">
+            <label for="file-input">
+              <img *ngIf="!img" class="rounded-circle" width="200px"
+                src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg" />
+              <img *ngIf="img" class="rounded-circle" width="200px" [src]="img" />
+            </label>
+
+            <input id="file-input" type="file" (change)="imageSelected($event)" />
+          </div>
         </div>
       </div>
     </div>
-    <form action="#">
+    <form>
       <div class="row">
         <div class="col-lg-6">
           <h5>First Name</h5>
-          <input type="text" name="first-name" [value]="this.User.name.first" />
+          <input type="text" name="first-name" [(ngModel)]="this.User.name.first" />
         </div>
         <div class="col-lg-6">
           <h5>Last Name</h5>
-          <input type="text" name="last-name" [value]="this.User.name.last" />
+          <input type="text" name="last-name" [(ngModel)]="this.User.name.last" />
         </div>
       </div>
       <div class="row">
         <div class="col-lg-6">
           <h5>Email</h5>
-          <input type="text" name="email" [value]="this.User.email" />
+          <input type="text" disabled name="email" [(ngModel)]="this.User.email" />
         </div>
         <div class="col-lg-6">
           <h5>Phone Number</h5>
-          <input name="phone" [value]="this.User.phone" />
+          <input name="phone" [(ngModel)]="this.User.phone" />
         </div>
       </div>
       <div class="row">
         <div class="col-lg-6 mx-auto">
           <h5>Role</h5>
-          <input name="role" disabled [value]="this.User.role" />
+          <input name="role" disabled [(ngModel)]="this.User.role" />
         </div>
       </div>
       <div class="row">
         <div class="col-lg-12">
-          <div
-            *ngFor="
+          <div *ngFor="
               let address of this.User.addresses;
-              let indexOfelement = index
-            "
-          >
+              let indexOfelement = index;
+              trackBy: trackByFn
+            ">
             <h6 class="mb-2">Address {{ indexOfelement + 1 }}</h6>
-            <input name="address" [value]="address" />
+            <input name="{{ indexOfelement }}" [(ngModel)]="this.User.addresses[indexOfelement]" />
           </div>
         </div>
       </div>
       <div class="text-center">
-        <button type="submit" class="site-btn text-center">Update</button>
+        <button type="button" class="site-btn text-center" (click)="onSubmit()">
+          Update
+        </button>
       </div>
     </form>
   </div>

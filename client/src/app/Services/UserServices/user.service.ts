@@ -34,6 +34,17 @@ export class UserService {
       .post<IRegesterData>(this.UserUrl + '/register', user)
       .pipe(catchError(this.handleError));
   }
+  addUserTemp(user: any): Observable<any> {
+    return this.http
+      .post<any>(this.UserUrl + '/register', user)
+      .pipe(catchError(this.handleError));
+  }
+
+  addUserImage(formData: FormData): Observable<FormData> {
+    return this.http
+      .post<FormData>(this.UserUrl + '/register-pfp', formData)
+      .pipe(catchError(this.handleError));
+  }
 
   loginUser(user: ILoginData): Observable<any> {
     return this.http
@@ -70,8 +81,18 @@ export class UserService {
       .pipe(catchError(this.handleError));
   }
 
-  getAllUsers(): Observable<IUser[]>
-  {
+  updateUser(user: any): Observable<any> {
+    const httpOptions: Object = {
+      headers: new HttpHeaders({
+        'x-auth-token': this.auth.getToken(),
+      }),
+    };
+    return this.http
+      .patch(this.UserUrl + '/' + this.auth.getEmail(), user, httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
+  getAllUsers(): Observable<IUser[]> {
     return this.http
       .get<IUser[]>(this.UserUrl + '/all', {
         headers: {
@@ -95,7 +116,7 @@ export class UserService {
     }
     // Return an observable with a user-facing error message.
     return throwError(
-      () => new Error('Something bad happened; please try again later.')
+      () => error
     );
   }
 }

@@ -24,6 +24,12 @@ class ProductService {
     );
   }
 
+  async getProductsByMerchent(merchentID: string | undefined) {
+    return await ProductModel.find({
+      merchantId: merchentID,
+    });
+  }
+
   async getProductById(_id: string) {
     return await ProductModel.findById(_id);
   }
@@ -37,6 +43,23 @@ class ProductService {
       {},
       { limit: +envconf.ProductsLimit, skip: skip }
     );
+  }
+
+  async getProductBySearch(search: string, page: any = undefined) {
+    if (!page) page = 1;
+    let skip = (parseInt(page) - 1) * +envconf.ProductsLimit;
+    let regex = new RegExp(search, "i");
+    const products = await ProductModel.find(
+      {
+        $text: {
+          $search: search,
+        },
+      },
+      { score: { $meta: "textScore" } },
+      { limit: +envconf.ProductsLimit, skip: skip }
+    ).sort({ score: { $meta: "textScore" } });
+
+    return products;
   }
 
   async updateProduct(_id: string, product: Partial<IProduct>) {
@@ -72,8 +95,22 @@ class ProductService {
       { categoryName: _category },
       {},
       { limit: +envconf.ProductsLimit, skip: skip }
-    );
+    );}
+  async updateBulk(arr:any){
+    return await ProductModel.bulkWrite(arr);
   }
+
+  async getProductList(ids:string[]){
+    return await ProductModel.find().where('_id').in(ids);
+  }
+
+
+
+  async getProductByMerchant(id:string){
+    return await ProductModel.find({"merchantId":id});
+  }
+  
+
 
   async getProductByCategory(categoryName: string, page: any = undefined) {
     if (!page) return await ProductModel.find({});

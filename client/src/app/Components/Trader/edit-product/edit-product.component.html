@@ -1,0 +1,157 @@
+<section class="jumbotron my-form-color mx-auto container-img vertical-center col-lg-7 col-md-9 col-sm-11 p-0 pb-3">
+  <h1 class="text-center text-black bold" style="font-size: 60px;">Add Product</h1>
+  <div class="container col-lg-8 col-md-9 col-sm-10">
+    <form [formGroup]="myForm!">
+      <div class="form-group mb-0">
+        <div
+          class="embed-responsive embed-responsive-1by1 d-flex justify-content-center align-items-center m-auto col-xl-5 col-lg-6 col-md-8 col-sm-10 col-10">
+          <label for="edit-product-imgURL" style="cursor: pointer;">
+            <img *ngIf="!oldImg" class="rounded-circle"
+              src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg" />
+            <img *ngIf="oldImg" class="rounded-circle embed-responsive-item" [src]="oldImg" />
+          </label>
+          <input id="edit-product-imgURL" type="file" (change)="selectImage($event)" />
+        </div>
+      </div>
+
+      <div class="form-group mb-0">
+        <label for="edit-product-name">Name</label>
+        <input type="text" id="edit-product-name"
+          class="form-control {{validationClass('name')}} {{opacityClass('name')}}" formControlName="name"
+          placeholder="Name" />
+        <span
+          [ngClass]="{'visible': (validationClass('name') == invalidClass), 'invisible' :(validationClass('name') != invalidClass)}">
+          <p class="form-text form-control-feedback m-0" style="color: #dc3545;">
+            Name is required.</p>
+        </span>
+      </div>
+
+      <div class="form-group mb-0">
+        <label for="edit-product-price">Price</label>
+        <input type="number" id="edit-product-name"
+          class="form-control  {{validationClass('price')}} {{opacityClass('price')}}"
+          [ngClass]="{'mb-4':(validationClass('price') == 'validClass')}" formControlName="price" placeholder="Price" />
+        <span
+          [ngClass]="{'visible': (validationClass('price') == invalidClass), 'invisible' :(validationClass('price') != invalidClass)}">
+          <p class="form-text form-control-feedback m-0" style="color: #dc3545;"
+            *ngIf="errorName('price') == 'required';else elsePrice">
+            Price is required.</p>
+          <ng-template #elsePrice>
+            <p class="form-text form-control-feedback m-0" style="color: #dc3545;">Minimum value for Price is 0.</p>
+          </ng-template>
+        </span>
+      </div>
+
+      <div class="form-group mb-0">
+        <label for="edit-product-short-description">Short Description</label>
+        <input type="text" id="edit-product-short-description"
+          class="form-control {{validationClass('shortDescription')}} {{opacityClass('shortDescription')}}"
+          placeholder="Short Description" formControlName="shortDescription" maxlength="70" />
+        <span
+          [ngClass]="{'visible': (validationClass('shortDescription') == invalidClass), 'invisible' :(validationClass('shortDescription') != invalidClass)}">
+          <p class="form-text form-control-feedback m-0" style="color: #dc3545;">
+            Short Description is required.</p>
+        </span>
+      </div>
+
+
+      <div class="form-group mb-0">
+        <label for="edit-product-weight">Weight</label>
+        <div class="input-group">
+          <input type="number" id="edit-product-weight"
+            class="form-control {{validationClass('weight')}} {{opacityClass('weight')}}" style="display: inline;"
+            formControlName="weight" placeholder="Weight in KG"
+            [ngClass]="{'mb-4':(validationClass('availableInventory') == 'validClass')}" />
+          <div class="input-group-append">
+            <div class="input-group-text">KG</div>
+          </div>
+        </div>
+        <span
+          [ngClass]="{'visible': (validationClass('weight') == invalidClass), 'invisible' :(validationClass('weight') != invalidClass)}">
+          <p class="form-text form-control-feedback m-0" style="color: #dc3545;"
+            *ngIf="errorName('weight') == 'required'; else elseWeight">
+            Weight is required.</p>
+          <ng-template #elseWeight>
+            <p class="form-text form-control-feedback m-0" style="color: #dc3545;">Minimum value for Weight
+              is 0 KG.</p>
+          </ng-template>
+        </span>
+      </div>
+
+      <div class="form-group mb-0">
+        <label for="edit-product-available-inventory">Available Inventory</label>
+        <input type="number" id="edit-product-available-inventory"
+          class="form-control {{validationClass('availableInventory')}} {{opacityClass('availableInventory')}}"
+          formControlName="availableInventory" placeholder="Available Inventory"
+          [ngClass]="{'mb-4':(validationClass('availableInventory') == 'validClass')}" />
+        <span
+          [ngClass]="{'visible': (validationClass('availableInventory') == invalidClass), 'invisible' :(validationClass('availableInventory') != invalidClass)}">
+          <p class="form-text form-control-feedback m-0" style="color: #dc3545;"
+            *ngIf="errorName('availableInventory') == 'required'; else elseAvail">
+            Available Inventory is required.</p>
+          <ng-template #elseAvail>
+            <p class="form-text form-control-feedback m-0" style="color: #dc3545;">Minimum value for Available Inventory
+              is 0.</p>
+          </ng-template>
+        </span>
+      </div>
+
+      <div class="form-group mb-0">
+        <label for="edit-product-long-Description">Long Description</label>
+        <textarea id="edit-product-long-Description" formControlName="longDescription"
+          class="form-control {{validationClass('longDescription')}} {{opacityClass('longDescription')}}"
+          placeholder="Long Description"></textarea>
+        <span
+          [ngClass]="{'visible': (validationClass('longDescription') == invalidClass), 'invisible' :(validationClass('longDescription') != invalidClass)}">
+          <p class="form-text form-control-feedback m-0" style="color: #dc3545;">
+            Long Description is required.</p>
+        </span>
+      </div>
+
+      <div class="form-group mb-0">
+        <label for="edit-product-category">Category</label>
+        <select class="form-control form-select {{validationClass('categoryName')}} {{opacityClass('categoryName')}}"
+          formControlName="categoryName" id="edit-product-category" style="cursor: pointer;">
+          <option value="" hidden selected>Please select a category</option>
+          <option *ngFor="let cat of categories" [value]="cat._id">{{cat.name}}</option>
+        </select>
+        <span
+          [ngClass]="{'visible': (validationClass('categoryName') == invalidClass), 'invisible' :(validationClass('categoryName') != invalidClass)}">
+          <p class="form-text form-control-feedback m-0" style="color: #dc3545;">
+            Category is required.</p>
+        </span>
+      </div>
+
+      <div class="form-group mb-0">
+        <label for="edit-product-product-information">Product Information</label>
+        <input type="text" id="edit-product-product-information"
+          class="form-control {{validationClass('productInformation')}} {{opacityClass('productInformation')}}"
+          formControlName="productInformation" placeholder="Product Information" />
+        <span
+          [ngClass]="{'visible': (validationClass('productInformation') == invalidClass), 'invisible' :(validationClass('productInformation') != invalidClass)}">
+          <p class="form-text form-control-feedback m-0" style="color: #dc3545;">
+            Product Information is required.</p>
+        </span>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <button type="submit" class="site-btn mx-1 col-xl-3 col-lg-4 col-md-5 col-sm-6 col-6" (click)="onSubmit()">edit
+          Product</button>
+        <button type="reset" class="site-btn btn-secondary mx-1 col-xl-3 col-lg-4 col-md-5 col-sm-6 col-6"
+          (click)="onReset()" style="background-color:rgb(108, 117, 125) ;">Clear</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- <pre>{{myForm.controls['name'].valid|json}}</pre>
+  <pre>{{myForm.controls['weight'].valid|json}}</pre>
+  <pre>{{myForm.controls['categoryName'].valid|json}}</pre>
+  <pre>{{myForm.controls['longDescription'].valid|json}}</pre>
+  <pre>{{myForm.controls['availableInventory'].valid|json}}</pre>
+  <pre>{{myForm.controls['shortDescription'].valid|json}}</pre>
+  <pre>{{myForm.controls['img'].valid|json}}</pre>
+  <pre>{{myForm.controls['productInformation'].valid|json}}</pre>
+  <pre>{{myForm.controls['price'].valid|json}}</pre>
+  
+  <pre>{{myForm.valid|json}}</pre> -->

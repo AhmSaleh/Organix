@@ -87,7 +87,6 @@ async function addDefualtAdmin() {
     addresses: [],
   };
   await UserService.createUser(admin);
-  console.log("Default admin added");
 }
 
 async function fillIfEmptyUsers(count: number, role: RoleEnum) {
@@ -103,7 +102,7 @@ async function fillIfEmptyUsers(count: number, role: RoleEnum) {
           last: randFirstName(),
         },
         email: randEmail(),
-        password: "1234",
+        password: "12345678",
         role: role,
         phone: "01112020153",
         img: "imgSrc",
@@ -127,6 +126,11 @@ async function fillAll() {
   // default admin
   if (!(await UserService.getUserByEmail(envconf.adminEmail))) {
     await addDefualtAdmin();
+    console.log("Default admin added");
+  } else {
+    //update the password
+    await UserService.updateUserPassword(envconf.adminEmail, envconf.adminPassword);
+    console.log("Admin password updated");
   }
   //dummy data
   if (process.env.NODE_ENV != "production") {
