@@ -23,13 +23,9 @@ class UserController {
   static getProfile = getProfile;
   static getMerchant = getMerchant;
   static getPFP = getPFP;
+  static getAddresses = getAddresses;
   static UPDATEUserProfileByEmail = UPDATEUserProfileByEmail;
-  // static postRegisterPFP = registerPFP;
 }
-
-// async function registerPFP(req: Request, res: Response) {
-//   //somelogic
-// }
 
 async function postLogin(r: Request, res: Response) {
   let req = r as RequestWithSchema<ILoginData>;
@@ -80,11 +76,21 @@ async function getProfile(r: any, res: Response) {
   let req = r as RequestWithAuth;
 
   const user = await UserService.getUserByEmail(req.params.email);
-
   if (
     req.tockenInfo.role == RoleEnum.admin ||
     user?.id == req.tockenInfo.UserId
   ) {
+    res.send(user);
+  } else {
+    res.status(403).send("Access Denied");
+  }
+}
+
+async function getAddresses(r: any, res: Response) {
+  let req = r as RequestWithAuth;
+
+  const user = await UserService.getAddressesByEmail(req.params.email);
+  if (user?.id == req.tockenInfo.UserId) {
     res.send(user);
   } else {
     res.status(403).send("Access Denied");
