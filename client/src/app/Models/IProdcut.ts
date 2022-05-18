@@ -12,6 +12,7 @@ export interface IProduct {
     longDescription: string;
     productInformation: string;
     merchantId: string;
+    categoryName: string;
   }
 
 export interface productFetchParamters {

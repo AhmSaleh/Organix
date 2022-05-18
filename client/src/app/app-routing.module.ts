@@ -14,6 +14,13 @@ import { AuthGuard } from './core/guards/auth.guard';
 import { AddProductComponent } from './Components/Trader/add-product/add-product.component';
 import { AboutComponent } from './Components/about/about.component';
 import { UsersListComponent } from './Components/User/users-list/users-list.component';
+import { EditProductComponent } from './Components/Trader/edit-product/edit-product.component';
+import { DeleteProductComponent } from './Components/Trader/delete-product/delete-product.component';
+import { MyproductsComponent } from './Components/Trader/myproducts/myproducts.component';
+import { ViewProductDetailsComponent } from './Components/Trader/view-product-details/view-product-details.component';
+import { CheckoutComponent } from './Components/checkout/checkout.component';
+import { CartComponent } from './Components/cart/cart.component';
+import { OrdersComponent } from './Components/orders/orders.component';
 
 const routes: Routes = [
   {
@@ -28,9 +35,20 @@ const routes: Routes = [
       { path: 'shop', component: ShopComponent },
       { path: 'product/:id', component: ProductDetailsComponent },
       { path: 'add-product', component: AddProductComponent },
-      { path: 'about-us', component: AboutComponent},
-      { path: 'users-list', component: UsersListComponent}
+      { path: 'about-us', component: AboutComponent },
+      { path: 'users-list', component: UsersListComponent },
+      { path: 'edit-product', component: EditProductComponent },
+      { path: 'delete-product/:id', component: DeleteProductComponent },
+      { path: 'myproducts', component: MyproductsComponent },
+      { path: 'view-product', component: ViewProductDetailsComponent },
       // { path: 'cart', component: CartComponent }
+      { path: 'cart', component: CartComponent },
+      {
+        path: 'checkout',
+        component: CheckoutComponent,
+        canActivate: [AuthGuard],
+      },
+      { path: 'orders', component: OrdersComponent, canActivate: [AuthGuard] },
     ],
   },
   { path: '**', component: NotFoundComponentComponent },

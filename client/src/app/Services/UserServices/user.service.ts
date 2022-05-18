@@ -34,6 +34,17 @@ export class UserService {
       .post<IRegesterData>(this.UserUrl + '/register', user)
       .pipe(catchError(this.handleError));
   }
+  addUserTemp(user: any): Observable<any> {
+    return this.http
+      .post<any>(this.UserUrl + '/register', user)
+      .pipe(catchError(this.handleError));
+  }
+
+  addUserImage(formData: FormData): Observable<FormData> {
+    return this.http
+      .post<FormData>(this.UserUrl + '/register-pfp', formData)
+      .pipe(catchError(this.handleError));
+  }
 
   loginUser(user: ILoginData): Observable<any> {
     return this.http

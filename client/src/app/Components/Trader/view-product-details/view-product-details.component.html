@@ -1,0 +1,95 @@
+<section class="jumbotron my-form-color mx-auto container-img vertical-center col-lg-7 col-md-9 col-sm-11 p-0 pb-3">
+  <h1 class="text-center text-black bold" style="font-size: 60px;">Add Product</h1>
+  <div class="container col-lg-8 col-md-9 col-sm-10">
+    <form [formGroup]="myForm">
+      <div class="form-group mb-0">
+        <div
+          class="embed-responsive embed-responsive-1by1 d-flex justify-content-center align-items-center m-auto col-xl-5 col-lg-6 col-md-8 col-sm-10 col-10">
+          <label for="view-product-imgURL" style="cursor: pointer;">
+            <img *ngIf="!img" class="rounded-circle"
+              src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg" />
+            <img *ngIf="img" class="rounded-circle embed-responsive-item" [src]="img" />
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group mb-0">
+        <label for="view-product-name">Name</label>
+        <input type="text" id="view-product-name" class="form-control" formControlName="name" placeholder="Name"
+          readonly />
+      </div>
+
+      <div class="form-group mb-0">
+        <label for="view-product-price">Price</label>
+        <input type="number" id="view-product-name" class="form-control" formControlName="price" placeholder="Price"
+          readonly />
+
+      </div>
+
+      <div class="form-group mb-0">
+        <label for="view-product-short-description">Short Description</label>
+        <input type="text" id="view-product-short-description" class="form-control" placeholder="Short Description"
+          formControlName="shortDescription" maxlength="70" readonly />
+
+      </div>
+
+
+      <div class="form-group mb-0">
+        <label for="view-product-weight">Weight</label>
+        <div class="input-group">
+          <input type="number" id="view-product-weight" class="form-control" style="display: inline;"
+            formControlName="weight" placeholder="Weight in KG" readonly />
+          <div class="input-group-append">
+            <div class="input-group-text">KG</div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="form-group mb-0">
+        <label for="view-product-available-inventory">Available Inventory</label>
+        <input type="number" id="view-product-available-inventory" class="form-control "
+          formControlName="availableInventory" placeholder="Available Inventory" readonly />
+
+      </div>
+
+      <div class="form-group mb-0">
+        <label for="view-product-long-Description">Long Description</label>
+        <textarea id="view-product-long-Description" formControlName="longDescription" class="form-control"
+          placeholder="Long Description" readonly></textarea>
+
+      </div>
+
+      <div class="form-group mb-0">
+        <label for="view-product-category">Category</label>
+        <input type="text" id="view-product-category" class="form-control" formControlName="categoryName"
+          placeholder="Category Name" readonly />
+      </div>
+
+      <div class="form-group mb-3">
+        <label for="view-product-product-information">Product Information</label>
+        <input type="text" id="view-product-product-information" class="form-control"
+          formControlName="productInformation" placeholder="Product Information" readonly />
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <button type="button" class="site-btn btn-secondary mx-1 col-xl-4 col-lg-5 col-md-6 col-sm-6 col-6"
+          (click)="onReturn()" style="background-color:rgb(108, 117, 125) ;">Return To Your Products</button>
+          <button type="button" class="site-btn btn-secondary mx-1 col-xl-4 col-lg-5 col-md-6 col-sm-6 col-6"
+          (click)="onEdit()">Edit Product</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- <pre>{{myForm.controls['name'].value|json}}</pre>
+<pre>{{myForm.controls['weight'].value|json}}</pre>
+<pre>{{myForm.controls['categoryName'].value|json}}</pre>
+<pre>{{myForm.controls['longDescription'].value|json}}</pre>
+<pre>{{myForm.controls['availableInventory'].value|json}}</pre>
+<pre>{{myForm.controls['shortDescription'].value|json}}</pre>
+<pre>{{myForm.controls['imgURL'].value|json}}</pre>
+<pre>{{myForm.controls['productInformation'].value|json}}</pre>
+<pre>{{myForm.controls['price'].value|json}}</pre>
+
+<pre>{{myForm.valid|json}}</pre> -->

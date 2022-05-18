@@ -5,8 +5,7 @@
         <div class="col-lg-6 col-md-6">
           <div class="header__top__left">
             <ul>
-              <li><i class="fa fa-envelope"></i> hello@colorlib.com</li>
-              <li>Free Shipping for all Order of $99</li>
+              <li><i class="fa fa-envelope"></i> hello@organix.com</li>
             </ul>
           </div>
         </div>
@@ -27,7 +26,12 @@
                 <li><a href="#">English</a></li>
               </ul>
             </div>
-            <div class="header__top__right__auth">
+            <div *ngIf="auth.isLoggedIn()" class="header__top__right__auth">
+              <a href="" (click)="logout()"
+                ><i class="fa fa-sign-out"></i> Logout</a
+              >
+            </div>
+            <div *ngIf="!auth.isLoggedIn()" class="header__top__right__auth">
               <a href="/login"><i class="fa fa-user"></i> Login</a>
             </div>
           </div>
@@ -38,8 +42,8 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-3">
-        <div class="header__logo" >
-          <a href="./index.html"><img src="assets/img/logo.png" alt=""/></a>
+        <div class="header__logo">
+          <a href="./index.html"><img src="assets/img/logo.png" alt="" /></a>
         </div>
       </div>
       <div class="col-lg-6">
@@ -64,15 +68,15 @@
         <div class="header__cart">
           <ul>
             <li>
-              <a href="#"><i class="fa fa-heart"></i> <span>1</span></a>
-            </li>
-            <li>
               <a routerLink="/cart"
-                ><i class="fa fa-shopping-bag"></i> <span>3</span></a
+                ><i class="fa fa-shopping-bag"></i>
+                <span>{{ cartService.getCart()?.Products?.length }}</span></a
               >
             </li>
           </ul>
-          <div class="header__cart__price">item: <span>$150.00</span></div>
+          <div class="header__cart__price">
+            Total: <span>EGP {{ cartService.calcCartTotal() }}</span>
+          </div>
         </div>
       </div>
     </div>

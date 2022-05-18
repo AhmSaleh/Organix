@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "properties": {
+    "UserID": {
+      "type": "string"
+    },
+    "Products": {
+      "type": "array",
+      "uniqueItemProperties": ["ID"],
+      "items": {
+        "type": "object",
+        "properties": {
+          "ID": { "type": "string" },
+          "Count": { "type": "number" }
+        }
+      },
+      "minItems": 1
+    },
+    "Address": { "type": "string" },
+    "Method": { "enum": [0, 1] }
+  },
+  "required": ["UserID", "Products", "Method"]
+}

@@ -1,0 +1,20 @@
+{
+  "type": "object",
+  "properties": {
+    "UserID": {
+      "type": "string"
+    },
+    "Products": {
+      "type": "array",
+      "uniqueItemProperties": ["ProductID"],
+      "items": {
+        "type": "object",
+        "properties": {
+          "ProductID": { "type": "string" },
+          "Count": { "type": "number" }
+        }
+      }
+    }
+  },
+  "required": ["UserID"]
+}

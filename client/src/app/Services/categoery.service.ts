@@ -4,14 +4,17 @@ import { Observable } from 'rxjs';
 import ICategory from '../Models/ICategory';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CategoryService {
   CategoryUrl = 'http://localhost:3000/api/category';
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  getCategories(): Observable<ICategory[]>{
-    return this.http.get<ICategory[]>(this.CategoryUrl+"/all");
+  getCategories(): Observable<ICategory[]> {
+    return this.http.get<ICategory[]>(this.CategoryUrl + '/all');
   }
 
+  getCategoryNameById(id: string) {
+    return this.http.get<ICategory>(this.CategoryUrl + '/' + id);
+  }
 }
