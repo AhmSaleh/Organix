@@ -17,6 +17,8 @@ class ProductController {
   static GETProductsByCatCount = GETProductsByCatCount;
   static GETProductByMerchent = GetProductsByMerchent;
   static GETProductImage = GETProductImage;
+  static GETProductsBySearchCount = GETProductsBySearchCount;
+
 }
 
 async function GETProductImage(req: Request, res: Response) {
@@ -94,6 +96,18 @@ async function GETProductsByCatCount(req: Request, res: Response) {
   }
 }
 
+
+async function GETProductsBySearchCount(req: Request, res: Response) {
+  try {
+    const productsCount = await ProductService.getProductBySearchCount(
+      req.params.search
+    );
+    res.send({ productsCount }).status(200);
+  } catch (err) {
+    res.status(500).send();
+  }
+}
+
 async function getProductList(req: Request, res: Response) {
   try {
     let arr: string[] = JSON.parse(req.params.list);
@@ -102,6 +116,7 @@ async function getProductList(req: Request, res: Response) {
     res.send(list).status(200);
   } catch (err) {
     res.status(404).send(err);
+
   }
 }
 

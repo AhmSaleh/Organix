@@ -25,17 +25,18 @@ export class ProductGridComponent implements OnInit {
   refreshProducts(fetchParamters: productFetchParamters) {
     //TODO create single service to accept all filters
     console.log("fetching products with filters", fetchParamters)
+
     if (fetchParamters?.category) {
-      this.productService.getProductByCategory(fetchParamters.category)
+      this.productService.getProductByCategory(fetchParamters.category,fetchParamters?.page)
         .subscribe((data) => this.fillProducts(data.products));
     }
     else if (fetchParamters?.searchTerm) {
-      this.productService.getProductBySearchTerm(fetchParamters.searchTerm)
+      this.productService.getProductBySearchTerm(fetchParamters.searchTerm,fetchParamters?.page)
         .subscribe(this.fillProducts);
     }
     else {
       // get all products
-      this.productService.getAllProducts().subscribe(this.fillProducts);
+      this.productService.getAllProducts(fetchParamters?.page).subscribe(this.fillProducts);
     }
   }
   fillProducts = (data: IProduct[]) => {

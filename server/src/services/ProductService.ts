@@ -48,12 +48,11 @@ class ProductService {
   async getProductBySearch(search: string, page: any = undefined) {
     if (!page) page = 1;
     let skip = (parseInt(page) - 1) * +envconf.ProductsLimit;
-    let regex = new RegExp(search, "i");
     const products = await ProductModel.find(
       {
         $text: {
           $search: search,
-        },
+        }
       },
       { score: { $meta: "textScore" } },
       { limit: +envconf.ProductsLimit, skip: skip }
@@ -95,21 +94,22 @@ class ProductService {
       { categoryName: _category },
       {},
       { limit: +envconf.ProductsLimit, skip: skip }
-    );}
-  async updateBulk(arr:any){
+    );
+  }
+  async updateBulk(arr: any) {
     return await ProductModel.bulkWrite(arr);
   }
 
-  async getProductList(ids:string[]){
+  async getProductList(ids: string[]) {
     return await ProductModel.find().where('_id').in(ids);
   }
 
 
 
-  async getProductByMerchant(id:string){
-    return await ProductModel.find({"merchantId":id});
+  async getProductByMerchant(id: string) {
+    return await ProductModel.find({ "merchantId": id });
   }
-  
+
 
 
   async getProductByCategory(categoryName: string, page: any = undefined) {
@@ -125,7 +125,7 @@ class ProductService {
   async getAllProductsCount() {
     const count =
       (await ProductModel.countDocuments()) / +envconf.ProductsLimit;
-    return Math.ceil(count);
+    return Math.floor(count);
   }
 
   async getProductByCategoryCount(categoryName: any) {
@@ -134,7 +134,18 @@ class ProductService {
         categoryName,
       }).countDocuments()) / +envconf.ProductsLimit;
 
-    return Math.ceil(count);
+    return Math.floor(count);
+  }
+
+  async getProductBySearchCount(search: string) {
+    const count =
+      (await ProductModel.find({
+        $text: {
+          $search: search,
+        },
+      }).countDocuments()) / +envconf.ProductsLimit;
+
+    return Math.floor(count);
   }
 }
 
