@@ -32,12 +32,6 @@ export class AuthService {
     throw new Error('No logged in user to find the role.');
   }
 
-  getUserId() {
-    if (this.isLoggedIn())
-      return JSON.parse(atob(this.getToken().split('.')[1])).UserId;
-    throw new Error('Not logged in');
-  }
-
   isAdmin() {
     if (this.isLoggedIn())
       return atob(this.getToken().split('.')[1]) === 'admin';
@@ -46,9 +40,9 @@ export class AuthService {
   }
 
   //get user id
-  getUserId(){
+  getUserId() {
     if (this.isLoggedIn())
-    return JSON.parse(atob(this.getToken().split('.')[1])).UserId;
+      return JSON.parse(atob(this.getToken().split('.')[1])).UserId;
     throw new Error('Not logged in');
   }
 }
