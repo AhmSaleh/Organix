@@ -19,7 +19,6 @@ class UserService {
       addresses: user.addresses,
     });
 
-
     CartService.addCart(newUser._id.toString());
 
     return newUser;
@@ -82,7 +81,15 @@ class UserService {
       });
     }
   }
-}
 
+  async getAddressesByEmail(email: string) {
+    return await mongoose.model<IUser>("User").findOne(
+      {
+        email: email,
+      },
+      { addresses: 1 }
+    );
+  }
+}
 
 export default new UserService();
