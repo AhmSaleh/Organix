@@ -79,4 +79,6 @@ router.patch(
   ProductController.UPDATEProductById
 );
 
+router.get("/list/:list", ProductController.GETProductList);
+
 export default router;

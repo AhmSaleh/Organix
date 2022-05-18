@@ -1,0 +1,16 @@
+GET http://localhost:3000/api/product/list/["626c8e6db4573ed088c213d9","626c8e6db4573ed088c213da"] HTTP/1.1
+
+###
+POST http://localhost:3000/api/product HTTP/1.1
+Content-Type: application/json
+{
+"name":,
+"price":,
+"shortDescription":,
+"availability":,
+"weight":,
+"longDescription":,
+"productInformation":
+}
+
+###

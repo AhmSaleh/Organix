@@ -18,6 +18,9 @@ import { EditProductComponent } from './Components/Trader/edit-product/edit-prod
 import { DeleteProductComponent } from './Components/Trader/delete-product/delete-product.component';
 import { MyproductsComponent } from './Components/Trader/myproducts/myproducts.component';
 import { ViewProductDetailsComponent } from './Components/Trader/view-product-details/view-product-details.component';
+import { CheckoutComponent } from './Components/checkout/checkout.component';
+import { CartComponent } from './Components/cart/cart.component';
+import { OrdersComponent } from './Components/orders/orders.component';
 
 const routes: Routes = [
   {
@@ -39,6 +42,13 @@ const routes: Routes = [
       { path: 'myproducts', component: MyproductsComponent },
       { path: 'view-product', component: ViewProductDetailsComponent },
       // { path: 'cart', component: CartComponent }
+      { path: 'cart', component: CartComponent },
+      {
+        path: 'checkout',
+        component: CheckoutComponent,
+        canActivate: [AuthGuard],
+      },
+      { path: 'orders', component: OrdersComponent, canActivate: [AuthGuard] },
     ],
   },
   { path: '**', component: NotFoundComponentComponent },
