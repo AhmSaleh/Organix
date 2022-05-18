@@ -27,7 +27,9 @@ export class UserDetailsComponent implements OnInit {
         this.createImageFromBlob(response);
       },
       (error) => {
-        console.error('Request failed with error');
+        Notify.failure("Coudn't get user Profile Picture!", {
+          closeButton: true,
+        });
       }
     );
     UserService.getUser().subscribe(
@@ -35,7 +37,9 @@ export class UserDetailsComponent implements OnInit {
         this.User = response;
       },
       (error) => {
-        console.error('Request failed with error');
+        Notify.failure("Coudn't getting user information!", {
+          closeButton: true,
+        });
       }
     );
   }
