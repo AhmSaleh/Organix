@@ -38,7 +38,7 @@ export class CheckoutComponent implements OnInit {
         console.log(res);
       })
       .catch((err) => {
-        Notify.failure("Coudn't get user Profile Picture!", {
+        Notify.failure("Coudn't Checkout!", {
           closeButton: true,
         });
       });

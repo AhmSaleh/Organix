@@ -1,4 +1,7 @@
-<section class="shoping-cart spad">
+<section
+  *ngIf="cartService.getCart()?.Products?.length || 0 > 0"
+  class="shoping-cart spad"
+>
   <div class="container">
     <div class="row">
       <div class="col-lg-12">
@@ -85,3 +88,10 @@
     </div>
   </div>
 </section>
+
+<div *ngIf="cartService.getCart()?.Products?.length == 0" style="height: 60vh">
+  <p class="h1 text-center mt-5">No Products To show</p>
+  <div class="content">
+    <a href="/home" class="site-btn home-btn">Back to Home</a>
+  </div>
+</div>
