@@ -32,12 +32,13 @@ export class UserDetailsComponent implements OnInit {
         });
       }
     );
+
     UserService.getUser().subscribe(
       (response) => {
         this.User = response;
       },
       (error) => {
-        Notify.failure("Coudn't getting user information!", {
+        Notify.failure("Coudn't get user information!", {
           closeButton: true,
         });
       }
