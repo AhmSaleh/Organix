@@ -13,10 +13,20 @@ export class ShopComponent implements OnInit {
     private route: ActivatedRoute,
   ) { }
 
+  currentPage: number = 1;
+
   productFetchParamters?: productFetchParamters
   ngOnInit(): void {
+    //TODO fetch the number of pages from the server
     this.route.queryParams.subscribe(params => {
       this.productFetchParamters = params
+      if (this.productFetchParamters.page != undefined) {
+        this.currentPage = this.productFetchParamters.page;
+      }
+      else {
+        this.currentPage = 1;
+      }
+
     })
   }
 }
