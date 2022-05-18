@@ -1,6 +1,7 @@
 import ProductService from "../services/ProductService";
 import { Request, Response } from "express";
 import ajv from "../Utils/validate";
+import path from "path";
 
 class ProductController {
   static POSTProduct = POSTProduct;
@@ -13,6 +14,35 @@ class ProductController {
   static GETProductByCategory = GETProductByCategory;
   static GETProductsCount = GETProductsCount;
   static GETProductsByCatCount = GETProductsByCatCount;
+  static GETProductByMerchent = GetProductsByMerchent;
+  static GETProductImage = GETProductImage;
+}
+
+async function GETProductImage(req: Request, res: Response) {
+  try {
+    const product = await ProductService.getProductById(req.params.id);
+    if (!product)
+      return res.status(404).send(`There are no products added by you.`);
+
+    const imgPath = "../../" + product?.imgURL;
+    res.sendFile(path.join(__dirname, imgPath));
+  } catch (err) {
+    res.status(404).send(err);
+  }
+}
+
+async function GetProductsByMerchent(req: Request, res: Response) {
+  try {
+    const products = await ProductService.getProductsByMerchent(
+      req.get("merchentID")
+    );
+    if (!products) {
+      return res.status(404).send(`There are no products added by you.`);
+    }
+    res.send(products).status(200);
+  } catch (err) {
+    res.status(404).send(err);
+  }
 }
 
 async function POSTProduct(req: Request, res: Response) {
@@ -124,7 +154,7 @@ async function UPDATEProductById(req: Request, res: Response) {
 
     if (!valid) return res.status(400).send();
 
-    const product = await ProductService.updateProduct(req.params.id, req.body);
+    const product = await ProductService.getProductById(req.params.id);
 
     if (!product) {
       return res
@@ -133,7 +163,17 @@ async function UPDATEProductById(req: Request, res: Response) {
           `Coudln't find product with the provided Id --> ${req.params.id}`
         );
     }
-    res.send(product);
+    if (req.body.merchantId != product?.merchantId)
+      return res
+        .status(403)
+        .send(`You have no authorization to update this product.`);
+    if (!req.body.imgURL) req.body.imgURL = product.imgURL;
+
+    const updatedProduct = await ProductService.updateProduct(
+      req.params.id,
+      req.body
+    );
+    res.send(updatedProduct);
   } catch (err) {
     res.status(500).send(err);
   }
