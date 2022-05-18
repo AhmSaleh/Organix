@@ -26,7 +26,12 @@
                 <li><a href="#">English</a></li>
               </ul>
             </div>
-            <div class="header__top__right__auth">
+            <div *ngIf="auth.isLoggedIn()" class="header__top__right__auth">
+              <a href="" (click)="logout()"
+                ><i class="fa fa-sign-out"></i> Logout</a
+              >
+            </div>
+            <div *ngIf="!auth.isLoggedIn()" class="header__top__right__auth">
               <a href="/login"><i class="fa fa-user"></i> Login</a>
             </div>
           </div>
