@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
+import { lastValueFrom, take } from 'rxjs';
 import { productFetchParamters } from 'src/app/Models/IProdcut';
 import { ProductServices } from 'src/app/Services/ProductServices/product-services.service';
 
@@ -7,7 +8,7 @@ import { ProductServices } from 'src/app/Services/ProductServices/product-servic
   templateUrl: './pagination.component.html',
   styleUrls: ['./pagination.component.css']
 })
-export class PaginationComponent implements OnInit {
+export class PaginationComponent  {
 
   @Input() currentPage: number = 1;
   lastPageNumber: number = 10;
@@ -18,26 +19,35 @@ export class PaginationComponent implements OnInit {
     return { ...this.linkParamters, page: pageNumber };
   };
 
+
+  async ngOnChanges(changes: SimpleChanges) {
+    //TODO don't fetch if only the page number changed
+    if (changes["linkParamters"] && this.linkParamters != undefined) {
+      const count = await this.getPageCount();
+      this.updatePagesCount(count)    
+    }
+  }
+
   pagesList: number[] = [];
-  ngOnInit(): void {
-    this.pagesList = Array.from(Array(this.currentPage).keys()).map(i => i + 1);
+
+
+  async getPageCount(): Promise<number> {
     if (this.linkParamters?.category) {
-      this.productServices.getProductByCategoryCount(this.linkParamters.category).subscribe(data => {
-        this.updatePagesCount(data.productsCount)
-      });
+      let data = await lastValueFrom(this.productServices
+        .getProductByCategoryCount(this.linkParamters.category)
+      )
+      return data.productsCount;
     }
     else if (this.linkParamters?.searchTerm) {
-      this.productServices.getProductBySearchTermCount(this.linkParamters.searchTerm).subscribe(data => {
-        this.updatePagesCount(data.productsCount)
-      }
+      let data = await lastValueFrom(this.productServices
+        .getProductBySearchTermCount(this.linkParamters.searchTerm)
       );
+      return data.productsCount;
     }
     else {
-      this.productServices.getAllProductsCount().subscribe(data => {
-        this.updatePagesCount(data.productsCount)
-      });
+      let data = await lastValueFrom(this.productServices.getAllProductsCount());
+      return data.productsCount;
     }
-    
   }
 
   updatePagesCount(pagesNumber: number) {
