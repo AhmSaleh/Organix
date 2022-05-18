@@ -42,14 +42,12 @@ import { Subject } from 'rxjs';
 //   getCart() {
 //    return this.cart;
 //   }
-  
 
 //   //TODO: check availability
 //   //TODO: remove lowdash
 //   //TODO: add cart to register
 
 //   add(product: IProduct) {
-
 
 //     let index = this.cart.Products?.findIndex((i) =>
 //     i.product._id == product._id
@@ -84,7 +82,6 @@ import { Subject } from 'rxjs';
 //     this.syncItems();
 //   }
 
-
 //   syncItems() {
 //     if (this.auth.isLoggedIn()) {
 //       let mapped = this.cart.Products?.map((p) => {
@@ -115,33 +112,11 @@ import { Subject } from 'rxjs';
 //   }
 // }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //for testing
-
 export class CartService {
-// private cart: ICartView;
+  // private cart: ICartView;
   CartEmitter = new Subject<ICartView>();
   constructor(private http: HttpClient, private auth: AuthService) {
-
-
     // let empty = JSON.stringify({ Products: [] });
     // let newCart: ICartView = JSON.parse(
     //   localStorage.getItem('Cart') || empty
@@ -152,7 +127,7 @@ export class CartService {
     //this.cart = newCart;
 
     if (this.auth.isLoggedIn()) {
-     // this.cart = {Products:[]};
+      // this.cart = {Products:[]};
       this.http
         .get<ICartView>(
           'http://localhost:3000/api/cart/' + this.auth.getUserId()
@@ -165,43 +140,32 @@ export class CartService {
   }
 
   getCart() {
-  let empty = JSON.stringify({ Products: [] });
-   let newCart: ICartView = JSON.parse(
-     localStorage.getItem('Cart') || empty
-   );
+    let empty = JSON.stringify({ Products: [] });
+    let newCart: ICartView = JSON.parse(localStorage.getItem('Cart') || empty);
 
-   return newCart
+    return newCart;
   }
-  
 
   //TODO: check availability
   //TODO: remove lowdash
   //TODO: add cart to register
 
   add(product: IProduct) {
-
     let cart = this.getCart();
-    let index = cart.Products?.findIndex((i) =>
-    i.product._id == product._id
-  );
+    let index = cart.Products?.findIndex((i) => i.product._id == product._id);
 
- 
-  if (index == -1){
-    cart.Products?.push({ product: product, Count: 1 });
-  }
-  else{
-
-    if(product.availableInventory > cart.Products[index].Count){
-      cart.Products![index!].Count++;
+    if (index == -1) {
+      cart.Products?.push({ product: product, Count: 1 });
+    } else {
+      if (product.availableInventory > cart.Products[index].Count) {
+        cart.Products![index!].Count++;
+      }
     }
-  }
-  this.syncItems(cart);
+    this.syncItems(cart);
   }
   remove(product: IProduct) {
     let cart = this.getCart();
-    let index = cart.Products?.findIndex((i) =>
-    i.product._id == product._id
-    );
+    let index = cart.Products?.findIndex((i) => i.product._id == product._id);
     if (index == -1) return;
     if (cart.Products![index!].Count > 1) {
       cart.Products![index!].Count--;
@@ -213,14 +177,10 @@ export class CartService {
 
   removeAll(product: IProduct) {
     let cart = this.getCart();
-    let index = cart.Products?.findIndex((i) =>
-    i.product._id == product._id
-    );
+    let index = cart.Products?.findIndex((i) => i.product._id == product._id);
     cart.Products?.splice(index!, 1);
     this.syncItems(cart);
   }
-
-
 
   calcCartTotal(): number {
     let cartTotal = 0;
@@ -230,9 +190,7 @@ export class CartService {
     return cartTotal;
   }
 
-
-  syncItems(cart:ICartView) {
-
+  syncItems(cart: ICartView) {
     localStorage.setItem('Cart', JSON.stringify(cart)); // sync the data
     this.CartEmitter.next(cart);
 
@@ -240,13 +198,12 @@ export class CartService {
       let mapped = cart.Products?.map((p) => {
         return { ProductID: p.product._id, Count: p.Count };
       });
-      this.http.post<ICart>('http://localhost:3000/api/cart', {
+      this.http
+        .post<ICart>('http://localhost:3000/api/cart', {
           UserID: this.auth.getUserId(),
           Products: mapped,
-        }).subscribe(res=>{
         })
-    } 
-    
+        .subscribe((res) => {});
+    }
   }
-
 }

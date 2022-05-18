@@ -21,6 +21,7 @@ import { ViewProductDetailsComponent } from './Components/Trader/view-product-de
 import { CheckoutComponent } from './Components/checkout/checkout.component';
 import { CartComponent } from './Components/cart/cart.component';
 import { OrdersComponent } from './Components/orders/orders.component';
+import { RoleGuard } from './core/guards/role.guard';
 
 const routes: Routes = [
   {
@@ -39,7 +40,12 @@ const routes: Routes = [
       { path: 'users-list', component: UsersListComponent },
       { path: 'edit-product', component: EditProductComponent },
       { path: 'delete-product/:id', component: DeleteProductComponent },
-      { path: 'myproducts', component: MyproductsComponent },
+      {
+        path: 'myproducts',
+        component: MyproductsComponent,
+        canActivate: [AuthGuard, RoleGuard],
+        data: { expecteRole: ['merchant'] },
+      },
       { path: 'view-product', component: ViewProductDetailsComponent },
       // { path: 'cart', component: CartComponent }
       { path: 'cart', component: CartComponent },
