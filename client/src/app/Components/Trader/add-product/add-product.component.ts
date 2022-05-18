@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
 import ICategory from 'src/app/Models/ICategory';
 import { AuthService } from 'src/app/Services/auth.service';
 import { CategoryService } from 'src/app/Services/categoery.service';
@@ -22,7 +23,8 @@ export class AddProductComponent implements OnInit {
   constructor(
     private categoryService: CategoryService,
     private productService: ProductServices,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {
     this.myForm = new FormGroup({
       name: new FormControl(null, Validators.required),
@@ -40,7 +42,7 @@ export class AddProductComponent implements OnInit {
       img: new FormControl(null, Validators.required),
       longDescription: new FormControl(null, Validators.required),
       productInformation: new FormControl(null, Validators.required),
-      categoryName: new FormControl(null, Validators.required),
+      categoryName: new FormControl('', Validators.required),
     });
   }
 
@@ -80,12 +82,16 @@ export class AddProductComponent implements OnInit {
         this.myForm.value['productInformation']
       );
       this.formData.append('categoryName', this.myForm.value['categoryName']);
+      this.formData.append('merchantId', this.authService.getUserId());
 
       console.log('sending...');
       this.productService
         .addProductAny(this.formData, this.authService.isLoggedIn())
         .subscribe(
-          (data) => console.log(data),
+          (data) => {
+            console.log(data);
+            this.router.navigate(['/myproducts']);
+          },
           (err) => console.log(err)
         );
     }

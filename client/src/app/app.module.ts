@@ -30,6 +30,9 @@ import { SearchComponent } from './Components/home/hero/search/search.component'
 import { AboutComponent } from './Components/about/about.component';
 import { UsersListComponent } from './Components/User/users-list/users-list.component';
 import { MyproductsComponent } from './Components/Trader/myproducts/myproducts.component';
+import { EditProductComponent } from './Components/Trader/edit-product/edit-product.component';
+import { DeleteProductComponent } from './Components/Trader/delete-product/delete-product.component';
+import { ViewProductDetailsComponent } from './Components/Trader/view-product-details/view-product-details.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +61,9 @@ import { MyproductsComponent } from './Components/Trader/myproducts/myproducts.c
     AboutComponent,
     UsersListComponent,
     MyproductsComponent,
+    EditProductComponent,
+    DeleteProductComponent,
+    ViewProductDetailsComponent,
   ],
   imports: [
     BrowserAnimationsModule,

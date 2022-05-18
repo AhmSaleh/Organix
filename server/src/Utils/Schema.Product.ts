@@ -67,6 +67,7 @@ const procut_schema: JSONSchemaType<IProduct & { merchantId: string }> = {
     "productInformation",
     "categoryName",
     "imgURL",
+    "merchantId",
   ],
 };
 

@@ -1,7 +1,12 @@
-import { HttpClient } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+  JsonpClientBackend,
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 // import { url } from 'inspector';
-import { Observable } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 import { IProduct } from '../../Models/IProdcut';
 
 @Injectable({
@@ -15,10 +20,43 @@ export class ProductServices {
     return this.http.get<IProduct>(`${this.ProductUrl}/${id}`);
   }
 
+  deleteProduct(id: string, header: string) {
+    return this.http.delete(`${this.ProductUrl}/${id}`, {
+      headers: {
+        'x-auth-token': header,
+      },
+    });
+  }
+
+  getProductImage(id: string) {
+    const options = {
+      responseType: 'blob' as const,
+    };
+    return this.http
+      .get(this.ProductUrl + '/image/' + id, {
+        responseType: 'blob',
+      })
+      .pipe(catchError(this.handleError));
+  }
+
+  getProductByMerchent(merchentID: string) {
+    return this.http.get<IProduct[]>(`${this.ProductUrl}/merchent`, {
+      headers: { merchentID: merchentID },
+    });
+  }
+
   getProductByCategory(name: string) {
     return this.http.get<{ name: string; products: IProduct[] }>(
       `${this.ProductUrl}/category/${name}`
     );
+  }
+
+  updateProduct(productID: string, product: FormData, header: any) {
+    return this.http.patch<any>(this.ProductUrl + '/' + productID, product, {
+      headers: {
+        'x-auth-token': header,
+      },
+    });
   }
 
   addProduct(product: IProduct) {
@@ -36,7 +74,24 @@ export class ProductServices {
   getAllProducts(): Observable<IProduct[]> {
     return this.http.get<IProduct[]>(this.ProductUrl);
   }
+
   getProductBySearchTerm(searchTerm: string): Observable<IProduct[]> {
     return this.http.get<IProduct[]>(`${this.ProductUrl}/search/${searchTerm}`);
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    if (error.status === 0) {
+      // A client-side or network error occurred. Handle it accordingly.
+      console.error('An error occurred:', error.error);
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong.
+      console.error(
+        `Backend returned code ${error.status}, body was: `,
+        error.error
+      );
+    }
+    // Return an observable with a user-facing error message.
+    return throwError(() => error);
   }
 }
