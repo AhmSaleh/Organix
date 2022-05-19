@@ -278,13 +278,41 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/user/abdo2@email.com",
+							"raw": "{{baseUrl}}/user/shay_kjartansson573@mail.io",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"user",
-								"abdo2@email.com"
+								"shay_kjartansson573@mail.io"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update user",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"role\": \"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user/admin/shay_kjartansson573@mail.io",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"admin",
+								"shay_kjartansson573@mail.io"
 							]
 						}
 					},
