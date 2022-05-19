@@ -20,6 +20,7 @@ class ProductController {
   static GETProductImage = GETProductImage;
   static UPDATEProductStatus = UPDATEProductStatus;
   static GETPendingProducts = GETPendingProducts;
+  static GETProductsBySearchCount = GETProductsBySearchCount;
 }
 
 async function UPDATEProductStatus(req: Request, res: Response) {
@@ -121,6 +122,17 @@ async function GETProductsByCatCount(req: Request, res: Response) {
   try {
     const productsCount = await ProductService.getProductByCategoryCount(
       req.query.category
+    );
+    res.send({ productsCount }).status(200);
+  } catch (err) {
+    res.status(500).send();
+  }
+}
+
+async function GETProductsBySearchCount(req: Request, res: Response) {
+  try {
+    const productsCount = await ProductService.getProductBySearchCount(
+      req.params.search
     );
     res.send({ productsCount }).status(200);
   } catch (err) {

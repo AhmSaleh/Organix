@@ -30,6 +30,7 @@ router.get("/merchent", ProductController.GETProductByMerchent);
 router.get("/allCount", ProductController.GETProductsCount);
 
 router.get("/CatgCount", ProductController.GETProductsByCatCount);
+router.get("/SearchCount", ProductController.GETProductsBySearchCount);
 
 router.get("/status", ProductController.GETPendingProducts);
 

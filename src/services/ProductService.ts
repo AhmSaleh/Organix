@@ -48,7 +48,6 @@ class ProductService {
   async getProductBySearch(search: string, page: any = undefined) {
     if (!page) page = 1;
     let skip = (parseInt(page) - 1) * +envconf.ProductsLimit;
-    let regex = new RegExp(search, "i");
     const products = await ProductModel.find(
       {
         $text: {
@@ -122,7 +121,7 @@ class ProductService {
   async getAllProductsCount() {
     const count =
       (await ProductModel.countDocuments()) / +envconf.ProductsLimit;
-    return Math.ceil(count);
+    return Math.floor(count);
   }
 
   async getPendingProducts() {
@@ -135,7 +134,18 @@ class ProductService {
         categoryName,
       }).countDocuments()) / +envconf.ProductsLimit;
 
-    return Math.ceil(count);
+    return Math.floor(count);
+  }
+
+  async getProductBySearchCount(search: string) {
+    const count =
+      (await ProductModel.find({
+        $text: {
+          $search: search,
+        },
+      }).countDocuments()) / +envconf.ProductsLimit;
+
+    return Math.floor(count);
   }
 }
 
