@@ -2,9 +2,11 @@ import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   CanActivate,
+  Router,
   RouterStateSnapshot,
   UrlTree,
 } from '@angular/router';
+import { Notify } from 'notiflix';
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/Services/auth.service';
 
@@ -12,7 +14,7 @@ import { AuthService } from 'src/app/Services/auth.service';
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-  constructor(private auth: AuthService) {}
+  constructor(private auth: AuthService, private route: Router) {}
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
@@ -22,6 +24,12 @@ export class AuthGuard implements CanActivate {
     | boolean
     | UrlTree {
     if (this.auth.isLoggedIn()) return true;
-    return false;
+    else {
+      this.route.navigate(['./login']);
+      Notify.warning('PLease login first to processed', {
+        closeButton: true,
+      });
+      return false;
+    }
   }
 }

@@ -4,3 +4,15 @@ img:hover {
 .image-upload > input {
   display: none;
 }
+
+a {
+  color: green;
+}
+
+a:hover {
+  cursor: pointer;
+}
+
+i {
+  cursor: pointer;
+}

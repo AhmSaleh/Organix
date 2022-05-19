@@ -7,7 +7,7 @@ export class AuthService {
   constructor() {}
 
   isLoggedIn() {
-    return localStorage.getItem('token');
+    return localStorage.getItem('token') != undefined;
   }
 
   login(token: string, email: string) {
@@ -28,14 +28,13 @@ export class AuthService {
   }
 
   getRole() {
-    if (this.isLoggedIn()) return atob(this.getToken().split('.')[1]);
+    if (this.isLoggedIn())
+      return JSON.parse(atob(this.getToken().split('.')[1])).role;
     throw new Error('No logged in user to find the role.');
   }
 
   isAdmin() {
-    if (this.isLoggedIn())
-      return atob(this.getToken().split('.')[1]) === 'admin';
-
+    if (this.isLoggedIn()) return this.getRole() === 'admin';
     throw new Error('No logged in user to find if admin or not.');
   }
 

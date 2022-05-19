@@ -1,9 +1,18 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import {
+  Component,
+  ElementRef,
+  Inject,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
+import { Router } from '@angular/router';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { ICartView } from 'src/app/Interfaces/ICartView';
 import { IOrderData } from 'src/app/Interfaces/IOrder';
 import { AuthService } from 'src/app/Services/auth.service';
 import { CartService } from 'src/app/Services/cart.service';
+import { UserService } from 'src/app/Services/UserServices/user.service';
 
 declare let paypal: any;
 
@@ -14,17 +23,35 @@ declare let paypal: any;
 })
 export class CheckoutComponent implements OnInit {
   @ViewChild('paypal', { static: true }) paypalElement!: ElementRef;
-  constructor(private cartService: CartService, private auth: AuthService) {
-    this.cart = this.cartService.getCart();
-  }
   products: any;
   cart: ICartView;
+  userAddresses: string[] = [];
+  document: any;
+  selectedIndex = -1;
+
+  constructor(
+    private cartService: CartService,
+    private auth: AuthService,
+    private userService: UserService,
+    @Inject(DOCUMENT) document: Document,
+    private router: Router
+  ) {
+    this.cart = this.cartService.getCart();
+    this.document = document;
+  }
 
   CheckOut() {
+    if (this.selectedIndex == -1) {
+      Notify.failure('Please Select Address from the providded to proceed', {
+        closeButton: true,
+      });
+      return;
+    }
+
     let orderData: IOrderData = {
       UserID: this.auth.getUserId(),
       Products: this.products,
-      Address: 'ddd',
+      Address: this.userAddresses[this.selectedIndex],
       Method: 1,
     };
     fetch('http://localhost:3000/api/order/create', {
@@ -35,10 +62,14 @@ export class CheckoutComponent implements OnInit {
       body: JSON.stringify(orderData),
     })
       .then((res) => {
-        console.log(res);
+        Notify.success('Your order has been placed successfully!', {
+          closeButton: true,
+        });
+        this.cartService.clearCart()
+        this.router.navigate(['/home']);
       })
       .catch((err) => {
-        Notify.failure("Coudn't get user Profile Picture!", {
+        Notify.failure("Coudn't Checkout!", {
           closeButton: true,
         });
       });
@@ -56,6 +87,7 @@ export class CheckoutComponent implements OnInit {
       Method: 0,
     };
 
+    let clearCart = this.cartService.clearCart;
     paypal.Button.render(
       {
         env: 'sandbox', // Or 'production'
@@ -95,6 +127,7 @@ export class CheckoutComponent implements OnInit {
             },
             body: JSON.stringify({ UserID: UserID, data }),
           }).then(function (res) {
+            clearCart();
             console.log(res);
           });
         },
@@ -119,6 +152,17 @@ export class CheckoutComponent implements OnInit {
       },
       '#paypal-button'
     );
+
+    this.userService.getUserAddresses().subscribe(
+      (res) => {
+        this.userAddresses = res.addresses;
+      },
+      (error) => {
+        Notify.failure("Coudn't Get User Addresses!", {
+          closeButton: true,
+        });
+      }
+    );
   }
 
   calcCartTotal(): number {
@@ -127,5 +171,16 @@ export class CheckoutComponent implements OnInit {
       cartTotal += product.Count * product.product.price;
     }
     return cartTotal;
+  }
+
+  selectAddress(index: any, addresses: any) {
+    this.selectedIndex = index;
+    for (let i = 0; i < addresses.childNodes.length; i++) {
+      if (i == index) {
+        addresses.childNodes[i].style = 'box-shadow: 0 0 3px #80e796;';
+      } else {
+        addresses.childNodes[i].style = 'box-shadow: 0 0 0;';
+      }
+    }
   }
 }

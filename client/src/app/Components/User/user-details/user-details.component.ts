@@ -32,12 +32,32 @@ export class UserDetailsComponent implements OnInit {
         });
       }
     );
+
     UserService.getUser().subscribe(
       (response) => {
         this.User = response;
+
+        this.User.addresses.forEach((element, index) => {
+          let newAddress = document.createElement(`div`);
+          let addressHead = document.createElement(`h6`);
+          let addressInput = document.createElement(`input`);
+
+          addressHead.setAttribute('class', 'mb-2');
+          addressHead.appendChild(
+            document.createTextNode(`Address ${index + 1}`)
+          );
+
+          addressInput.setAttribute('name', `${index}`);
+          addressInput.setAttribute('value', element);
+
+          newAddress.appendChild(addressHead);
+          newAddress.appendChild(addressInput);
+
+          document?.getElementById('addresses')?.appendChild(newAddress);
+        });
       },
       (error) => {
-        Notify.failure("Coudn't getting user information!", {
+        Notify.failure("Coudn't get user information!", {
           closeButton: true,
         });
       }
@@ -70,13 +90,23 @@ export class UserDetailsComponent implements OnInit {
     }
   }
   onSubmit() {
+    this.User.addresses.forEach((element, index) => {
+      this.User.addresses[index] = (
+        document?.getElementById('addresses')?.childNodes[index + 1]
+          ?.childNodes[1] as HTMLInputElement
+      ).value;
+    });
+
+    this.User.addresses.forEach((element, index) => {
+      console.log(element);
+    });
+
     const formData = new FormData();
     if (this.newImg) formData.append('img', this.newImg);
     formData.append('phone', this.User.phone);
     formData.append('addresses', JSON.stringify(this.User.addresses));
     formData.append('name', JSON.stringify(this.User.name));
 
-    console.log('Hnaa');
     this.UserService.updateUser(formData).subscribe(
       (res) => {
         if (!res)
@@ -84,5 +114,25 @@ export class UserDetailsComponent implements OnInit {
       },
       (err) => Notify.failure("Coudn't update!", { closeButton: true })
     );
+  }
+  addNewAddressInput(addresses: any) {
+    let newAddress = document.createElement(`div`);
+    let addressHead = document.createElement(`h6`);
+    let addressInput = document.createElement(`input`);
+
+    addressHead.setAttribute('class', 'mb-2');
+    addressHead.appendChild(
+      document.createTextNode(`Address ${this.User.addresses.length + 1}`)
+    );
+
+    addressInput.setAttribute('name', `${this.User.addresses.length}`);
+
+    newAddress.appendChild(addressHead);
+    newAddress.appendChild(addressInput);
+
+    addresses.appendChild(newAddress);
+
+    this.User.addresses.push('');
+    console.log(document.getElementById('addresses'));
   }
 }
