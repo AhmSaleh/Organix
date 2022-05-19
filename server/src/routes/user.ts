@@ -75,6 +75,13 @@ router.patch(
   checkRole(RoleEnum.admin, RoleEnum.merchant, RoleEnum.user),
   UserController.UPDATEUserProfileByEmail
 );
+
+router.patch(
+  "/admin/:email",
+  checkRole(RoleEnum.admin),
+  checkSchema("SchemaUpdateUserByAdmin"),
+  UserController.UPDATEUserByAdmin
+)
 router.get("/merchant/:id", UserController.getMerchant);
 
 export default router;
