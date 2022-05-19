@@ -65,6 +65,7 @@ export class CheckoutComponent implements OnInit {
         Notify.success('Your order has been placed successfully!', {
           closeButton: true,
         });
+        this.cartService.clearCart()
         this.router.navigate(['/home']);
       })
       .catch((err) => {
@@ -86,6 +87,7 @@ export class CheckoutComponent implements OnInit {
       Method: 0,
     };
 
+    let clearCart = this.cartService.clearCart;
     paypal.Button.render(
       {
         env: 'sandbox', // Or 'production'
@@ -125,6 +127,7 @@ export class CheckoutComponent implements OnInit {
             },
             body: JSON.stringify({ UserID: UserID, data }),
           }).then(function (res) {
+            clearCart();
             console.log(res);
           });
         },
