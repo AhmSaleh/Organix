@@ -11,6 +11,7 @@ import { Types } from "mongoose";
 import { RequestWithAuth } from "../middleware/authentication";
 import path from "path";
 import ajv from "../Utils/validate";
+import { IRegesterDataForUserByAdmin } from "../Utils/SchemaUpdateUserByAdmin";
 
 export interface ITockeBayload {
   UserId: Types.ObjectId;
@@ -24,6 +25,7 @@ class UserController {
   static getMerchant = getMerchant;
   static getPFP = getPFP;
   static UPDATEUserProfileByEmail = UPDATEUserProfileByEmail;
+  static UPDATEUserByAdmin = UPDATEUserByAdmin;
   // static postRegisterPFP = registerPFP;
 }
 
@@ -137,4 +139,17 @@ async function UPDATEUserProfileByEmail(r: Request, res: Response) {
   }
 }
 
+async function UPDATEUserByAdmin(r: Request, res: Response){
+  let req = r as RequestWithAuth & RequestWithSchema<IRegesterDataForUserByAdmin>;
+  const user = req.data;
+  try{
+    await UserService.updateUserProfile(req.params.email,user);
+    res.status(201).send();
+  }
+  catch(err){
+    res.status(500).send(err);
+  } 
+
+
+}
 export default UserController;
