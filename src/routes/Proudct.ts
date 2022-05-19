@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Router } from "express";
 import ProductController from "../controllers/Product.Controller";
 import checkRole from "../middleware/authentication";
 import { RoleEnum } from "../model/UserModel";
@@ -23,9 +23,6 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-// router.use(upload.array());
-// router.use(express.static("public"));
-
 router.get("/", ProductController.GETProducts);
 
 router.get("/merchent", ProductController.GETProductByMerchent);
@@ -33,6 +30,8 @@ router.get("/merchent", ProductController.GETProductByMerchent);
 router.get("/allCount", ProductController.GETProductsCount);
 
 router.get("/CatgCount", ProductController.GETProductsByCatCount);
+
+router.get("/status", ProductController.GETPendingProducts);
 
 router.get("/:id", ProductController.GETProductById);
 
@@ -48,7 +47,6 @@ router.post(
   "/",
   upload.single("imgURL"),
   (req: any, res: any, next: any) => {
-    console.log(req.file);
     if (req.file) req.body.imgURL = req.file.path;
     req.body.price = Number.parseFloat(req.body.price);
     req.body.availableInventory = Number.parseInt(req.body.availableInventory);
@@ -63,6 +61,12 @@ router.delete(
   "/:id",
   checkRole(RoleEnum.admin),
   ProductController.DELETEProductById
+);
+
+router.patch(
+  "/status/:id",
+  checkRole(RoleEnum.admin),
+  ProductController.UPDATEProductStatus
 );
 
 router.patch(

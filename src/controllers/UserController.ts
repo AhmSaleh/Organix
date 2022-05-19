@@ -24,12 +24,18 @@ class UserController {
   static getMerchant = getMerchant;
   static getPFP = getPFP;
   static UPDATEUserProfileByEmail = UPDATEUserProfileByEmail;
+  static GETUserById = GETUserById;
   // static postRegisterPFP = registerPFP;
 }
 
-// async function registerPFP(req: Request, res: Response) {
-//   //somelogic
-// }
+async function GETUserById(req: Request, res: Response) {
+  const user = await UserService.getUserByAdmin(req.params.id);
+  if (user) {
+    res.send(user);
+  } else {
+    res.status(404).send("Merchant not found");
+  }
+}
 
 async function postLogin(r: Request, res: Response) {
   let req = r as RequestWithSchema<ILoginData>;

@@ -1,5 +1,5 @@
 import CategoryModel from "../model/Categoery";
-import { IProduct, ProductModel } from "../model/Product.Model";
+import { IProduct, ProductModel, Status } from "../model/Product.Model";
 import CategoeryService from "./CategoeryService";
 import envconf from "../envconf";
 
@@ -95,22 +95,19 @@ class ProductService {
       { categoryName: _category },
       {},
       { limit: +envconf.ProductsLimit, skip: skip }
-    );}
-  async updateBulk(arr:any){
+    );
+  }
+  async updateBulk(arr: any) {
     return await ProductModel.bulkWrite(arr);
   }
 
-  async getProductList(ids:string[]){
-    return await ProductModel.find().where('_id').in(ids);
+  async getProductList(ids: string[]) {
+    return await ProductModel.find().where("_id").in(ids);
   }
 
-
-
-  async getProductByMerchant(id:string){
-    return await ProductModel.find({"merchantId":id});
+  async getProductByMerchant(id: string) {
+    return await ProductModel.find({ merchantId: id });
   }
-  
-
 
   async getProductByCategory(categoryName: string, page: any = undefined) {
     if (!page) return await ProductModel.find({});
@@ -126,6 +123,10 @@ class ProductService {
     const count =
       (await ProductModel.countDocuments()) / +envconf.ProductsLimit;
     return Math.ceil(count);
+  }
+
+  async getPendingProducts() {
+    return await ProductModel.find({ status: Status.pending });
   }
 
   async getProductByCategoryCount(categoryName: any) {
