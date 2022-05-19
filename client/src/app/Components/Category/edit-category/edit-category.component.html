@@ -1,0 +1,37 @@
+<section class="jumbotron my-form-color mx-auto container-img vertical-center col-lg-7 col-md-9 col-sm-11 p-0 pb-3">
+  <h1 class="text-center text-black bold" style="font-size: 60px;">Edit Category</h1>
+  <div class="container col-lg-8 col-md-9 col-sm-10">
+    <form [formGroup]="myForm!">
+      <div class="form-group mb-0">
+        <div
+          class="embed-responsive embed-responsive-1by1 d-flex justify-content-center align-items-center m-auto col-xl-5 col-lg-6 col-md-8 col-sm-10 col-10">
+          <label for="edit-category-imgUrl" style="cursor: pointer;">
+            <img *ngIf="!oldImg" class="rounded-circle" src="/assets/img/placeholderImage.png" />
+            <img *ngIf="oldImg" class="rounded-circle embed-responsive-item" [src]="oldImg" />
+          </label>
+          <input id="edit-category-imgUrl" type="file" (change)="selectImage($event)" />
+        </div>
+      </div>
+
+      <div class="form-group mb-0">
+        <label for="edit-category-name">Name</label>
+        <input type="text" id="edit-category-name"
+          class="form-control {{validationClass('name')}} {{opacityClass('name')}}" formControlName="name"
+          placeholder="Name" />
+        <span
+          [ngClass]="{'visible': (validationClass('name') == invalidClass), 'invisible' :(validationClass('name') != invalidClass)}">
+          <p class="form-text form-control-feedback m-0" style="color: #dc3545;">
+            Name is required.</p>
+        </span>
+      </div>
+
+
+      <div class="d-flex justify-content-center">
+        <button type="submit" class="site-btn mx-1 col-xl-3 col-lg-4 col-md-5 col-sm-6 col-6" (click)="onSubmit()">Edit
+          Category</button>
+        <button type="reset" class="site-btn btn-secondary mx-1 col-xl-3 col-lg-4 col-md-5 col-sm-6 col-6"
+          (click)="onReset()" style="background-color:rgb(108, 117, 125) ;">Clear</button>
+      </div>
+    </form>
+  </div>
+</section>

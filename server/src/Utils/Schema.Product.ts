@@ -56,6 +56,9 @@ const procut_schema: JSONSchemaType<IProduct & { merchantId: string }> = {
       type: "string",
       pattern: "^[0-9a-fA-F]{24}$",
     },
+    status: {
+      type: "string",
+    },
   },
   required: [
     "name",
@@ -68,6 +71,8 @@ const procut_schema: JSONSchemaType<IProduct & { merchantId: string }> = {
     "categoryName",
     "imgURL",
     "merchantId",
+    "status",
+    "availability",
   ],
 };
 

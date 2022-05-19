@@ -19,7 +19,6 @@ class UserService {
       addresses: user.addresses,
     });
 
-
     CartService.addCart(newUser._id.toString());
 
     return newUser;
@@ -48,6 +47,10 @@ class UserService {
         role: 1,
       }
     );
+  }
+
+  async getUserByAdmin(id: string) {
+    return await UserModel.find({ _id: id });
   }
 
   async getAllUsers() {
@@ -83,6 +86,5 @@ class UserService {
     }
   }
 }
-
 
 export default new UserService();

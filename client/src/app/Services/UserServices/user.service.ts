@@ -62,6 +62,14 @@ export class UserService {
       .pipe(catchError(this.handleError));
   }
 
+  getUserById(usrId: string) {
+    return this.http.get<any>(this.UserUrl + '/users/' + usrId, {
+      headers: {
+        'x-auth-token': this.auth.getToken(),
+      },
+    });
+  }
+
   getUserPFP(): Observable<any> {
     const httpOptions: Object = {
       headers: new HttpHeaders({
@@ -111,8 +119,6 @@ export class UserService {
       );
     }
     // Return an observable with a user-facing error message.
-    return throwError(
-      () => error
-    );
+    return throwError(() => error);
   }
 }

@@ -84,12 +84,11 @@ export class AddProductComponent implements OnInit {
       this.formData.append('categoryName', this.myForm.value['categoryName']);
       this.formData.append('merchantId', this.authService.getUserId());
 
-      console.log('sending...');
       this.productService
         .addProductAny(this.formData, this.authService.isLoggedIn())
         .subscribe(
           (data) => {
-            console.log(data);
+            // console.log(data);
             this.router.navigate(['/myproducts']);
           },
           (err) => console.log(err)

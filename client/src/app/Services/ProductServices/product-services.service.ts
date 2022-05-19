@@ -51,6 +51,10 @@ export class ProductServices {
     );
   }
 
+  getPendingProducts() {
+    return this.http.get<IProduct[]>(this.ProductUrl + '/' + 'status');
+  }
+
   updateProduct(productID: string, product: FormData, header: any) {
     return this.http.patch<any>(this.ProductUrl + '/' + productID, product, {
       headers: {
@@ -69,6 +73,20 @@ export class ProductServices {
         'x-auth-token': header,
       },
     });
+  }
+
+  updateProductStatus(prodID: string, status: string, header: string) {
+    return this.http.patch<any>(
+      this.ProductUrl + '/status/' + prodID,
+      {
+        status: status,
+      },
+      {
+        headers: {
+          'x-auth-token': header,
+        },
+      }
+    );
   }
 
   getAllProducts(): Observable<IProduct[]> {

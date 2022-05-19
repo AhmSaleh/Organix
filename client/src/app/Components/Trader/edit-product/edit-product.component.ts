@@ -47,7 +47,8 @@ export class EditProductComponent implements OnInit {
         if (key != 'imgURL') this.formData.append(key, this.myForm.value[key]);
 
       this.formData.append('merchantId', this.authService.getUserId());
-      this.formData.append('imgURL', this.newImg);
+      if (this.newImg) this.formData.append('imgURL', this.newImg);
+      else this.formData.append('imgURL', this.myForm.value['imgURL']);
 
       this.productService
         .updateProduct(
@@ -56,10 +57,7 @@ export class EditProductComponent implements OnInit {
           this.authService.getToken()
         )
         .subscribe(
-          (data) => {
-            console.log(data);
-            this.router.navigate(['/myproducts']);
-          },
+          (data) => this.router.navigate(['/myproducts']),
           (err) => console.log(err)
         );
     }
@@ -71,7 +69,6 @@ export class EditProductComponent implements OnInit {
       'load',
       () => {
         this.oldImg = reader.result;
-        this.newImg = null;
       },
       false
     );
@@ -84,8 +81,9 @@ export class EditProductComponent implements OnInit {
   selectImage(event: any) {
     if (event.target.files.length > 0) {
       this.newImg = event.target.files[0];
-      this.myForm.patchValue({ img: this.newImg });
+      this.myForm.patchValue({ imgURL: this.newImg });
       this.myForm.controls['imgURL'].markAsTouched();
+      this.createImageFromBlob(this.newImg);
     }
   }
 
@@ -147,7 +145,7 @@ export class EditProductComponent implements OnInit {
 
   ngOnInit(): void {
     this.productID = this.dataTransferService.getData();
-    if (this.productID != '')
+    if (this.productID != '') {
       this.productService.getProduct(this.productID).subscribe(
         (data) => {
           this.ogData = data;
@@ -155,16 +153,20 @@ export class EditProductComponent implements OnInit {
         },
         (err) => console.log(err)
       );
-    this.categoryService.getCategories().subscribe((data) => {
-      this.categories = data;
-    });
-    this.productService.getProductImage(this.productID).subscribe(
-      (data) => {
-        this.createImageFromBlob(data);
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
+      this.categoryService.getCategories().subscribe((data) => {
+        this.categories = data;
+      });
+      this.productService.getProductImage(this.productID).subscribe(
+        (data) => {
+          this.createImageFromBlob(data);
+        },
+        (err) => {
+          console.log(err);
+          console.log('somewhere here');
+          this.oldImg = this.newImg = null;
+          this.myForm.patchValue({ imgURL: null });
+        }
+      );
+    } else this.router.navigate(['/myproducts']);
   }
 }
