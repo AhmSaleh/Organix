@@ -79,6 +79,8 @@ async function getProfile(r: any, res: Response) {
   let req = r as RequestWithAuth;
 
   const user = await UserService.getUserByEmail(req.params.email);
+  if (!user) return res.status(404).send("User not found");
+
   if (
     req.tockenInfo.role == RoleEnum.admin ||
     user?.id == req.tockenInfo.UserId
