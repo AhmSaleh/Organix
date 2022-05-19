@@ -6,6 +6,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
+import { Router } from '@angular/router';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { ICartView } from 'src/app/Interfaces/ICartView';
 import { IOrderData } from 'src/app/Interfaces/IOrder';
@@ -32,7 +33,8 @@ export class CheckoutComponent implements OnInit {
     private cartService: CartService,
     private auth: AuthService,
     private userService: UserService,
-    @Inject(DOCUMENT) document: Document
+    @Inject(DOCUMENT) document: Document,
+    private router: Router
   ) {
     this.cart = this.cartService.getCart();
     this.document = document;
@@ -60,7 +62,10 @@ export class CheckoutComponent implements OnInit {
       body: JSON.stringify(orderData),
     })
       .then((res) => {
-        console.log(res);
+        Notify.success('Your order has been placed successfully!', {
+          closeButton: true,
+        });
+        this.router.navigate(['/home']);
       })
       .catch((err) => {
         Notify.failure("Coudn't Checkout!", {
