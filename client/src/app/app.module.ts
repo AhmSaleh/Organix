@@ -31,6 +31,7 @@ import { HeroComponent } from './Components/home/hero/hero.component';
 import { SearchComponent } from './Components/home/hero/search/search.component';
 import { AboutComponent } from './Components/about/about.component';
 import { UsersListComponent } from './Components/User/users-list/users-list.component';
+import { PaginationComponent } from './Components/shop/pagination/pagination.component';
 import { MyproductsComponent } from './Components/Trader/myproducts/myproducts.component';
 import { EditProductComponent } from './Components/Trader/edit-product/edit-product.component';
 import { ViewProductDetailsComponent } from './Components/Trader/view-product-details/view-product-details.component';
@@ -72,6 +73,7 @@ import { UpdateProductStatusComponent } from './Components/update-product-status
     SearchComponent,
     AboutComponent,
     UsersListComponent,
+    PaginationComponent,
     MyproductsComponent,
     EditProductComponent,
     ViewProductDetailsComponent,

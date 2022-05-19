@@ -49,15 +49,11 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-lg-12">
-          <div *ngFor="
-              let address of this.User.addresses;
-              let indexOfelement = index;
-              trackBy: trackByFn
-            ">
-            <h6 class="mb-2">Address {{ indexOfelement + 1 }}</h6>
-            <input name="{{ indexOfelement }}" [(ngModel)]="this.User.addresses[indexOfelement]" />
-          </div>
+        <div class="col-lg-12" #addresses id="addresses">
+          <p class="h5">
+            Addresses
+            <i class="fa fa-plus" aria-hidden="true" (click)="addNewAddressInput(addresses)"></i>
+          </p>
         </div>
       </div>
       <div class="text-center">

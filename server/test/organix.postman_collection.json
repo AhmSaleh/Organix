@@ -77,9 +77,6 @@
 									"    pm.response.to.have.status(200);\r",
 									"});\r",
 									"\r",
-									"pm.test(\"response contain login success\", function () {\r",
-									"    pm.response.to.have.body(\"Login success\")\r",
-									"});\r",
 									"\r",
 									"pm.test(\"ressponse contain tocken in header\",function(){\r",
 									"    pm.response.to.have.header(\"x-auth-token\");\r",
@@ -105,7 +102,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"admin@email.com\",\r\n    \"password\": \"AA123ab31421@#S\"\r\n}",
+							"raw": "{\r\n    \"email\": \"admin@email.com\",\r\n    \"password\": \"admin\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -278,13 +275,41 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/user/abdo2@email.com",
+							"raw": "{{baseUrl}}/user/shay_kjartansson573@mail.io",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"user",
-								"abdo2@email.com"
+								"shay_kjartansson573@mail.io"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update user",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"role\": \"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user/admin/shay_kjartansson573@mail.io",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"admin",
+								"shay_kjartansson573@mail.io"
 							]
 						}
 					},
@@ -345,6 +370,29 @@
 							"path": [
 								"product",
 								"626719facf4f70333b4a9840"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "categories",
+			"item": [
+				{
+					"name": "getAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/category/all",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"category",
+								"all"
 							]
 						}
 					},

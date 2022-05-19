@@ -1,36 +1,71 @@
-<section class="jumbotron my-form-color mx-auto container-img vertical-center col-lg-7 col-md-9 col-sm-11 p-0 pb-3">
+<section
+  class="jumbotron my-form-color mx-auto container-img vertical-center col-lg-7 col-md-9 col-sm-11 p-0 pb-3"
+>
   <!-- jumbotron gives grey background -->
-  <h1 class="text-center text-black bold" style="font-size: 60px;">Log In</h1>
-  <div class="container col-lg-8 col-md-9 col-sm-10 ">
+  <p class="text-center text-black bold pt-5 h2" style="font-size: 60px">
+    Log In
+  </p>
+  <div class="container col-lg-8 col-md-9 col-sm-10">
     <form [formGroup]="myForm" novalidate (ngSubmit)="onSubmit()">
-
       <div class="form-group">
         <label for="login-email">Email</label>
-        <input type="email" id="login-email" class="form-control {{emailOpacity()}} {{emailClass()}}"
-          formControlName="email" placeholder="Email" />
-        <span [ngClass]="{'visible': (emailClass() == invalidClass), 'invisible' :(emailClass() != invalidClass)}">
-          <p class="form-text form-control-feedback m-0" style="color: #dc3545;">
-            Email is required.</p>
+        <input
+          type="email"
+          id="login-email"
+          class="form-control {{ emailOpacity() }} {{ emailClass() }}"
+          formControlName="email"
+          placeholder="Email"
+        />
+        <span
+          [ngClass]="{
+            visible: emailClass() == invalidClass,
+            invisible: emailClass() != invalidClass
+          }"
+        >
+          <p class="form-text form-control-feedback m-0" style="color: #dc3545">
+            Email is required.
+          </p>
         </span>
       </div>
 
       <div class="form-group">
         <label for="login-password">Password</label>
-        <input type="password" id="login-password" class="form-control {{passwordOpacity()}} {{passwordClass()}}"
-          formControlName="password" placeholder="Password" />
+        <input
+          type="password"
+          id="login-password"
+          class="form-control {{ passwordOpacity() }} {{ passwordClass() }}"
+          formControlName="password"
+          placeholder="Password"
+        />
         <span
-          [ngClass]="{'visible': (passwordClass() == invalidClass), 'invisible' :(passwordClass() != invalidClass)}">
-          <p class="form-text form-control-feedback m-0" style="color: #dc3545;">
-            Password is required.</p>
+          [ngClass]="{
+            visible: passwordClass() == invalidClass,
+            invisible: passwordClass() != invalidClass
+          }"
+        >
+          <p class="form-text form-control-feedback m-0" style="color: #dc3545">
+            Password is required.
+          </p>
         </span>
       </div>
 
       <!-- <div class="d-inline-flex gap-2 mb-3 justify-content-center"> -->
-      <div class="d-flex  justify-content-center">
-        <button type="submit" class="site-btn mx-1 col-xl-2 col-lg-3 col-md-4 col-sm-5 col-6">Log In</button>
-        <button type="reset" class="site-btn btn-secondary mx-1 col-xl-2 col-lg-3 col-md-4 col-sm-5 col-6" (click)="onReset()">Reset</button>
+      <div class="d-flex justify-content-center">
+        <button
+          type="submit"
+          class="site-btn mx-1 col-xl-2 col-lg-3 col-md-4 col-sm-5 col-6"
+        >
+          Log In
+        </button>
+        <button
+          type="reset"
+          class="site-btn btn-secondary mx-1 col-xl-2 col-lg-3 col-md-4 col-sm-5 col-6"
+          (click)="onReset()"
+          style="background-color: rgb(108, 117, 125)"
+        >
+          Reset
+        </button>
       </div>
-
     </form>
   </div>
 </section>

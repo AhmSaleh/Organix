@@ -70,6 +70,15 @@ export class UserService {
     });
   }
 
+  getUserAddresses(): Observable<any> {
+    return this.http
+      .get<any>(this.UserUrl + '/addresses/' + this.auth.getEmail(), {
+        headers: {
+          'x-auth-token': this.auth.getToken(),
+        },
+      })
+      .pipe(catchError(this.handleError));
+  }
   getUserPFP(): Observable<any> {
     const httpOptions: Object = {
       headers: new HttpHeaders({

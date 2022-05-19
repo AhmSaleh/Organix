@@ -60,6 +60,13 @@ router.get(
   checkRole(RoleEnum.admin, RoleEnum.merchant, RoleEnum.user),
   UserController.getProfile
 );
+
+router.get(
+  "/addresses/:email",
+  checkRole(RoleEnum.user),
+  UserController.getAddresses
+);
+
 router.get(
   "/pfp/:email",
   checkRole(RoleEnum.admin, RoleEnum.merchant, RoleEnum.user),
@@ -71,6 +78,13 @@ router.patch(
   rowData,
   checkRole(RoleEnum.admin, RoleEnum.merchant, RoleEnum.user),
   UserController.UPDATEUserProfileByEmail
+);
+
+router.patch(
+  "/admin/:email",
+  checkRole(RoleEnum.admin),
+  checkSchema("SchemaUpdateUserByAdmin"),
+  UserController.UPDATEUserByAdmin
 );
 
 export default router;

@@ -25,4 +25,5 @@ export enum Status {
 export interface productFetchParamters {
   category?: string;
   searchTerm?: string;
+  page?: number;
 }

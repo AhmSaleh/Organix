@@ -85,6 +85,15 @@ class UserService {
       });
     }
   }
+
+  async getAddressesByEmail(email: string) {
+    return await mongoose.model<IUser>("User").findOne(
+      {
+        email: email,
+      },
+      { addresses: 1 }
+    );
+  }
 }
 
 export default new UserService();
