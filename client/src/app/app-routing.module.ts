@@ -21,6 +21,7 @@ import { ViewProductDetailsComponent } from './Components/Trader/view-product-de
 import { CheckoutComponent } from './Components/checkout/checkout.component';
 import { CartComponent } from './Components/cart/cart.component';
 import { OrdersComponent } from './Components/orders/orders.component';
+import { TestComponent } from './Components/test/test.component';
 
 const routes: Routes = [
   {
@@ -34,13 +35,13 @@ const routes: Routes = [
       { path: 'user/details', component: UserDetailsComponent },
       { path: 'shop', component: ShopComponent },
       { path: 'product/:id', component: ProductDetailsComponent },
-      { path: 'add-product', component: AddProductComponent },
+      { path: 'add-product', component: AddProductComponent }, //5ara
       { path: 'about-us', component: AboutComponent },
       { path: 'users-list', component: UsersListComponent },
-      { path: 'edit-product', component: EditProductComponent },
+      { path: 'edit-product', component: EditProductComponent }, //5ara
       { path: 'delete-product/:id', component: DeleteProductComponent },
       { path: 'myproducts', component: MyproductsComponent },
-      { path: 'view-product', component: ViewProductDetailsComponent },
+      { path: 'view-product', component: ViewProductDetailsComponent },  //??????????????
       // { path: 'cart', component: CartComponent }
       { path: 'cart', component: CartComponent },
       {
@@ -49,6 +50,7 @@ const routes: Routes = [
         canActivate: [AuthGuard],
       },
       { path: 'orders', component: OrdersComponent, canActivate: [AuthGuard] },
+      { path: 'test', component: TestComponent}
     ],
   },
   { path: '**', component: NotFoundComponentComponent },

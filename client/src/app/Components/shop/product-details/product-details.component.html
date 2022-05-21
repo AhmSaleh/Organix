@@ -9,7 +9,7 @@
                                 [src]="selectedImage" alt="">
                         </div>
                         <!-- support multiple images -->
-                        <owl-carousel-o class="product__details__pic__slider">
+                        <owl-carousel-o [options]="{'dots': true}" class="product__details__pic__slider">
                             <ng-container *ngFor="let slide of product.imagesURL">
                               <ng-template carouselSlide >
                                 <img [src]="slide" (click)="updateSelected($event)">

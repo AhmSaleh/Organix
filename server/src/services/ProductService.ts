@@ -1,6 +1,6 @@
-import CategoryModel from "../model/Categoery";
+import CategoryModel from "../model/Category";
 import { IProduct, ProductModel } from "../model/Product.Model";
-import CategoeryService from "./CategoeryService";
+import CategoeryService from "./CategoryService";
 import envconf from "../envconf";
 
 class ProductService {

@@ -3,7 +3,7 @@ import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/Services/auth.service';
 import { UserService } from 'src/app/Services/UserServices/user.service';
-
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { Report } from 'notiflix/build/notiflix-report-aio';
@@ -21,7 +21,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private userService: UserService,
     private router: Router,
-    private auth: AuthService
+    private auth: AuthService,
+    private activeModal: NgbActiveModal
   ) {
     this.myForm = new FormGroup({
       email: new FormControl('', Validators.required),
@@ -29,6 +30,10 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  closeModal(){
+    this.activeModal.close();
+  }
+  
   onSubmit() {
     if (this.myForm.valid) {
       this.userService.loginUser(this.myForm.value).subscribe({

@@ -41,6 +41,10 @@ import { CheckoutComponent } from './Components/checkout/checkout.component';
 import { OrdersComponent } from './Components/orders/orders.component';
 import { AdminOrderComponent } from './Components/orders/admin-order/admin-order.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { CategoriesCarouselComponent } from './Components/home/categories-carousel/categories-carousel.component';
+import { FeaturedProductsComponent } from './Components/home/featured-products/featured-products.component';
+import { MatSidenavModule } from "@angular/material/sidenav";
+import { TestComponent } from './Components/test/test.component'
 // import {MatRadioModule} from '@angular/material/radio'
 // import {MatFormFieldModule} from '@angular/material/form-field'
 
@@ -78,6 +82,9 @@ import { MatDialogModule } from '@angular/material/dialog';
     CheckoutComponent,
     OrdersComponent,
     AdminOrderComponent,
+    CategoriesCarouselComponent,
+    FeaturedProductsComponent,
+    TestComponent,
   ],
   imports: [
     BrowserAnimationsModule,
@@ -89,6 +96,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     NgbModule,
     FormsModule,
     MatDialogModule,
+    MatSidenavModule,
     // MatRadioModule,
     // MatFormFieldModule
   ],
