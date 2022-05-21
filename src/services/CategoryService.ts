@@ -1,5 +1,5 @@
 import { Schema, Types } from "mongoose";
-import CategoryModel, { ICategory } from "../model/Categoery";
+import CategoryModel, { ICategory } from "../model/Category";
 import { IProduct } from "../model/Product.Model";
 import ProductService from "./ProductService";
 
