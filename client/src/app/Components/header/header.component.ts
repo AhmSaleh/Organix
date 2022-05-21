@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { ICartView } from 'src/app/Interfaces/ICartView';
 import { AuthService } from 'src/app/Services/auth.service';
@@ -15,7 +16,12 @@ import { NgbModal} from '@ng-bootstrap/ng-bootstrap';
 })
 export class HeaderComponent {
 
-  constructor(public cartService: CartService, public auth: AuthService, private modalService: NgbModal) {
+  constructor(
+    public cartService: CartService, 
+    public auth: AuthService, 
+    private modalService: NgbModal,
+    private router: Router
+    ) {
   }
 
   openLoginModal() {
@@ -42,5 +48,9 @@ export class HeaderComponent {
       prependTo: '#mobile-menu-wrap',
       allowParentLinks: true
     });
+  }
+  logout() {
+    this.auth.logout();
+    this.router.navigate(['/home']);
   }
 }

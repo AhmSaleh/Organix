@@ -53,30 +53,32 @@ import { CartService } from 'src/app/Services/cart.service';
 //     this.Products= this.cart.getCart().Products;
 //   }
 // }
-
 export class CartComponent implements OnInit {
-  constructor(public cart: CartService, private auth: AuthService) {}
+  constructor(
+    public cart: CartService,
+    private auth: AuthService,
+    public cartService: CartService
+  ) {}
 
-  Products: ICartView = {Products:[]};
+  Products: ICartView = { Products: [] };
 
   ngOnInit(): void {
     this.Products = this.cart.getCart();
-    this.cart.CartEmitter.subscribe(res=>{
-      this.Products = res
-    })
+    this.cart.CartEmitter.subscribe((res) => {
+      this.Products = res;
+    });
   }
 
-  inc(product:any) {
-      this.cart.add(product);
+  inc(product: any) {
+    this.cart.add(product);
   }
 
-  dec(product:any) {
+  dec(product: any) {
     //if (this.Products[itemIndex].Count > 1) {
-      this.cart.remove(product);
-    }
-  
+    this.cart.remove(product);
+  }
 
-  removeItem(product:any) {
+  removeItem(product: any) {
     this.cart.removeAll(product);
   }
 
@@ -87,5 +89,4 @@ export class CartComponent implements OnInit {
     }
     return cartTotal;
   }
-
 }

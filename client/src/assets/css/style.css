@@ -132,7 +132,6 @@ ol {
   opacity: 1;
 }
 
-
 /*---------------------
   Helper CSS
 -----------------------*/
@@ -328,6 +327,16 @@ ol {
 }
 
 .header__top__right__social:after {
+  position: absolute;
+  right: -20px;
+  top: 1px;
+  height: 20px;
+  width: 1px;
+  background: #000000;
+  opacity: 0.1;
+  content: "";
+}
+.User:after {
   position: absolute;
   right: -20px;
   top: 1px;

@@ -1,0 +1,4 @@
+<span *ngFor="let i of pagesList" class="mx-2">
+    <a *ngIf="i == currentPage" style="color: red;"  routerLink="/shop" [queryParams]=pageWithParamters(i)> {{i}} </a>
+    <a *ngIf="i != currentPage" style="color: black;"  routerLink="/shop" [queryParams]=pageWithParamters(i)> {{i}} </a>
+</span>

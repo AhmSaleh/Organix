@@ -33,6 +33,7 @@ import { AboutComponent } from './Components/about/about.component';
 import { UsersListComponent } from './Components/User/users-list/users-list.component';
 import { UsersListFilterPipe } from './Pipes/users-list/users-list-filter.pipe';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { PaginationComponent } from './Components/shop/pagination/pagination.component';
 import { MyproductsComponent } from './Components/Trader/myproducts/myproducts.component';
 import { EditProductComponent } from './Components/Trader/edit-product/edit-product.component';
 import { DeleteProductComponent } from './Components/Trader/delete-product/delete-product.component';
@@ -75,6 +76,7 @@ import { TestComponent } from './Components/test/test.component'
     AboutComponent,
     UsersListComponent,
     UsersListFilterPipe,
+    PaginationComponent,
     MyproductsComponent,
     EditProductComponent,
     DeleteProductComponent,

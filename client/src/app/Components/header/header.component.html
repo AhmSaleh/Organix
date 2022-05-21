@@ -13,6 +13,7 @@
                 <li><a [ngStyle]="{
                   'pointer-events': cartService.getCart()?.Products?.length ? 'auto' : 'none'}"
                   routerLink="/cart"><i class="fa fa-shopping-bag"></i> <span>{{ cartService.getCart().Products?.length }}</span></a></li>
+              <li><i class="fa fa-envelope"></i> hello@organix.com</li>
             </ul>
             <div class="header__cart__price">Total: <span>EGP {{cartService.calcCartTotal()}}</span></div>
         </div>
