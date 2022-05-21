@@ -46,7 +46,8 @@ const UpdateCart = async(cart:ICart)=>{
 
 //add to registeration
 const addCart = async (UserID:string)=>{
-    var cart = new CartModel({ UserID } as ICart);
+    let arr:{ ProductID: String, Count: Number}[] = []
+    var cart = new CartModel({ UserID, Products:arr } as ICart);
     cart.save();
 }
 
