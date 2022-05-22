@@ -1,5 +1,5 @@
 import ProductService from "../services/ProductService";
-import { IProduct } from "../model/Product.Model";
+import { IProduct, Status } from "../model/Product.Model";
 import mongoose from "mongoose";
 import {
   rand,
@@ -65,6 +65,7 @@ async function fillIfEmptyProducts(merchants_ids: mongoose.Types.ObjectId[]) {
         productInformation: randParagraph(),
         categoryName: rand(categories),
         merchantId: rand(merchants_ids),
+        status: randomEnum(Status),
       };
 
       await ProductService.createProduct(randProduct);
@@ -129,7 +130,10 @@ async function fillAll() {
     console.log("Default admin added");
   } else {
     //update the password
-    await UserService.updateUserPassword(envconf.adminEmail, envconf.adminPassword);
+    await UserService.updateUserPassword(
+      envconf.adminEmail,
+      envconf.adminPassword
+    );
     console.log("Admin password updated");
   }
   //dummy data
@@ -149,6 +153,15 @@ async function resetAll() {
       console.log("Database dropped");
     }
   }
+}
+
+function randomEnum<T>(anEnum: T): T[keyof T] {
+  const enumValues = Object.keys(anEnum)
+    .map((n) => Number.parseInt(n))
+    .filter((n) => !Number.isNaN(n)) as unknown as T[keyof T][];
+  const randomIndex = Math.floor(Math.random() * enumValues.length);
+  const randomEnumValue = enumValues[randomIndex];
+  return randomEnumValue;
 }
 
 async function main() {

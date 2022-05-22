@@ -14,12 +14,11 @@ import { IProduct } from '../../Models/IProdcut';
 })
 export class ProductServices {
   ProductUrl = 'http://localhost:3000/api/product';
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getProduct(id: string): Observable<IProduct> {
     return this.http.get<IProduct>(`${this.ProductUrl}/${id}`);
   }
-
 
   deleteProduct(id: string, header: string) {
     return this.http.delete(`${this.ProductUrl}/${id}`, {
@@ -46,10 +45,15 @@ export class ProductServices {
     });
   }
 
-
   getProductByCategory(name: string, page: number = 1) {
-    return this.http.get<{ name: string, products: IProduct[] }>(
-      `${this.ProductUrl}/category/${name}`, { params: { page: page } });
+    return this.http.get<{ name: string; products: IProduct[] }>(
+      `${this.ProductUrl}/category/${name}`,
+      { params: { page: page } }
+    );
+  }
+
+  getPendingProducts() {
+    return this.http.get<IProduct[]>(this.ProductUrl + '/' + 'status');
   }
 
   updateProduct(productID: string, product: FormData, header: any) {
@@ -72,27 +76,61 @@ export class ProductServices {
     });
   }
 
+  updateProductStatus(prodID: string, status: string, header: string) {
+    return this.http.patch<any>(
+      this.ProductUrl + '/status/' + prodID,
+      {
+        status: status,
+      },
+      {
+        headers: {
+          'x-auth-token': header,
+        },
+      }
+    );
+  }
+
+  // getAllProducts(): Observable<IProduct[]> {
+  //   return this.http.get<IProduct[]>(this.ProductUrl);
+  // }
   getAllProducts(page: number = 1): Observable<IProduct[]> {
-    return this.http.get<IProduct[]>(this.ProductUrl, { params: { page: page } });
+    return this.http.get<IProduct[]>(this.ProductUrl, {
+      params: { page: page },
+    });
   }
 
-
-  getProductBySearchTerm(searchTerm: string, page: number = 1): Observable<IProduct[]> {
-    return this.http.get<IProduct[]>(`${this.ProductUrl}/search/${searchTerm}`, { params: { page: page } });
+  getProductBySearchTerm(
+    searchTerm: string,
+    page: number = 1
+  ): Observable<IProduct[]> {
+    return this.http.get<IProduct[]>(
+      `${this.ProductUrl}/search/${searchTerm}`,
+      { params: { page: page } }
+    );
   }
 
-  getProductByCategoryCount(name: string): Observable<{ productsCount: number }> {
-    return this.http.get<{ productsCount: number }>(`${this.ProductUrl}/CatgCount`, { params: { category: name } });
+  getProductByCategoryCount(
+    name: string
+  ): Observable<{ productsCount: number }> {
+    return this.http.get<{ productsCount: number }>(
+      `${this.ProductUrl}/CatgCount`,
+      { params: { category: name } }
+    );
   }
 
   getAllProductsCount(): Observable<{ productsCount: number }> {
-    return this.http.get<{ productsCount: number }>(`${this.ProductUrl}/allCount`);
+    return this.http.get<{ productsCount: number }>(
+      `${this.ProductUrl}/allCount`
+    );
   }
-  getProductBySearchTermCount(searchTerm: string): Observable<{ productsCount: number }> {
-    return this.http.get<{ productsCount: number }>(`${this.ProductUrl}/searchCount`, { params: { searchTerm: searchTerm } });
+  getProductBySearchTermCount(
+    searchTerm: string
+  ): Observable<{ productsCount: number }> {
+    return this.http.get<{ productsCount: number }>(
+      `${this.ProductUrl}/searchCount`,
+      { params: { searchTerm: searchTerm } }
+    );
   }
-
-
 
   private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {

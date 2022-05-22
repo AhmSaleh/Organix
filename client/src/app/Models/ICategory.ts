@@ -1,5 +1,5 @@
 export default interface ICategory {
-    _id: string;
-    name: string;
-    imageURL: string;
+  _id: string;
+  name: string;
+  imageUrl: string;
 }

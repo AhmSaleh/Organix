@@ -8,7 +8,8 @@ const DEFAULT_ADMIN_PASSWORD = "admin";
 const DEFAUKT_DUMMYUSER_EMAIL = "1234";
 const PRODUCTS_LIMIT = 12;
 const USERS_PFP_PATH = "uploads/UsersPFP";
-const PRODUCT_IMG_PATH = "uploads/ProductImg"
+const PRODUCT_IMG_PATH = "uploads/ProductImg";
+const CATEGORY_IMG_PATH = "uploads/CategoryImg";
 /* ------------------------------ end defaults ------------------------------ */
 
 function throwIfMissing(env: string, name: string) {
@@ -52,8 +53,11 @@ class envconf {
   get UsersPfpPath(): string {
     return USERS_PFP_PATH;
   }
-  get ProductImgPath():string{
+  get ProductImgPath(): string {
     return PRODUCT_IMG_PATH;
+  }
+  get CategoryImgPath(): string {
+    return CATEGORY_IMG_PATH;
   }
 }
 

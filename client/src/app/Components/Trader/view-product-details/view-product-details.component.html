@@ -6,8 +6,7 @@
         <div
           class="embed-responsive embed-responsive-1by1 d-flex justify-content-center align-items-center m-auto col-xl-5 col-lg-6 col-md-8 col-sm-10 col-10">
           <label for="view-product-imgURL" style="cursor: pointer;">
-            <img *ngIf="!img" class="rounded-circle"
-              src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg" />
+            <img *ngIf="!img" class="rounded-circle" src="/assets/img/placeholderImage.png" />
             <img *ngIf="img" class="rounded-circle embed-responsive-item" [src]="img" />
           </label>
         </div>
@@ -75,7 +74,7 @@
       <div class="d-flex justify-content-center">
         <button type="button" class="site-btn btn-secondary mx-1 col-xl-4 col-lg-5 col-md-6 col-sm-6 col-6"
           (click)="onReturn()" style="background-color:rgb(108, 117, 125) ;">Return To Your Products</button>
-          <button type="button" class="site-btn btn-secondary mx-1 col-xl-4 col-lg-5 col-md-6 col-sm-6 col-6"
+        <button type="button" class="site-btn btn-secondary mx-1 col-xl-4 col-lg-5 col-md-6 col-sm-6 col-6"
           (click)="onEdit()">Edit Product</button>
       </div>
     </form>

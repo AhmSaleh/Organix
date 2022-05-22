@@ -2,6 +2,7 @@ import ProductService from "../services/ProductService";
 import { json, Request, Response } from "express";
 import ajv from "../Utils/validate";
 import path from "path";
+import { Status } from "../model/Product.Model";
 
 class ProductController {
   static POSTProduct = POSTProduct;
@@ -17,8 +18,36 @@ class ProductController {
   static GETProductsByCatCount = GETProductsByCatCount;
   static GETProductByMerchent = GetProductsByMerchent;
   static GETProductImage = GETProductImage;
+  static UPDATEProductStatus = UPDATEProductStatus;
+  static GETPendingProducts = GETPendingProducts;
   static GETProductsBySearchCount = GETProductsBySearchCount;
+}
 
+async function UPDATEProductStatus(req: Request, res: Response) {
+  try {
+    const product = await ProductService.getProductById(req.params.id);
+    if (!product)
+      return res
+        .status(404)
+        .send(`There are no products matching id: ${req.params.id}.`);
+    product.status = req.body.status;
+    await ProductService.updateProduct(req.params.id, product);
+    const finalProduct = await ProductService.getProductById(req.params.id);
+    res.status(202).send(finalProduct);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+}
+
+async function GETPendingProducts(req: Request, res: Response) {
+  try {
+    const products = await ProductService.getPendingProducts();
+    if (!products)
+      return res.status(404).send(`There are no pending products.`);
+    res.send(products).status(200);
+  } catch (err) {
+    res.status(500).send(err);
+  }
 }
 
 async function GETProductImage(req: Request, res: Response) {
@@ -30,7 +59,7 @@ async function GETProductImage(req: Request, res: Response) {
     const imgPath = "../../" + product?.imgURL;
     res.sendFile(path.join(__dirname, imgPath));
   } catch (err) {
-    res.status(404).send(err);
+    res.status(500).send(err);
   }
 }
 
@@ -44,16 +73,20 @@ async function GetProductsByMerchent(req: Request, res: Response) {
     }
     res.send(products).status(200);
   } catch (err) {
-    res.status(404).send(err);
+    res.status(500).send(err);
   }
 }
 
 async function POSTProduct(req: Request, res: Response) {
   try {
+    req.body.status = Status.pending;
+    req.body.availability = req.body.availableInventory > 0;
     const validate = ajv.getSchema("product");
     const valid = validate!(req.body);
+
     if (!valid) return res.status(400).send();
     const product = await ProductService.createProduct(req.body);
+
     res.send(product).status(200);
     res.send(); // 2 res.send()???
   } catch (err: any) {
@@ -96,7 +129,6 @@ async function GETProductsByCatCount(req: Request, res: Response) {
   }
 }
 
-
 async function GETProductsBySearchCount(req: Request, res: Response) {
   try {
     const productsCount = await ProductService.getProductBySearchCount(
@@ -116,7 +148,6 @@ async function getProductList(req: Request, res: Response) {
     res.send(list).status(200);
   } catch (err) {
     res.status(404).send(err);
-
   }
 }
 
@@ -176,8 +207,12 @@ async function DELETEProductById(req: Request, res: Response) {
 
 async function UPDATEProductById(req: Request, res: Response) {
   try {
+    req.body.status = "pending";
+    req.body.availability = req.body.availableInventory > 0;
     const validate = ajv.getSchema("product");
     const valid = validate!(req.body);
+
+    // console.log(validate);
 
     if (!valid) return res.status(400).send();
 
@@ -195,7 +230,6 @@ async function UPDATEProductById(req: Request, res: Response) {
         .status(403)
         .send(`You have no authorization to update this product.`);
     if (!req.body.imgURL) req.body.imgURL = product.imgURL;
-
     const updatedProduct = await ProductService.updateProduct(
       req.params.id,
       req.body
