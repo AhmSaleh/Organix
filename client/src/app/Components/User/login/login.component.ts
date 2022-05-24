@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
             this.myForm.value.email
           );
           Notify.success('Login Successful');
-          this.router.navigate(['./home']);
+          this.router.navigate(['/home']);
         },
         error: (error) => {
           if(error.status == 401) {

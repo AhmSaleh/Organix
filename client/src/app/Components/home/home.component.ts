@@ -12,12 +12,16 @@ import { CartService } from 'src/app/Services/cart.service';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private cartService: CartService,config:  NgbCarouselConfig) {
+  constructor(private cartService: CartService,config:  NgbCarouselConfig, private authService:AuthService) {
     config.showNavigationArrows = false;
     config.showNavigationIndicators = false;
 }
 
   ngOnInit(): void {}
+
+  onLogout(){
+    this.authService.logout();
+  }
   
     // this.cartService.getCart().subscribe(res=>{
     //   console.log('removed');
