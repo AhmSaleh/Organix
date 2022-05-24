@@ -62,6 +62,14 @@ export class UserService {
       .pipe(catchError(this.handleError));
   }
 
+  getUserById(usrId: string) {
+    return this.http.get<any>(this.UserUrl + '/users/' + usrId, {
+      headers: {
+        'x-auth-token': this.auth.getToken(),
+      },
+    });
+  }
+
   getUserAddresses(): Observable<any> {
     return this.http
       .get<any>(this.UserUrl + '/addresses/' + this.auth.getEmail(), {

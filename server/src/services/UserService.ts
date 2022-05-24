@@ -49,6 +49,10 @@ class UserService {
     );
   }
 
+  async getUserByAdmin(id: string) {
+    return await UserModel.find({ _id: id });
+  }
+
   async getAllUsers() {
     return await mongoose.model<IUser>("User").find({});
   }

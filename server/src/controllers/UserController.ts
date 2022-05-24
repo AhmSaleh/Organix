@@ -26,9 +26,20 @@ class UserController {
   static getPFP = getPFP;
   static getAddresses = getAddresses;
   static UPDATEUserProfileByEmail = UPDATEUserProfileByEmail;
+  static GETUserById = GETUserById;
   static UPDATEUserByAdmin = UPDATEUserByAdmin;
-  // static postRegisterPFP = registerPFP;
 }
+
+async function GETUserById(req: Request, res: Response) {
+  const user = await UserService.getUserByAdmin(req.params.id);
+  if (user) {
+    res.send(user);
+  } else {
+    res.status(404).send("Merchant not found");
+  }
+}
+
+// static postRegisterPFP = registerPFP;
 
 async function postLogin(r: Request, res: Response) {
   let req = r as RequestWithSchema<ILoginData>;
@@ -148,17 +159,15 @@ async function UPDATEUserProfileByEmail(r: Request, res: Response) {
   }
 }
 
-async function UPDATEUserByAdmin(r: Request, res: Response){
-  let req = r as RequestWithAuth & RequestWithSchema<IRegesterDataForUserByAdmin>;
+async function UPDATEUserByAdmin(r: Request, res: Response) {
+  let req = r as RequestWithAuth &
+    RequestWithSchema<IRegesterDataForUserByAdmin>;
   const user = req.data;
-  try{
-    await UserService.updateUserProfile(req.params.email,user);
+  try {
+    await UserService.updateUserProfile(req.params.email, user);
     res.status(201).send();
-  }
-  catch(err){
+  } catch (err) {
     res.status(500).send(err);
-  } 
-
-
+  }
 }
 export default UserController;

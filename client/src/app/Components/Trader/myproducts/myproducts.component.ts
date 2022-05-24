@@ -76,7 +76,8 @@ export class MyproductsComponent implements OnInit {
             f != 'longDescription' &&
             f != '_id' &&
             f != '__v' &&
-            f != 'merchantId'
+            f != 'merchantId' &&
+            f != 'availability'
         );
       });
   }

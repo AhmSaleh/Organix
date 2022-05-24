@@ -19,16 +19,16 @@ export class ViewProductDetailsComponent implements OnInit {
     private formBuilder: FormBuilder
   ) {}
   productID = '';
-  myForm: FormGroup = new FormGroup({
-    name: new FormControl(''),
-    price: new FormControl(''),
-    weight: this.formBuilder.control(['']),
-    productInformation: this.formBuilder.control(['']),
-    categoryName: this.formBuilder.control(['']),
-    availableInventory: this.formBuilder.control(['']),
-    shortDescription: this.formBuilder.control(['']),
-    longDescription: this.formBuilder.control(['']),
-    imgURL: this.formBuilder.control(['']),
+  myForm: FormGroup = this.formBuilder.group({
+    name: [''],
+    price: [''],
+    weight: [''],
+    productInformation: [''],
+    categoryName: [''],
+    availableInventory: [''],
+    shortDescription: [''],
+    longDescription: [''],
+    imgURL: [''],
   });
   img: any;
 
@@ -89,6 +89,6 @@ export class ViewProductDetailsComponent implements OnInit {
         },
         (err) => console.log(err)
       );
-    }
+    } else this.router.navigate(['/list-categories']);
   }
 }

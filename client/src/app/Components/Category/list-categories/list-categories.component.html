@@ -1,28 +1,22 @@
 <section class="mx-auto container-img vertical-center col-lg-10 col-md-11 col-sm-12 p-0 pb-3">
-  <h1 class="text-center font-h1">My Products</h1>
-  <a routerLink="/add-product" class="btn site-btn my-1 col-xl-2 col-lg-3 col-md-4 col-sm-5 col-5"
-    style="border-radius: 0;">Add Product</a>
+  <h1 class="text-center font-h1">My Categories</h1>
+  <a routerLink="/add-category" class="btn site-btn my-1 col-xl-2 col-lg-3 col-md-4 col-sm-5 col-5"
+    style="border-radius: 0;">Add Category</a>
   <table class="table table-bordered table-hover">
     <thead>
       <tr>
         <th class="text-center">Name</th>
-        <th class="text-center">Price</th>
-        <th class="text-center">Short Description</th>
-        <th class="text-center">Weight</th>
-        <th class="text-center">Available Inventory</th>
-        <th class="text-center">Product Information</th>
-        <th class="text-center">Category</th>
-        <th class="text-center">Status</th>
         <th class="text-center">Operations</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let prod of myProducts">
-        <td class="text-center" *ngFor="let head of tableHeads">{{prod[head]}}</td>
+      <tr *ngFor="let cat of categories">
+        <td class="text-center">{{cat.name}}</td>
         <td class="text-center">
-          <p><a class="btn btn-primary  text-white" (click)="editClick(prod['_id'])">Edit</a> | <a
-              class="btn btn-primary text-white" (click)="detailClick(prod['_id'])">Details</a> | <a class="btn btn-danger text-white"
-              (click)="deleteClick(prod['_id'])" data-toggle="modal" data-target="#exampleModalCenter">Delete</a></p>
+          <p><a class="btn btn-primary  text-white" (click)="editClick(cat['_id'])">Edit</a> | <a
+              class="btn btn-primary text-white" (click)="detailClick(cat['_id'])">Details</a> | <a
+              class="btn btn-danger text-white" (click)="deleteClick(cat['_id'])" data-toggle="modal"
+              data-target="#exampleModalCenter">Delete</a></p>
         </td>
       </tr>
     </tbody>

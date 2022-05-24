@@ -1,14 +1,13 @@
 <section class="jumbotron my-form-color mx-auto container-img vertical-center col-lg-7 col-md-9 col-sm-11 p-0 pb-3">
-  <h1 class="text-center text-black bold" style="font-size: 60px;">Add Product</h1>
+  <h1 class="text-center text-black bold" style="font-size: 60px;">Edit Product</h1>
   <div class="container col-lg-8 col-md-9 col-sm-10">
     <form [formGroup]="myForm!">
       <div class="form-group mb-0">
         <div
           class="embed-responsive embed-responsive-1by1 d-flex justify-content-center align-items-center m-auto col-xl-5 col-lg-6 col-md-8 col-sm-10 col-10">
           <label for="edit-product-imgURL" style="cursor: pointer;">
-            <img *ngIf="!oldImg" class="rounded-circle"
-              src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg" />
-            <img *ngIf="oldImg" class="rounded-circle embed-responsive-item" [src]="oldImg" />
+            <img *ngIf="!oldImg" class="rounded-circle" src="/assets/img/placeholderImage.png" />
+            <img *ngIf="oldImg || newImg" class="rounded-circle embed-responsive-item" [src]="oldImg || newImg" />
           </label>
           <input id="edit-product-imgURL" type="file" (change)="selectImage($event)" />
         </div>
