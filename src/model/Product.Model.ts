@@ -14,6 +14,13 @@ export interface IProduct {
   productInformation: string;
   categoryName: string;
   merchantId: mongoose.Types.ObjectId;
+  status: Status;
+}
+
+export enum Status {
+  approved = "approved",
+  pending = "pending",
+  rejected = "rejected",
 }
 
 var ProductSchema = new mongoose.Schema<IProduct>({
@@ -54,7 +61,7 @@ var ProductSchema = new mongoose.Schema<IProduct>({
   availableInventory: {
     type: Number,
     required: true,
-    min:[0,"Available Inventory can't be less than zero"],
+    min: [0, "Available Inventory can't be less than zero"],
   },
   longDescription: {
     type: String,
@@ -70,15 +77,19 @@ var ProductSchema = new mongoose.Schema<IProduct>({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Merchant",
   },
+  status: {
+    type: String,
+    enum: Object.values(Status),
+  },
 });
 
-
-ProductSchema.index({
-  name: "text",
-  shortDescription: "text",
-  longDescription: "text",
-  productInformation: "text",
-  categoryName: "text"
+ProductSchema.index(
+  {
+    name: "text",
+    shortDescription: "text",
+    longDescription: "text",
+    productInformation: "text",
+    categoryName: "text",
   },
   {
     weights: {
@@ -88,9 +99,9 @@ ProductSchema.index({
       productInformation: 1,
       categoryName: 1,
     },
-  })
+  }
+);
 
-
-  // ProductSchema.virtual('abailability').get(()=> this.availableInventory != 0);
+// ProductSchema.virtual('abailability').get(()=> this.availableInventory != 0);
 const ProductModel = mongoose.model<IProduct>("Product", ProductSchema);
 export { ProductModel, ProductSchema };

@@ -52,6 +52,10 @@ router.post(
 
 router.get("/all", checkRole(RoleEnum.admin), UserController.getAll);
 
+router.get("/merchant/:id", UserController.getMerchant);
+
+router.get("/users/:id", checkRole(RoleEnum.admin), UserController.GETUserById);
+
 router.get(
   "/:email",
   checkRole(RoleEnum.admin, RoleEnum.merchant, RoleEnum.user),
@@ -82,7 +86,6 @@ router.patch(
   checkRole(RoleEnum.admin),
   checkSchema("SchemaUpdateUserByAdmin"),
   UserController.UPDATEUserByAdmin
-)
-router.get("/merchant/:id", UserController.getMerchant);
+);
 
 export default router;
