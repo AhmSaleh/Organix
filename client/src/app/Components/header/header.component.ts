@@ -5,7 +5,6 @@ import { ICartView } from 'src/app/Interfaces/ICartView';
 import { AuthService } from 'src/app/Services/auth.service';
 import { CartService } from 'src/app/Services/cart.service';
 declare var $: any;
-import { TestComponent } from '../test/test.component';
 import { LoginComponent } from '../User/login/login.component';
 import { NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
@@ -18,7 +17,7 @@ export class HeaderComponent {
 
   constructor(
     public cartService: CartService, 
-    public auth: AuthService, 
+    public authService: AuthService, 
     private modalService: NgbModal,
     private router: Router
     ) {
@@ -50,7 +49,7 @@ export class HeaderComponent {
     });
   }
   logout() {
-    this.auth.logout();
+    this.authService.logout();
     this.router.navigate(['/home']);
   }
 }

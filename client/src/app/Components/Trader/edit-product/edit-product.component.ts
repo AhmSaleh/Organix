@@ -24,7 +24,9 @@ export class EditProductComponent implements OnInit {
   imgString = '';
   oldImg: any;
   newImg: any;
+ 
 
+  testimg: any;
   constructor(
     private authService: AuthService,
     private dataTransferService: DataTransferService,
@@ -34,6 +36,34 @@ export class EditProductComponent implements OnInit {
     private router: Router
   ) {
     this.myForm = new FormGroup({});
+  }
+
+  ngOnInit(): void {
+    this.productID = this.dataTransferService.getData();
+    if (this.productID != '') {
+      this.productService.getProduct(this.productID).subscribe(
+        (data) => {
+          this.ogData = data;
+          this.setItemData();
+        },
+        (err) => console.log(err)
+      );
+      this.categoryService.getCategories().subscribe((data) => {
+        this.categories = data;
+      });
+      this.productService.getProductImage(this.productID).subscribe(
+        (data) => {
+          this.createImageFromBlob(data);
+        },
+        (err) => {
+          console.log(err);
+          console.log('somewhere here');
+          this.oldImg = this.newImg = null;
+          this.myForm.patchValue({ imgURL: null });
+        }
+      );
+    } 
+    else this.router.navigate(['/myproducts']);
   }
 
   onReset() {
@@ -143,30 +173,4 @@ export class EditProductComponent implements OnInit {
     this.myForm.markAllAsTouched();
   }
 
-  ngOnInit(): void {
-    this.productID = this.dataTransferService.getData();
-    if (this.productID != '') {
-      this.productService.getProduct(this.productID).subscribe(
-        (data) => {
-          this.ogData = data;
-          this.setItemData();
-        },
-        (err) => console.log(err)
-      );
-      this.categoryService.getCategories().subscribe((data) => {
-        this.categories = data;
-      });
-      this.productService.getProductImage(this.productID).subscribe(
-        (data) => {
-          this.createImageFromBlob(data);
-        },
-        (err) => {
-          console.log(err);
-          console.log('somewhere here');
-          this.oldImg = this.newImg = null;
-          this.myForm.patchValue({ imgURL: null });
-        }
-      );
-    } else this.router.navigate(['/myproducts']);
-  }
 }

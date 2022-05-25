@@ -44,9 +44,8 @@ const routes: Routes = [
       { path: 'about-us', component: AboutComponent },
       { path: 'users-list', component: UsersListComponent },
       { path: 'edit-product', component: EditProductComponent }, //5ara
-      { path: 'myproducts', component: MyproductsComponent },
+      { path: 'myproducts', component: MyproductsComponent },// icons, margin, pm-color 
       { path: 'view-product', component: ViewProductDetailsComponent },  //??????????????
-      { path: 'edit-product', component: EditProductComponent },
       {
         path: 'myproducts',
         component: MyproductsComponent,
@@ -59,7 +58,6 @@ const routes: Routes = [
       { path: 'add-category', component: AddCategoryComponent },
       { path: 'view-category', component: ViewCategoryComponent },
       { path: 'updatestatus', component: UpdateProductStatusComponent },
-      // { path: 'cart', component: CartComponent }
       { path: 'cart', component: CartComponent },
       {
         path: 'checkout',

@@ -18,16 +18,4 @@ export class HomeComponent implements OnInit {
 }
 
   ngOnInit(): void {}
-
-  onLogout(){
-    this.authService.logout();
-  }
-  
-    // this.cartService.getCart().subscribe(res=>{
-    //   console.log('removed');
-    //   console.log(res);
-
-    // },err=>{
-    //   console.log('error');
-    // });
 }

@@ -44,6 +44,7 @@ export class LoginComponent implements OnInit {
           );
           Notify.success('Login Successful');
           this.router.navigate(['/home']);
+          this.closeModal();
         },
         error: (error) => {
           if(error.status == 401) {

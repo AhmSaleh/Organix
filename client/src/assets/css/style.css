@@ -24,11 +24,14 @@
 8.  Latest Product Section
 9.  Contact
 10.  Footer Style
+11. Admin crud buttons
 -------------------------------------------------------------------*/
 
 /*----------------------------------------*/
 /* Template default CSS
 /*----------------------------------------*/
+
+@import "~bootstrap-icons/font/bootstrap-icons.css";
 
 html,
 body {
@@ -3523,3 +3526,98 @@ ol {
   opacity: 1!important;
   left: 0!important;
 }
+
+/* Admin CRUD buttons */
+
+.anchor-new {
+  color: #858585;
+  background-color: #1e7e34;
+  border-color: #1c7430;
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  user-select: none;
+  border: 1px solid transparent;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  transition: all 500ms ease 0s;
+  text-decoration: none;
+  outline: 0 solid transparent;
+  color: #fbf5f5;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.anchor-new:hover {
+  color: #fbf5f5;
+  text-decoration:none;
+}
+
+.anchor-edit {
+  color: #007bff;
+  background-color: transparent;
+  background-image: none;
+  border-color: #007bff;
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border: 1px solid transparent;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  transition: all 500ms ease 0s;
+  text-decoration: none;
+  outline: 0 solid transparent;
+  
+  /* font-weight: 600; */
+  font-size: 12px;
+}
+
+.anchor-edit:hover{
+  text-decoration:none;
+  /*font-size:16px;*/
+}
+
+.anchor-delete {
+  display: inline-block;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border: 1px solid transparent;
+  padding: 0.375rem 0.75rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  text-decoration: none;
+  outline: 0 solid transparent;
+  /* font-weight: 600; */
+  font-size: 12px;
+  color: #fff !important;
+  background-color: #c82333;
+  border-color: #bd2130;
+}
+
+  .anchor-delete:hover {
+      transition: all 500ms ease 0s;
+      text-decoration: none;
+      outline: 0 solid transparent;
+      color: #c82333 !important;
+      background-color: transparent;
+      
+  }

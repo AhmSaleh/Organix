@@ -3,10 +3,10 @@
         <div class="input-group mb-3">
             <ng-template #tipContent>search by name, email, or role. Clear the search Bar then search to get the whole list.</ng-template>
             <i data-toggle="tooltip" placement="top" [ngbTooltip]="tipContent" 
-            class='fa fa-info-circle fa-pull-left fa-lg' style="color: #83BD75; margin-top: 10px;"></i>
+            class='fa fa-info-circle fa-pull-left fa-lg' style="color: #7fad39; margin-top: 10px;"></i>
             <input type="text" #searchBar class="form-control" placeholder="Search by Name or Email">
             <div class="input-group-append">
-                <button (click)="search(searchBar.value)" class="btn btn-outline-success" type="button">Search</button>
+                <button (click)="search(searchBar.value)" class="btn user-link" type="button">Search</button>
             </div>
           </div>
     <!-- </form> -->

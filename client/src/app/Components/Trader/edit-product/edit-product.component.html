@@ -1,20 +1,37 @@
-<section class="jumbotron my-form-color mx-auto container-img vertical-center col-lg-7 col-md-9 col-sm-11 p-0 pb-3">
-  <h1 class="text-center text-black bold" style="font-size: 60px;">Edit Product</h1>
-  <div class="container col-lg-8 col-md-9 col-sm-10">
+<section class="mx-auto col-lg-7 col-md-9 col-sm-11 p-0 pb-3">
+  <header>
+    <h1 class="text-center bold mat-display-2 mb-0 mt-3">Edit Product</h1>
+    <hr>
+  </header>
+  <div class="container col-lg-12 col-md-9 col-sm-10">
     <form [formGroup]="myForm!">
+
       <div class="form-group mb-0">
+        <label class="form-label mat-display-1 m-0" for="edit-product-name">Product Image</label>
         <div
-          class="embed-responsive embed-responsive-1by1 d-flex justify-content-center align-items-center m-auto col-xl-5 col-lg-6 col-md-8 col-sm-10 col-10">
+          class="product-img-container d-flex justify-content-center m-auto col-xl-12 col-lg-12 col-md-8 col-sm-10 col-10">
           <label for="edit-product-imgURL" style="cursor: pointer;">
-            <img *ngIf="!oldImg" class="rounded-circle" src="/assets/img/placeholderImage.png" />
-            <img *ngIf="oldImg || newImg" class="rounded-circle embed-responsive-item" [src]="oldImg || newImg" />
+            <div class="media">
+              <div class="overlay"></div>
+              <img *ngIf="!oldImg" class="product-img" src="assets/img/product/product-1.jpg" />
+              <img *ngIf="oldImg || newImg" class="product-img embed-responsive-item" [src]="oldImg || newImg" />
+              <div class="image-details">
+                Upload image
+              </div>
+            </div>
+            <input class="form-control" style="display: none;" id="edit-product-imgURL" type="file"
+              (change)="selectImage($event)" />
           </label>
-          <input id="edit-product-imgURL" type="file" (change)="selectImage($event)" />
         </div>
+        <span
+        [ngClass]="{'visible': (validationClass('img') == invalidClass), 'invisible' :(validationClass('img') != invalidClass)}">
+        <p class="form-text form-control-feedback m-0" style="color: #dc3545;">
+          Image is required.</p>
+      </span>
       </div>
 
       <div class="form-group mb-0">
-        <label for="edit-product-name">Name</label>
+        <label class="form-label" for="edit-product-name">Name</label>
         <input type="text" id="edit-product-name"
           class="form-control {{validationClass('name')}} {{opacityClass('name')}}" formControlName="name"
           placeholder="Name" />
@@ -26,7 +43,7 @@
       </div>
 
       <div class="form-group mb-0">
-        <label for="edit-product-price">Price</label>
+        <label class="form-label" for="edit-product-price">Price</label>
         <input type="number" id="edit-product-name"
           class="form-control  {{validationClass('price')}} {{opacityClass('price')}}"
           [ngClass]="{'mb-4':(validationClass('price') == 'validClass')}" formControlName="price" placeholder="Price" />
@@ -42,7 +59,7 @@
       </div>
 
       <div class="form-group mb-0">
-        <label for="edit-product-short-description">Short Description</label>
+        <label class="form-label" for="edit-product-short-description">Short Description</label>
         <input type="text" id="edit-product-short-description"
           class="form-control {{validationClass('shortDescription')}} {{opacityClass('shortDescription')}}"
           placeholder="Short Description" formControlName="shortDescription" maxlength="70" />
@@ -55,7 +72,7 @@
 
 
       <div class="form-group mb-0">
-        <label for="edit-product-weight">Weight</label>
+        <label class="form-label" for="edit-product-weight">Weight</label>
         <div class="input-group">
           <input type="number" id="edit-product-weight"
             class="form-control {{validationClass('weight')}} {{opacityClass('weight')}}" style="display: inline;"
@@ -78,7 +95,7 @@
       </div>
 
       <div class="form-group mb-0">
-        <label for="edit-product-available-inventory">Available Inventory</label>
+        <label class="form-label" for="edit-product-available-inventory">Available Inventory</label>
         <input type="number" id="edit-product-available-inventory"
           class="form-control {{validationClass('availableInventory')}} {{opacityClass('availableInventory')}}"
           formControlName="availableInventory" placeholder="Available Inventory"
@@ -96,7 +113,7 @@
       </div>
 
       <div class="form-group mb-0">
-        <label for="edit-product-long-Description">Long Description</label>
+        <label class="form-label" for="edit-product-long-Description">Long Description</label>
         <textarea id="edit-product-long-Description" formControlName="longDescription"
           class="form-control {{validationClass('longDescription')}} {{opacityClass('longDescription')}}"
           placeholder="Long Description"></textarea>
@@ -108,9 +125,9 @@
       </div>
 
       <div class="form-group mb-0">
-        <label for="edit-product-category">Category</label>
-        <select class="form-control form-select {{validationClass('categoryName')}} {{opacityClass('categoryName')}}"
-          formControlName="categoryName" id="edit-product-category" style="cursor: pointer;">
+        <label class="form-label" for="edit-product-category">Category</label>
+        <select class="form-control {{opacityClass('categoryName')}}" formControlName="categoryName"
+          id="edit-product-category" style="cursor: pointer;">
           <option value="" hidden selected>Please select a category</option>
           <option *ngFor="let cat of categories" [value]="cat._id">{{cat.name}}</option>
         </select>
@@ -122,7 +139,7 @@
       </div>
 
       <div class="form-group mb-0">
-        <label for="edit-product-product-information">Product Information</label>
+        <label class="form-label" for="edit-product-product-information">Product Information</label>
         <input type="text" id="edit-product-product-information"
           class="form-control {{validationClass('productInformation')}} {{opacityClass('productInformation')}}"
           formControlName="productInformation" placeholder="Product Information" />
@@ -142,15 +159,3 @@
     </form>
   </div>
 </section>
-
-<!-- <pre>{{myForm.controls['name'].valid|json}}</pre>
-  <pre>{{myForm.controls['weight'].valid|json}}</pre>
-  <pre>{{myForm.controls['categoryName'].valid|json}}</pre>
-  <pre>{{myForm.controls['longDescription'].valid|json}}</pre>
-  <pre>{{myForm.controls['availableInventory'].valid|json}}</pre>
-  <pre>{{myForm.controls['shortDescription'].valid|json}}</pre>
-  <pre>{{myForm.controls['img'].valid|json}}</pre>
-  <pre>{{myForm.controls['productInformation'].valid|json}}</pre>
-  <pre>{{myForm.controls['price'].valid|json}}</pre>
-  
-  <pre>{{myForm.valid|json}}</pre> -->

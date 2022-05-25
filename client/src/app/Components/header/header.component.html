@@ -1,8 +1,3 @@
-<!-- Page Preloder -->
- <div id="preloder">
-  <div class="loader"></div>
-</div>
-
 <div class="humberger__menu__overlay"></div>
     <div class="humberger__menu__wrapper" >
         <div class="humberger__menu__logo">
@@ -27,8 +22,11 @@
                     <li><a href="#">English</a></li>
                 </ul>
             </div> -->
-            <div class="header__top__right__auth">
+            <div *ngIf="!authService.isLoggedIn()" class="header__top__right__auth">
                 <a (click)="openLoginModal()"><i class="fa fa-user"></i> Login</a>
+            </div>
+            <div *ngIf="authService.isLoggedIn()" class="header__top__right__auth">
+                <button class="btn" (click)="logout()">logout</button>
             </div>
         </div>
         <nav class="humberger__menu__nav mobile-menu">
@@ -37,6 +35,13 @@
             <li><a style="cursor: pointer;">Shop</a></li>
             <li><a href="./about-us">About US</a></li>
             <li><a href="./contact">Contact</a></li>
+            <li *ngIf="this.authService.isAdmin"><a>Management</a>
+                <ul>
+                    <li><a href="">Users</a></li>
+                    <li><a href="">Products</a></li>
+                    <li><a href="">Categories</a></li>
+                </ul>
+            </li>
           </ul>
         </nav>
         <div id="mobile-menu-wrap" class="slicknav_nav">
@@ -87,8 +92,11 @@
                                     <li><a href="#">English</a></li>
                                 </ul>
                             </div> -->
-                            <div *ngIf="!auth.isLoggedIn()" class="header__top__right__auth">
+                            <div *ngIf="!authService.isLoggedIn()" class="header__top__right__auth">
                                 <button (click)="openLoginModal()"><i class="fa fa-user"></i> Login</button>
+                            </div>
+                            <div *ngIf="authService.isLoggedIn()" class="header__top__right__auth">
+                                <button class="btn" (click)="logout()">logout</button>
                             </div>
                         </div>
                     </div>
@@ -102,17 +110,24 @@
                         <a routerLink="/home"><img src="assets/img/logo.png" alt=""></a>
                     </div>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-7">
                     <nav class="header__menu">
                         <ul>
                             <li class="active"><a routerLink="/home">Home</a></li>
                             <li><a routerLink="/shop">Shop</a></li>
                             <li><a routerLink="/about-us">About US</a></li>
                             <li><a routerLink="/contact">Contact</a></li>
+                            <li *ngIf="this.authService.isLoggedIn() && this.authService.isAdmin()"><a class="dropdown-toggle">Management</a>
+                                <ul class="header__menu__dropdown">
+                                    <li><a routerLink="/users-list">Users</a></li>
+                                    <li><a routerLink="/myproducts">Products</a></li>
+                                    <li><a routerLink="/list-categories">Categories</a></li>
+                                </ul>
+                            </li>
                         </ul>
                     </nav>
                 </div>
-                <div class="col-lg-3">
+                <div class="col-lg-2">
                     <div class="header__cart">
                         <ul>
                             <li><a [ngStyle]="{
