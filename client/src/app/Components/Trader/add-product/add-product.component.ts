@@ -85,7 +85,7 @@ export class AddProductComponent implements OnInit {
       this.formData.append('merchantId', this.authService.getUserId());
 
       this.productService
-        .addProductAny(this.formData, this.authService.isLoggedIn())
+        .addProductAny(this.formData, this.authService.getToken())
         .subscribe(
           (data) => {
             // console.log(data);

@@ -54,7 +54,7 @@ router.post(
     req.body.weight = Number.parseFloat(req.body.weight);
     next();
   },
-  checkRole(RoleEnum.admin),
+  checkRole(RoleEnum.merchant, RoleEnum.admin),
   ProductController.POSTProduct
 );
 
