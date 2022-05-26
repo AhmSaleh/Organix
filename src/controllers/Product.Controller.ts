@@ -87,10 +87,8 @@ async function POSTProduct(req: Request, res: Response) {
     req.body.availability = req.body.availableInventory > 0;
     const validate = ajv.getSchema("product");
     const valid = validate!(req.body);
-
     if (!valid) return res.status(400).send();
     const product = await ProductService.createProduct(req.body);
-
     res.send(product).status(200);
     res.send(); // 2 res.send()???
   } catch (err: any) {
