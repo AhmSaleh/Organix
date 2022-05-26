@@ -24,6 +24,7 @@ export class EditProductComponent implements OnInit {
   imgString = '';
   oldImg: any;
   newImg: any;
+  editable: boolean = false;
  
 
   testimg: any;
@@ -66,6 +67,13 @@ export class EditProductComponent implements OnInit {
     else this.router.navigate(['/myproducts']);
   }
 
+  reverseEdit() {
+    this.editable = !this.editable;
+  }
+  onReturn() {
+    this.router.navigate(['/myproducts']);
+  }
+  
   onReset() {
     this.myForm?.reset();
   }

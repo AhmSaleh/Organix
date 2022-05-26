@@ -23,11 +23,6 @@
               (change)="selectImage($event)" />
           </label>
         </div>
-        <span
-        [ngClass]="{'visible': (validationClass('img') == invalidClass), 'invisible' :(validationClass('img') != invalidClass)}">
-        <p class="form-text form-control-feedback m-0" style="color: #dc3545;">
-          Image is required.</p>
-      </span>
       </div>
 
       <div class="form-group mb-0">
