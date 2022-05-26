@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router, RouterEvent, RouterLink } from '@angular/router';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { IProduct } from 'src/app/Models/IProdcut';
 import { CartService } from 'src/app/Services/cart.service';
@@ -10,7 +11,7 @@ import { ProductServices } from 'src/app/Services/ProductServices/product-servic
   styleUrls: ['./product-item.component.css'],
 })
 export class ProductItemComponent implements OnInit {
-  constructor(private cartService: CartService,private productServices: ProductServices) 
+  constructor(private cartService: CartService,private productServices: ProductServices,private router: Router) 
   {
     this.product = {} as IProduct;
   }
@@ -27,8 +28,14 @@ export class ProductItemComponent implements OnInit {
 
   @Input() product: IProduct;
 
-  addProductIntoCart() {
+  addProductIntoCart(event: Event) {
+    event.stopPropagation()
     this.cartService.add(this.product);
     Notify.success('Product added to cart Successfully!', { timeout: 1400 });
+  }
+  gotoProductDetails(event: Event) {
+    event.stopPropagation()
+    // navigate to page
+    this.router.navigate(['/product', this.product._id]);
   }
 }
