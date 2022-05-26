@@ -84,6 +84,6 @@ export class ViewProductDetailsComponent implements OnInit {
         },
         (err) => console.log(err)
       );
-    } else this.router.navigate(['/list-categories']);
+    } else this.router.navigate(['/myproducts']);
   }
 }

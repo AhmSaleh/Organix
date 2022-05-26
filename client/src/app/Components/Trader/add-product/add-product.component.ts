@@ -50,12 +50,28 @@ export class AddProductComponent implements OnInit {
     this.myForm.controls['img'].markAsTouched();
   }
 
+  createImageFromBlob(image: Blob) {
+    let reader = new FileReader();
+    reader.addEventListener(
+      'load',
+      () => {
+        this.imageFile = reader.result;
+      },
+      false
+    );
+
+    if (image) {
+      reader.readAsDataURL(image);
+    }
+  }
+
   selectImage(event: any) {
     if (event.target.files.length > 0) {
       this.imageFile = event.target.files[0];
       this.myForm.patchValue({ img: this.imageFile });
       this.imageString = this.imageFile.name;
       this.myForm.controls['img'].markAsTouched();
+      this.createImageFromBlob(this.imageFile);
     }
   }
 

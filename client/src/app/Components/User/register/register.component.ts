@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
 import { UserService } from 'src/app/Services/UserServices/user.service';
 
 @Component({
@@ -15,7 +16,7 @@ export class RegisterComponent implements OnInit {
   formdata: FormData = new FormData();
   imageString: String = '';
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService, private router: Router) {
     this.myRegisterForm = new FormGroup({
       name: new FormGroup({
         first: new FormControl('', Validators.required),
@@ -70,7 +71,9 @@ export class RegisterComponent implements OnInit {
 
       this.userService.addUserTemp(this.formdata).subscribe(
         (data) => {
-          console.log('Form service in r c success', data);
+          // console.log('Form service in r c success', data);
+          this.router.navigate(['/']);
+
         },
         (err) => console.log('Form service in r c err' + err)
       );
@@ -200,5 +203,5 @@ export class RegisterComponent implements OnInit {
     )[0].toString();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 }

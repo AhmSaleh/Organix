@@ -1,0 +1,20 @@
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-12">
+                <div class="product__details__pic">
+                    <owl-carousel-o [options]="carouselOptions" class="product__details__pic__slider" #carousel>
+                            <ng-template *ngFor="let cat of categories;  index as i" carouselSlide>
+                                    <div class="profile-card-2">
+                                        <a routerLink="/shop" [queryParams]={category:cat.name}>
+                                            <img [src]="images[0]" class="img img-responsive">
+                                        </a>
+                                        <div class="profile-name">{{cat.name}}</div>
+                                    </div>
+                            </ng-template>
+                    </owl-carousel-o>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

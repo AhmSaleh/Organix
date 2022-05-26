@@ -1,26 +1,27 @@
-<section class="jumbotron my-form-color mx-auto container-img vertical-center col-lg-7 col-md-9 col-sm-11 p-0 pb-3">
-  <h1 class="text-center text-black bold" style="font-size: 60px;">Add Category</h1>
+<section class="my-form-color mx-auto container-img vertical-center col-lg-7 col-md-9 col-sm-11 p-0 pb-3">
+  <header>
+    <h1 class="text-center bold mat-display-2 mb-0 mt-3">Add Category</h1>
+    <hr>
+  </header>
   <div class="container col-lg-8 col-md-9 col-sm-10">
     <form [formGroup]="myForm!">
-      <div class="form-group mb-0">
+      <div class="form-group mb-0" (click)="imgInput.click()">
+        <label for="add-category-imgUrl" class="form-label mat-display-1 m-0">Category Image</label>
         <div
-          class="embed-responsive embed-responsive-1by1 d-flex justify-content-center align-items-center m-auto col-xl-5 col-lg-6 col-md-8 col-sm-10 col-10">
-          <label for="add-category-imgUrl" style="cursor: pointer; display: block;">
-            <img *ngIf="!oldImg" class="rounded-circle" src="/assets/img/placeholderImage.png" />
-            <img *ngIf="oldImg" class="rounded-circle embed-responsive-item" [src]="oldImg" />
+          class="product-img-container d-flex justify-content-center m-auto col-xl-12 col-lg-12 col-md-8 col-sm-10 col-10">
+          <label for="add-category-imgUrl" style="cursor: pointer">
+            <div class="media">
+              <div class="overlay"></div>
+              <img *ngIf="!oldImg" class="product-img" src="assets/img/upload-default.png" />
+              <img *ngIf="oldImg" class="product-img embed-responsive-item" [src]="oldImg" />
+              <div class="image-details">Upload image</div>
+            </div>
+            <input #imgInput type="file" class="form-control {{ validationClass('imageUrl') }} {{
+                opacityClass('imageUrl')
+              }}" style="display: none" id="add-category-imgUrl-hidden" name="img" (change)="selectImage($event)"
+              (cancel)="imgHasBeenTouched($event)" />
           </label>
         </div>
-        <div class="input-group" (click)="imgInput.click()">
-          <input type="text" class="form-control {{validationClass('imageUrl')}} {{opacityClass('imageUrl')}}"
-            id="add-category-imgUrl" placeholder="Choose file..." style="display: inline;" value="{{imageString}}"
-            placeholder="Choose file...">
-          <div class="input-group-append">
-            <button class="btn btn-outline-secondary" type="button">Button</button>
-          </div>
-        </div>
-        <input #imgInput type="file" class="form-control {{validationClass('imageUrl')}}" style="display:none;"
-          id="add-category-imgUrl-hidden" name="imageUrl" (change)="selectImage($event)"
-          (cancel)="imgHasBeenTouched($event)">
         <span
           [ngClass]="{'visible': (validationClass('imageUrl') == invalidClass), 'invisible' :(validationClass('imageUrl') != invalidClass)}">
           <p class="form-text form-control-feedback m-0" style="color: #dc3545;">
