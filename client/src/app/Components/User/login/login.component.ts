@@ -3,7 +3,7 @@ import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/Services/auth.service';
 import { UserService } from 'src/app/Services/UserServices/user.service';
-
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { Report } from 'notiflix/build/notiflix-report-aio';
@@ -23,6 +23,7 @@ export class LoginComponent implements OnInit {
     private userService: UserService,
     private router: Router,
     private auth: AuthService,
+    private activeModal: NgbActiveModal,
     private cart:CartService
   ) {
     this.myForm = new FormGroup({
@@ -31,6 +32,10 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  closeModal(){
+    this.activeModal.close();
+  }
+  
   onSubmit() {
     if (this.myForm.valid) {
       this.userService.loginUser(this.myForm.value).subscribe({
@@ -44,7 +49,8 @@ export class LoginComponent implements OnInit {
             this.cart.syncItems(cart)
           }
           Notify.success('Login Successful');
-          this.router.navigate(['./home']);
+          this.router.navigate(['/home']);
+          this.closeModal();
         },
         error: (error) => {
           if(error.status == 401) {

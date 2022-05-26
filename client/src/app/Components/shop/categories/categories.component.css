@@ -1,0 +1,9 @@
+.category-dd{
+ height: 390px;
+ overflow-y: scroll;   
+}
+
+.category-item:hover{
+    background-color: rgb(230, 230, 230);
+    border-radius: 5px;
+}

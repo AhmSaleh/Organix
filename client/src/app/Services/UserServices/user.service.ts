@@ -29,6 +29,22 @@ export class UserService {
   UserUrl = 'http://localhost:3000/api/user';
   constructor(private http: HttpClient, private auth: AuthService) {}
 
+  ChangeUserRole(userEmail: string, newRole: string, header: string) {
+    return this.http
+      .patch(
+        this.UserUrl + '/admin/' + userEmail,
+        {
+          role: newRole,
+        },
+        {
+          headers: {
+            'x-auth-token': header,
+          },
+        }
+      )
+      .pipe(catchError(this.handleError));
+  }
+
   addUser(user: IRegesterData): Observable<IRegesterData> {
     return this.http
       .post<IRegesterData>(this.UserUrl + '/register', user)
@@ -111,7 +127,11 @@ export class UserService {
 
   getAllUsers(): Observable<IUser[]> {
     return this.http
-      .get<IUser[]>(this.UserUrl + '/all')
+      .get<IUser[]>(this.UserUrl + '/all', {
+        headers: {
+          'x-auth-token': this.auth.getToken(),
+        },
+      })
       .pipe(catchError(this.handleError));
   }
 

@@ -64,6 +64,6 @@ export class ViewCategoryComponent implements OnInit {
         (data) => this.createImageFromBlob(data),
         (err) => console.log(err)
       );
-    }
+    }else this.router.navigate(['/list-categories']);
   }
 }

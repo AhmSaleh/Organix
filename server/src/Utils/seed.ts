@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import {
   rand,
   randBoolean,
+  randCat,
   randEmail,
   randFirstName,
   randFood,
@@ -17,6 +18,8 @@ import envconf from "../envconf";
 import { IUser, RoleEnum } from "../model/UserModel";
 import UserService from "../services/UserService";
 import { IRegesterData } from "./SchemaRegester";
+import { ICategory } from "../model/Category";
+import CategoryService from "../services/CategoryService";
 
 let categories = [
   "Fruits",
@@ -66,6 +69,7 @@ async function fillIfEmptyProducts(merchants_ids: mongoose.Types.ObjectId[]) {
         categoryName: rand(categories),
         merchantId: rand(merchants_ids),
         status: randomEnum(Status),
+        dateAdded: randNumber({ min: 10, max: 1000000000 }),
       };
 
       await ProductService.createProduct(randProduct);
@@ -88,6 +92,21 @@ async function addDefualtAdmin() {
     addresses: [],
   };
   await UserService.createUser(admin);
+}
+
+async function fillIfEmptyCategories() {
+  const allCategories = await CategoryService.getAllCategories();
+  if (allCategories.length === 0) {
+    for (let cat of categories) {
+      const randCat: ICategory = {
+        name: cat,
+        imageUrl:
+          "http://envato.jayasankarkr.in/code/profile/assets/img/profile-2.jpg",
+      };
+      await CategoryService.createCategory(randCat);
+    }
+    console.log(`${categories.length} categories added`);
+  }
 }
 
 async function fillIfEmptyUsers(count: number, role: RoleEnum) {
@@ -121,6 +140,7 @@ async function filldummyData() {
   const merchants = await fillIfEmptyUsers(10, RoleEnum.merchant);
   await fillIfEmptyProducts(merchants.map((x) => x._id));
   await fillIfEmptyUsers(30, RoleEnum.user);
+  await fillIfEmptyCategories();
 }
 
 async function fillAll() {

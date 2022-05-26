@@ -12,7 +12,7 @@ import { ProductServices } from 'src/app/Services/ProductServices/product-servic
 })
 export class ViewProductDetailsComponent implements OnInit {
   constructor(
-    private productService: ProductServices,
+    public productService: ProductServices,
     private dataTransferService: DataTransferService,
     private categoryService: CategoryService,
     private router: Router,
@@ -62,24 +62,19 @@ export class ViewProductDetailsComponent implements OnInit {
     if (this.productID != '') {
       this.productService.getProduct(this.productID).subscribe(
         (data) => {
-          this.categoryService.getCategoryNameById(data.categoryName).subscribe(
-            (catData) => {
-              data.categoryName = catData.name;
-              let myObj: any = {};
-              let keys = Object.keys(data);
-              const myData = data as any;
-              for (let key of keys)
-                if (
-                  key != 'imagesURL' &&
-                  key != '_id' &&
-                  key != '__v' &&
-                  key != 'merchantId'
-                )
-                  myObj[key] = [myData[key]];
-              this.myForm = this.formBuilder.group(myObj);
-            },
-            (err) => console.log(err)
-          );
+            let myObj: any = {};
+            let keys = Object.keys(data);
+            const myData = data as any;
+            for (let key of keys)
+              if (
+                key != 'imagesURL' &&
+                key != '_id' &&
+                key != '__v' &&
+                key != 'merchantId'
+              )
+                myObj[key] = [myData[key]];
+            this.myForm = this.formBuilder.group(myObj);
+          
         },
         (err) => console.log(err)
       );
@@ -89,6 +84,6 @@ export class ViewProductDetailsComponent implements OnInit {
         },
         (err) => console.log(err)
       );
-    } else this.router.navigate(['/list-categories']);
+    } else this.router.navigate(['/myproducts']);
   }
 }

@@ -1,5 +1,5 @@
 import { JSONSchemaType } from "ajv";
-import { ICategory } from "../model/Categoery";
+import { ICategory } from "../model/Category";
 
 const category_schema: JSONSchemaType<ICategory & { products?: string[] }> = {
   type: "object",

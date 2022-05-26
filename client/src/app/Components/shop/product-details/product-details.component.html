@@ -9,7 +9,7 @@
                                 [src]="selectedImage" alt="">
                         </div>
                         <!-- support multiple images -->
-                        <owl-carousel-o class="product__details__pic__slider">
+                        <owl-carousel-o [options]="{'dots': true}" class="product__details__pic__slider">
                             <ng-container *ngFor="let slide of product.imagesURL">
                               <ng-template carouselSlide >
                                 <img [src]="slide" (click)="updateSelected($event)">
@@ -21,10 +21,11 @@
                 <div class="col-lg-6 col-md-6">
                     <div class="product__details__text">
                         <h3>{{product.name}}</h3>
-                        <!-- TODO add link to merchant page -->
-                        
-                        <p *ngIf="merchant">{{merchant.name?.first}} {{merchant.name?.last}}</p>
-                        <app-rating-stars></app-rating-stars>
+                        <p *ngIf="product.categoryName">category: 
+                            <a routerLink="/shop" [queryParams]={category:product.categoryName}>{{product.categoryName}}</a>
+                        </p>
+                        <p class="lastMainInfo" *ngIf="merchant">merchent: {{merchant.name?.first}} {{merchant.name?.last}}</p>
+                        <!-- <app-rating-stars></app-rating-stars> -->
                         <div class="product__details__price">${{product.price}}</div>
                         <p>{{product.shortDescription}}</p>
                         <!-- TODO add improve UI add left and right buttons -->
@@ -70,10 +71,10 @@
                                 <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab"
                                     aria-selected="false">Information</a>
                             </li>
-                            <li class="nav-item">
+                            <!-- <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab"
                                     aria-selected="false">Reviews <span>(1)</span></a>
-                            </li>
+                            </li> -->
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane active" id="tabs-1" role="tabpanel">
