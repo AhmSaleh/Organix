@@ -165,7 +165,7 @@ export class EditProductComponent implements OnInit {
         Validators.compose([
           Validators.required,
           Validators.minLength(0),
-          Validators.maxLength(80),
+          Validators.maxLength(70),
         ]),
       ],
       longDescription: [this.ogData!.longDescription, Validators.required],
