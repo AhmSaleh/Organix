@@ -69,6 +69,7 @@ async function fillIfEmptyProducts(merchants_ids: mongoose.Types.ObjectId[]) {
         categoryName: rand(categories),
         merchantId: rand(merchants_ids),
         status: randomEnum(Status),
+        dateAdded: randNumber({ min: 10, max: 1000000000 }),
       };
 
       await ProductService.createProduct(randProduct);
@@ -95,12 +96,13 @@ async function addDefualtAdmin() {
 
 async function fillIfEmptyCategories() {
   const allCategories = await CategoryService.getAllCategories();
-  if(allCategories.length === 0) {
-    for(let cat of categories) {
+  if (allCategories.length === 0) {
+    for (let cat of categories) {
       const randCat: ICategory = {
         name: cat,
-        imageUrl: "http://envato.jayasankarkr.in/code/profile/assets/img/profile-2.jpg"
-      }
+        imageUrl:
+          "http://envato.jayasankarkr.in/code/profile/assets/img/profile-2.jpg",
+      };
       await CategoryService.createCategory(randCat);
     }
     console.log(`${categories.length} categories added`);
