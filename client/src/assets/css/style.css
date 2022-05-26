@@ -1753,7 +1753,7 @@ ol {
   margin-bottom: 15px;
 }
 
-.product__details__text p {
+.product__details__text p.lastMainInfo {
   margin-bottom: 45px;
 }
 
