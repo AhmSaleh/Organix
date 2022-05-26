@@ -44,6 +44,7 @@ import { EditCategoryComponent } from './Components/Category/edit-category/edit-
 import { AddCategoryComponent } from './Components/Category/add-category/add-category.component';
 import { ViewCategoryComponent } from './Components/Category/view-category/view-category.component';
 import { UpdateProductStatusComponent } from './Components/update-product-status/update-product-status.component';
+import { ChangeRoleComponent } from './Components/change-role/change-role.component';
 // import {MatRadioModule} from '@angular/material/radio'
 // import {MatFormFieldModule} from '@angular/material/form-field'
 
@@ -85,6 +86,7 @@ import { UpdateProductStatusComponent } from './Components/update-product-status
     AddCategoryComponent,
     ViewCategoryComponent,
     UpdateProductStatusComponent,
+    ChangeRoleComponent,
   ],
   imports: [
     BrowserAnimationsModule,
