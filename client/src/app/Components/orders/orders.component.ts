@@ -5,6 +5,8 @@ import { AuthService } from 'src/app/Services/auth.service';
 import { OrderService } from 'src/app/Services/order.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AdminOrderComponent } from './admin-order/admin-order.component';
+import { DataTransferService } from 'src/app/Services/DataTransferService/data-transfer.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-orders',
@@ -16,7 +18,9 @@ export class OrdersComponent implements OnInit {
   constructor(
     private orderService: OrderService,
     private auth: AuthService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private param : DataTransferService,
+    private router: Router
   ) {}
   orders: IOrder[] = [];
   readonly OrderStatus = OrderStatus;
@@ -25,11 +29,16 @@ export class OrdersComponent implements OnInit {
   readonly role = this.auth.getRole();
 
   ngOnInit(): void {
-    console.log(this.role);
-    this.orderService.getOrders().subscribe((res) => {
-      this.orders = res;
-      //console.log(res);
-    });
+    if(this.param.getData() != "")
+    {
+      
+      this.orderService.getOrders(this.param.getData()).subscribe((res) => {
+        this.orders = res;
+      });
+    }
+    else{
+      this.router.navigate(["/"])
+    }
   }
 
   cancelOrder(id: string) {
