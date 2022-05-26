@@ -66,11 +66,8 @@ const routes: Routes = [
         canActivate: [AuthGuard],
       },
       { path: 'orders', component: OrdersComponent, canActivate: [AuthGuard] },
-<<<<<<< HEAD
       { path: 'changerole', component: ChangeRoleComponent },
-=======
       { path: 'test', component: TestComponent}
->>>>>>> origin/main
     ],
   },
   { path: '**', component: NotFoundComponentComponent },
