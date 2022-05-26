@@ -2,6 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/Services/UserServices/user.service';
+import { AuthService } from 'src/app/Services/auth.service';
+import { CartService } from 'src/app/Services/cart.service';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import { Report } from 'notiflix/build/notiflix-report-aio';
+
 
 @Component({
   selector: 'app-register',
@@ -16,7 +21,7 @@ export class RegisterComponent implements OnInit {
   formdata: FormData = new FormData();
   imageString: String = '';
 
-  constructor(private userService: UserService, private router: Router) {
+  constructor(private userService: UserService, private router: Router, private auth: AuthService, private cart: CartService) {
     this.myRegisterForm = new FormGroup({
       name: new FormGroup({
         first: new FormControl('', Validators.required),
@@ -43,20 +48,34 @@ export class RegisterComponent implements OnInit {
   imgHasBeenTouched(event: any) {
     this.myRegisterForm.controls['img'].markAsTouched();
   }
+  createImageFromBlob(image: Blob) {
+    let reader = new FileReader();
+    reader.addEventListener(
+      'load',
+      () => {
+        this.imageFile = reader.result;
+      },
+      false
+    );
 
+    if (image) {
+      reader.readAsDataURL(image);
+    }
+  }
   selectImage(event: any) {
     if (event.target.files.length > 0) {
       this.imageFile = event.target.files[0];
       this.imageString = this.imageFile.name;
       this.myRegisterForm.patchValue({ img: this.imageFile });
       this.myRegisterForm.controls['img'].markAsTouched();
+      this.createImageFromBlob(this.imageFile);
     }
   }
 
   onSubmit(): void {
     if (this.myRegisterForm.valid) {
       this.formdata = new FormData();
-      this.formdata.append('img', this.imageFile);
+      this.formdata.append('img', this.myRegisterForm.value['img']);
       this.formdata.append(
         'name',
         JSON.stringify(this.myRegisterForm.value['name'])
@@ -68,16 +87,26 @@ export class RegisterComponent implements OnInit {
         'addresses',
         JSON.stringify([this.myRegisterForm.value['address']])
       );
-
-      this.userService.addUserTemp(this.formdata).subscribe(
-        (data) => {
-          // console.log('Form service in r c success', data);
-          this.router.navigate(['/']);
-
-        },
-        (err) => console.log('Form service in r c err' + err)
-      );
     }
+    this.userService.addUserTemp(this.formdata).subscribe(
+      (data) => {
+        this.userService.loginUser(this.myRegisterForm.value).subscribe({
+          next: (data) => {
+            this.auth.login(
+              data.headers.get('x-auth-token'),
+              this.myRegisterForm.value.email
+            );
+            let cart = this.cart.getCart();
+            if (cart.Products.length > 0) {
+              this.cart.syncItems(cart)
+            }
+            this.router.navigate(['/home']);
+          }
+        }
+        );
+      },
+      (err) => console.log('Form service in r c err' + err)
+    );
   }
 
   onReset() {
