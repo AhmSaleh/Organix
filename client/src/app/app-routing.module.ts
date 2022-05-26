@@ -51,7 +51,7 @@ const routes: Routes = [
         path: 'myproducts',
         component: MyproductsComponent,
         canActivate: [AuthGuard, RoleGuard],
-        data: { expecteRole: ['merchant', 'admin'] },
+        data: { expecteRole: ['admin','merchant'] },
       },
       { path: 'view-product', component: ViewProductDetailsComponent },
       { path: 'list-categories', component: ListCategoriesComponent },
