@@ -11,6 +11,10 @@ import { ProductServices } from 'src/app/Services/ProductServices/product-servic
 export class PaginationComponent  {
 
   @Input() currentPage: number = 1;
+  
+  viewStartIndex = (currentPage:number) => (currentPage-5 > 0) ? currentPage-5 : 0;
+  viewEndIndex = (currentPage:number) => (this.viewStartIndex(currentPage)+10 < this.lastPageNumber) ? this.viewStartIndex(currentPage)+10 : this.lastPageNumber;
+  
   lastPageNumber: number = 10;
   @Input() linkParamters?: productFetchParamters;
   constructor(private productServices: ProductServices) { }
