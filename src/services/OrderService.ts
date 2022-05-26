@@ -7,19 +7,6 @@ import ProductService from "./ProductService";
 
 
 
-// //modify price
-// const insertOrder = (data: IOrder) => {
-
-
-// var order = new OrderModel(data);
-// order.save();
-// };
-
-// //with user
-// const getOne = (OrderID: string) => {
-//   return OrderModel.find({ _id: OrderID });
-// };
-
 const getAll = () => {
   return OrderModel.find({}).populate('Products.ProductID');
 };
@@ -35,7 +22,7 @@ const updateOrderStatus =async (id:string,status:number)=>{
 
 const getOrderStatus = async (id:string)=>{
   let order =  await OrderModel.findOne({_id:id});
-  return order?.OrderStatus.toString();
+  return order?.OrderStatus;
 }
 
 
