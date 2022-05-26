@@ -25,7 +25,7 @@ export class ProductDetailsComponent implements OnInit {
       this.productService.getProduct(params['id'])
         .subscribe((product) => {
           this.product = product;
-          this.selectedImage = this.product.imgURL;
+          this.selectedImage = this.productService.getProductImageUrl(this.product._id);
           this.getMerchantInfo(product.merchantId);
         });
 

@@ -159,9 +159,7 @@
           }} {{ opacityClass('categoryName') }}" formControlName="categoryName" id="add-product-category"
           style="cursor: pointer">
           <option value="" hidden selected>Please select a category</option>
-          <option *ngFor="let cat of categories" [value]="cat._id">
-            {{ cat.name }}
-          </option>
+          <option *ngFor="let cat of categories" [value]="cat.name">{{cat.name}}</option>
         </select>
         <span [ngClass]="{
             visible: validationClass('categoryName') == invalidClass,

@@ -59,6 +59,9 @@ const procut_schema: JSONSchemaType<IProduct & { merchantId: string }> = {
     status: {
       type: "string",
     },
+    dateAdded: {
+      type: "number",
+    },
   },
   required: [
     "name",
@@ -73,6 +76,7 @@ const procut_schema: JSONSchemaType<IProduct & { merchantId: string }> = {
     "merchantId",
     "status",
     "availability",
+    "dateAdded",
   ],
 };
 

@@ -15,6 +15,7 @@ export interface IProduct {
   categoryName: string;
   merchantId: mongoose.Types.ObjectId;
   status: Status;
+  dateAdded: number;
 }
 
 export enum Status {
@@ -80,6 +81,9 @@ var ProductSchema = new mongoose.Schema<IProduct>({
   status: {
     type: String,
     enum: Object.values(Status),
+  },
+  dateAdded: {
+    type: Number,
   },
 });
 

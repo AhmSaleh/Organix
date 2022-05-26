@@ -27,6 +27,7 @@ import { AddCategoryComponent } from './Components/Category/add-category/add-cat
 import { ViewCategoryComponent } from './Components/Category/view-category/view-category.component';
 import { UpdateProductStatusComponent } from './Components/update-product-status/update-product-status.component';
 import { RoleGuard } from './core/guards/role.guard';
+import { ChangeRoleComponent } from './Components/change-role/change-role.component';
 
 const routes: Routes = [
   {
@@ -50,7 +51,7 @@ const routes: Routes = [
         path: 'myproducts',
         component: MyproductsComponent,
         canActivate: [AuthGuard, RoleGuard],
-        data: { expecteRole: ['merchant'] },
+        data: { expecteRole: ['admin','merchant'] },
       },
       { path: 'view-product', component: ViewProductDetailsComponent },
       { path: 'list-categories', component: ListCategoriesComponent },
@@ -65,6 +66,7 @@ const routes: Routes = [
         canActivate: [AuthGuard],
       },
       { path: 'orders', component: OrdersComponent, canActivate: [AuthGuard] },
+      { path: 'changerole', component: ChangeRoleComponent },
       { path: 'test', component: TestComponent}
     ],
   },

@@ -27,6 +27,8 @@ router.get("/", ProductController.GETProducts);
 
 router.get("/merchent", ProductController.GETProductByMerchent);
 
+router.get("/latest", ProductController.GETLatestProducts);
+
 router.get("/allCount", ProductController.GETProductsCount);
 
 router.get("/CatgCount", ProductController.GETProductsByCatCount);
@@ -54,7 +56,7 @@ router.post(
     req.body.weight = Number.parseFloat(req.body.weight);
     next();
   },
-  checkRole(RoleEnum.merchant),
+  checkRole(RoleEnum.admin, RoleEnum.merchant),
   ProductController.POSTProduct
 );
 
