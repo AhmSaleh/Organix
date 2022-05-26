@@ -5,25 +5,31 @@
   </header>
   <a routerLink="/add-category" class="btn site-btn mb-2 my-1 col-xl-2 col-lg-3 col-md-4 col-sm-5 col-5"
     style="border-radius: 0;"><i class="bi bi-plus"></i> Add Category</a>
-  <table class="table table-bordered table-hover">
-    <thead class="table-success sticky-top">
-      <tr>
-        <th class="text-center">Name</th>
-        <th class="text-center">Operations</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let cat of categories">
-        <td class="text-center">{{cat.name}}</td>
-        <td class="text-center">
-          <a class="btn btn-outline-success anchor-edit" (click)="editClick(cat['_id'])"><i class="bi bi-pencil mr-1"></i>Edit</a> | 
-          <a class="btn btn-outline-info anchor-edit" (click)="detailClick(cat['_id'])"><i class="bi bi-eye mr-1"></i>Details</a> | 
-          <a class="btn anchor-delete" (click)="deleteClick(cat['_id'])" data-toggle="modal"
+
+  <div class="table-responsive" style="height: 500px;">
+
+    <table class="table table-bordered border-success table-hover overflow-scroll">
+      <thead class="table-success">
+        <tr>
+          <th class="text-center">Name</th>
+          <th class="text-center">Operations</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cat of categories">
+          <td class="text-center">{{cat.name}}</td>
+          <td class="text-center">
+            <a class="btn btn-outline-success anchor-edit" (click)="editClick(cat['_id'])"><i
+                class="bi bi-pencil mr-1"></i>Edit</a> |
+            <a class="btn btn-outline-info anchor-edit" (click)="detailClick(cat['_id'])"><i
+                class="bi bi-eye mr-1"></i>Details</a> |
+            <a class="btn anchor-delete" (click)="deleteClick(cat['_id'])" data-toggle="modal"
               data-target="#exampleModalCenter"><i class="bi bi-trash"></i>Delete</a>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </section>
 
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"

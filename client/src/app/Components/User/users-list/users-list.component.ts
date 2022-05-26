@@ -33,6 +33,13 @@ export class UsersListComponent implements OnInit {
     }
   }
 
+  updateRole(id: string) {
+
+  }
+
+  showUserOrders(id: string){
+
+}
   search(value: string): void {
       this.filteredUsers = this.Users.filter((user) =>
         user.name.first.toLowerCase().includes(value.toLowerCase())

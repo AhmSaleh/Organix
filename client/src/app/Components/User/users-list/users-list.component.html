@@ -1,5 +1,8 @@
+<header>
+    <h1 class="text-center bold mat-display-2 mb-0 mt-3">Users List</h1>
+    <hr />
+</header>
 <div class="container d-flex flex-row-reverse">
-    <!-- <form style="width: 300px;"> -->
         <div class="input-group mb-3">
             <ng-template #tipContent>search by name, email, or role. Clear the search Bar then search to get the whole list.</ng-template>
             <i data-toggle="tooltip" placement="top" [ngbTooltip]="tipContent" 
@@ -9,7 +12,6 @@
                 <button (click)="search(searchBar.value)" class="btn user-link" type="button">Search</button>
             </div>
           </div>
-    <!-- </form> -->
 </div>
 <div class="table-responsive container" style="height: 500px;">
     <table class="table table-bordered border-success table-hover overflow-scroll">
@@ -30,8 +32,8 @@
                 <td>{{user.email}}</td>
                 <td>{{user.role}}</td>
                 <td>
-                    <a href="" class="btn user-link">Orders</a> |
-                    <a href="" class="btn user-link">Role</a>
+                    <button (click)="showUserOrders(user._id)" class="btn user-link">Orders</button> |
+                    <button (click)="updateRole(user._id)" class="btn user-link">Edit Role</button>
                 </td>
             </tr>
         </tbody>

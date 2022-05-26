@@ -79,23 +79,14 @@ async function GetProductsByMerchent(req: Request, res: Response) {
 
 async function POSTProduct(req: Request, res: Response) {
   try {
-    console.log("5ara 1");
     req.body.status = Status.pending;
-    console.log("5ara 2");
     req.body.availability = req.body.availableInventory > 0;
-    console.log("5ara 3");
     const validate = ajv.getSchema("product");
-    console.log("5ara 4");
     const valid = validate!(req.body);
-    console.log("5ara 5");
     if (!valid) return res.status(400).send();
-    console.log("5ara 6");
     const product = await ProductService.createProduct(req.body);
-    console.log("5ara 7");
     res.send(product).status(200);
-    console.log("5ara 8");
     res.send(); // 2 res.send()???
-    console.log("5ara");
   } catch (err: any) {
     if (err.name === "ValidationError") {
       res.status(400).send(err);
