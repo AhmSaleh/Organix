@@ -5,8 +5,8 @@
 
 .product-img {
     display: block;
-    width: 250px;
-    height: 100%;
+    width: fit-content;
+    height: 250px;
 }
 
 .text {

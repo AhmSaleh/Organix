@@ -16,7 +16,7 @@ export class FeaturedProductsComponent implements OnInit {
 
   ngOnInit(): void {
    this.productService.getAllProducts().subscribe(data => {
-      this.featuredProducts = data.slice(0, 8);
+      this.featuredProducts = data.slice(data.length - 9, 8);
       console.log(this.featuredProducts);
     })
   }
