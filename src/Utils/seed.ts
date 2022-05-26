@@ -56,7 +56,7 @@ async function fillIfEmptyProducts(merchants_ids: mongoose.Types.ObjectId[]) {
         name: randFood(),
         rate: randNumber({ min: 1, max: 5 }),
         price: randNumber({ min: 10, max: 1000 }),
-        shortDescription: randParagraph(),
+        shortDescription: randFood() + randFood() + randFood(),
         availability: randBoolean(),
         imgURL: randImgLocal(),
         imagesURL: Array(randNumber({ min: 1, max: 5 }))
