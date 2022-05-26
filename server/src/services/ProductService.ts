@@ -147,6 +147,12 @@ class ProductService {
 
     return Math.floor(count);
   }
+
+  async getLatest8Products() {
+    return await ProductModel.find({ dateAdded: { $exists: true } })
+      .sort({ dateAdded: -1 })
+      .limit(8);
+  }
 }
 
 export default new ProductService();

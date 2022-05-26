@@ -39,7 +39,7 @@ export class ProductServices {
       .pipe(catchError(this.handleError));
   }
 
-  getProductImageUrl(id: string){
+  getProductImageUrl(id: string) {
     return this.ProductUrl + '/image/' + id;
   }
 
@@ -94,9 +94,10 @@ export class ProductServices {
     );
   }
 
-  // getAllProducts(): Observable<IProduct[]> {
-  //   return this.http.get<IProduct[]>(this.ProductUrl);
-  // }
+  getLatest8Products() {
+    return this.http.get<IProduct[]>(this.ProductUrl + '/' + 'latest');
+  }
+
   getAllProducts(page: number = 1): Observable<IProduct[]> {
     return this.http.get<IProduct[]>(this.ProductUrl, {
       params: { page: page },

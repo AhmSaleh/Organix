@@ -27,6 +27,8 @@ router.get("/", ProductController.GETProducts);
 
 router.get("/merchent", ProductController.GETProductByMerchent);
 
+router.get("/latest", ProductController.GETLatestProducts);
+
 router.get("/allCount", ProductController.GETProductsCount);
 
 router.get("/CatgCount", ProductController.GETProductsByCatCount);
@@ -48,7 +50,7 @@ router.post(
   "/",
   upload.single("imgURL"),
   (req: any, res: any, next: any) => {
-    console.log("backend 5ara");
+    // console.log("backend 5ara");
     if (req.file) req.body.imgURL = req.file.path;
     req.body.price = Number.parseFloat(req.body.price);
     req.body.availableInventory = Number.parseInt(req.body.availableInventory);

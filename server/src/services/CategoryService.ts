@@ -23,7 +23,7 @@ class CategoerySerice {
     }
 
     async getORCreateCategory(categoryName: string) {
-        let category = await this.getCategoryById(categoryName);
+        let category = await this.getCategoryByName(categoryName);
         if (!category) {
             category = await this.createCategory({ name: categoryName });
         }
