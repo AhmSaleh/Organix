@@ -37,7 +37,11 @@ export class AuthService {
     if (this.isLoggedIn()) return this.getRole() === 'admin';
     throw new Error('No logged in user to find if admin or not.');
   }
-
+  
+  isMerchant() {
+    if (this.isLoggedIn()) return this.getRole() === 'merchant';
+    throw new Error('No logged in user to find if admin or not.');
+  }
   //get user id
   getUserId() {
     if (this.isLoggedIn())

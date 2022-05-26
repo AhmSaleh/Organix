@@ -1,5 +1,5 @@
 <a style="color: green;font-size: 4rem;" routerLink="/shop" [queryParams]=pageWithParamters(+currentPage-1)>
-    <button class="btn btn-outline-success" style="font-size: 2rem;">&lt;</button>
+    <button [disabled]="(+currentPage-1)<1" class="btn btn-outline-success" style="font-size: 2rem;">&lt;</button>
 </a>
 <span *ngFor="let i of pagesList.slice(viewStartIndex(currentPage) ,viewEndIndex(currentPage))" class="mx-2">
     <a *ngIf="i == currentPage" style="color: green;font-size: 4rem;" routerLink="/shop"
@@ -8,5 +8,5 @@
         [queryParams]=pageWithParamters(i)> {{i}} </a>
 </span>
 <a style="color: green;" routerLink="/shop" [queryParams]=pageWithParamters(+currentPage+1)> 
-    <button class="btn btn-outline-success" style="font-size: 2rem;">&gt;</button> 
+    <button [disabled]="(+currentPage+1)>pagesList.length" class="btn btn-outline-success" style="font-size: 2rem;">&gt;</button> 
 </a>

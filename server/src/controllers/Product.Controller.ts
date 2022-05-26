@@ -144,12 +144,14 @@ async function GETProductsByCatCount(req: Request, res: Response) {
 
 async function GETProductsBySearchCount(req: Request, res: Response) {
   try {
-    const productsCount = await ProductService.getProductBySearchCount(
-      req.params.search
-    );
-    res.send({ productsCount }).status(200);
+    if (typeof req.query.searchTerm == "string"){
+      const productsCount = await ProductService.getProductBySearchCount(
+        req.query.searchTerm
+      );
+      res.send({ productsCount }).status(200);
+    }
   } catch (err) {
-    res.status(500).send();
+    res.status(500).send(err);
   }
 }
 

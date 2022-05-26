@@ -55,7 +55,7 @@ export class PaginationComponent  {
   }
 
   updatePagesCount(pagesNumber: number) {
-    this.lastPageNumber = pagesNumber;
+    this.lastPageNumber = pagesNumber | 1;
     this.pagesList = Array.from(Array(this.lastPageNumber).keys()).map(i => i + 1);
   }
 

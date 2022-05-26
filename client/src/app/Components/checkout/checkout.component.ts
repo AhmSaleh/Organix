@@ -106,7 +106,13 @@ export class CheckoutComponent implements OnInit {
               console.log(res);
               if (res.ok) return res.json();
               return res.json().then((json) => {
-                alert(JSON.stringify(json));
+
+                let products = json.map((i:any) => i.name);
+                Notify.failure(`products [${products}] are not available in inventory`, {
+                  closeButton: true,
+                });
+                //alert(JSON.stringify(json));
+
                 Promise.reject(json);
               });
             })

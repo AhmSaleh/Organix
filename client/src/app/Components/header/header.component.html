@@ -8,20 +8,10 @@
                 <li><a [ngStyle]="{
                   'pointer-events': cartService.getCart()?.Products?.length ? 'auto' : 'none'}"
                   routerLink="/cart"><i class="fa fa-shopping-bag"></i> <span>{{ cartService.getCart().Products?.length }}</span></a></li>
-              <li><i class="fa fa-envelope"></i> hello@organix.com</li>
             </ul>
             <div class="header__cart__price">Total: <span>EGP {{cartService.calcCartTotal()}}</span></div>
         </div>
         <div class="humberger__menu__widget">
-            <!-- <div class="header__top__right__language">
-                <img src="assets/img/language.png" alt="">
-                <div>English</div>
-                <span class="arrow_carrot-down"></span>
-                <ul>
-                    <li><a href="#">Spanis</a></li>
-                    <li><a href="#">English</a></li>
-                </ul>
-            </div> -->
             <div *ngIf="!authService.isLoggedIn()" class="header__top__right__auth">
                 <a (click)="openLoginModal()"><i class="fa fa-user"></i> Login</a>
             </div>
@@ -32,16 +22,9 @@
         <nav class="humberger__menu__nav mobile-menu">
           <ul>
             <li class="active"><a href="/home">Home</a></li>
-            <li><a style="cursor: pointer;">Shop</a></li>
+            <li><a href="/shop" style="cursor: pointer;">Shop</a></li>
             <li><a href="./about-us">About US</a></li>
             <li><a href="./contact">Contact</a></li>
-            <li *ngIf="this.authService.isAdmin"><a>Management</a>
-                <ul>
-                    <li><a href="">Users</a></li>
-                    <li><a href="">Products</a></li>
-                    <li><a href="">Categories</a></li>
-                </ul>
-            </li>
           </ul>
         </nav>
         <div id="mobile-menu-wrap" class="slicknav_nav">
@@ -83,15 +66,6 @@
                                 <a href="#"><i class="fa fa-linkedin"></i></a>
                                 <a href="#"><i class="fa fa-pinterest-p"></i></a>
                             </div>
-                            <!-- <div class="header__top__right__language">
-                                <img src="assets/img/language.png" alt="">
-                                <div>English</div>
-                                <span class="arrow_carrot-down"></span>
-                                <ul>
-                                    <li><a href="#">Spanis</a></li>
-                                    <li><a href="#">English</a></li>
-                                </ul>
-                            </div> -->
                             <div *ngIf="!authService.isLoggedIn()" class="header__top__right__auth">
                                 <button (click)="openLoginModal()"><i class="fa fa-user"></i> Login</button>
                             </div>
@@ -105,24 +79,28 @@
         </div>
         <div class="container" >
             <div class="row">
-                <div class="col-lg-3">
+                <div class="col-lg-2">
                     <div class="header__logo">
                         <a routerLink="/home"><img src="assets/img/logo.png" alt=""></a>
                     </div>
                 </div>
-                <div class="col-lg-7">
+                <div class="col-lg-8">
                     <nav class="header__menu">
                         <ul>
                             <li class="active"><a routerLink="/home">Home</a></li>
                             <li><a routerLink="/shop">Shop</a></li>
                             <li><a routerLink="/about-us">About US</a></li>
                             <li><a routerLink="/contact">Contact</a></li>
+                            <li *ngIf="this.authService.isLoggedIn()"><a routerLink="">Orders</a></li>
                             <li *ngIf="this.authService.isLoggedIn() && this.authService.isAdmin()"><a class="dropdown-toggle">Management</a>
                                 <ul class="header__menu__dropdown">
                                     <li><a routerLink="/users-list">Users</a></li>
-                                    <li><a routerLink="/myproducts">Products</a></li>
                                     <li><a routerLink="/list-categories">Categories</a></li>
+                                    <li><a routerLink="/updatestatus">Pending Products</a></li>
                                 </ul>
+                            </li>
+                            <li *ngIf="this.authService.isLoggedIn() && this.authService.isMerchant()">
+                                <a routerLink="/myproducts">Manage Products</a>
                             </li>
                         </ul>
                     </nav>

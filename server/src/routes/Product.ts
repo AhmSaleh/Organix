@@ -50,14 +50,13 @@ router.post(
   "/",
   upload.single("imgURL"),
   (req: any, res: any, next: any) => {
-    // console.log("backend 5ara");
     if (req.file) req.body.imgURL = req.file.path;
     req.body.price = Number.parseFloat(req.body.price);
     req.body.availableInventory = Number.parseInt(req.body.availableInventory);
     req.body.weight = Number.parseFloat(req.body.weight);
     next();
   },
-  checkRole(RoleEnum.admin,RoleEnum.merchant),
+  checkRole(RoleEnum.admin, RoleEnum.merchant),
   ProductController.POSTProduct
 );
 
