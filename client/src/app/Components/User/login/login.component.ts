@@ -7,6 +7,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { Report } from 'notiflix/build/notiflix-report-aio';
+import { CartService } from 'src/app/Services/cart.service';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +23,8 @@ export class LoginComponent implements OnInit {
     private userService: UserService,
     private router: Router,
     private auth: AuthService,
-    private activeModal: NgbActiveModal
+    private activeModal: NgbActiveModal,
+    private cart:CartService
   ) {
     this.myForm = new FormGroup({
       email: new FormControl('', Validators.required),
@@ -42,6 +44,10 @@ export class LoginComponent implements OnInit {
             data.headers.get('x-auth-token'),
             this.myForm.value.email
           );
+          let cart = this.cart.getCart();
+          if(cart.Products.length > 0){
+            this.cart.syncItems(cart)
+          }
           Notify.success('Login Successful');
           this.router.navigate(['/home']);
           this.closeModal();
