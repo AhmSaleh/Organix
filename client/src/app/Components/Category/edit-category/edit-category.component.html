@@ -1,15 +1,31 @@
-<section class="jumbotron my-form-color mx-auto container-img vertical-center col-lg-7 col-md-9 col-sm-11 p-0 pb-3">
-  <h1 class="text-center text-black bold" style="font-size: 60px;">Edit Category</h1>
+<section class="my-form-color mx-auto container-img vertical-center col-lg-7 col-md-9 col-sm-11 p-0 pb-3">
+  <header>
+    <h1 class="text-center bold mat-display-2 mb-0 mt-3">Edit Category</h1>
+    <hr>
+  </header>
   <div class="container col-lg-8 col-md-9 col-sm-10">
     <form [formGroup]="myForm!">
       <div class="form-group mb-0">
-        <div
+        <!-- <div
           class="embed-responsive embed-responsive-1by1 d-flex justify-content-center align-items-center m-auto col-xl-5 col-lg-6 col-md-8 col-sm-10 col-10">
           <label for="edit-category-imgUrl" style="cursor: pointer;">
             <img *ngIf="!oldImg" class="rounded-circle" src="/assets/img/placeholderImage.png" />
             <img *ngIf="oldImg" class="rounded-circle embed-responsive-item" [src]="oldImg" />
           </label>
           <input id="edit-category-imgUrl" type="file" (change)="selectImage($event)" />
+        </div> -->
+        <label for="edit-category-imgUrl" class="form-label mat-display-1 m-0">Category Image</label>
+        <div
+          class="product-img-container d-flex justify-content-center m-auto col-xl-12 col-lg-12 col-md-8 col-sm-10 col-10">
+          <label for="edit-category-imgUrl" style="cursor: pointer">
+            <div class="media">
+              <div class="overlay"></div>
+              <img *ngIf="!oldImg" class="product-img" src="assets/img/upload-default.png" />
+              <img *ngIf="oldImg" class="product-img embed-responsive-item" [src]="oldImg" />
+              <div class="image-details">Upload image</div>
+            </div>
+            <input type="file" class="form-control" style="display: none" id="edit-category-imgUrl" name="img" (change)="selectImage($event)"/>
+          </label>
         </div>
       </div>
 

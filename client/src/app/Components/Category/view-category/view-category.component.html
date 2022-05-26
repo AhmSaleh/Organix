@@ -1,7 +1,10 @@
-<section class="jumbotron my-form-color mx-auto container-img vertical-center col-lg-7 col-md-9 col-sm-11 p-0 pb-3">
-  <h1 class="text-center text-black bold" style="font-size: 60px;">View Category</h1>
+<section class="my-form-color mx-auto container-img vertical-center col-lg-7 col-md-9 col-sm-11 p-0 pb-3">
+  <header>
+    <h1 class="text-center bold mat-display-2 mb-0 mt-3">Category Details</h1>
+    <hr>
+  </header>
   <div class="container col-lg-8 col-md-9 col-sm-10">
-    <form [formGroup]="myForm">
+    <!-- <form [formGroup]="myForm">
       <div class="form-group mb-0">
         <div
           class="embed-responsive embed-responsive-1by1 d-flex justify-content-center align-items-center m-auto col-xl-5 col-lg-6 col-md-8 col-sm-10 col-10">
@@ -24,6 +27,25 @@
         <button type="button" class="site-btn btn-secondary mx-1 col-xl-4 col-lg-5 col-md-6 col-sm-6 col-6"
           (click)="onEdit()">Edit Category</button>
       </div>
-    </form>
+    </form> -->
+
+    <div class="media mb-4">
+      <img *ngIf="!img" class="product-img" src="assets/img/product/product-1.jpg" />
+      <img *ngIf="img" class="product-img embed-responsive-item" [src]="img || img" />
+    </div>
+    <dl class="row">
+      <dt class="col-xl-6 col-lg-6 col-sm-12">
+        Name:
+      </dt>
+      <dd class="col-xl-6 col-lg-6 col-sm-12">
+        {{this.myForm.controls['name'].value}}
+      </dd>
+    </dl>
+    <div class="d-flex justify-content-center">
+      <button type="button" class="site-btn btn-secondary mx-1 col-xl-4 col-lg-5 col-md-6 col-sm-6 col-6"
+        (click)="onReturn()" style="background-color:rgb(108, 117, 125) ;">Return To Categories</button>
+      <button type="button" class="site-btn btn-secondary mx-1 col-xl-4 col-lg-5 col-md-6 col-sm-6 col-6"
+        (click)="onEdit()">Edit Category</button>
+    </div>
   </div>
 </section>
