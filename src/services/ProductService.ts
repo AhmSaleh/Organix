@@ -1,6 +1,6 @@
-import CategoryModel from "../model/Categoery";
+import CategoryModel from "../model/Category";
 import { IProduct, ProductModel, Status } from "../model/Product.Model";
-import CategoeryService from "./CategoeryService";
+import CategoeryService from "./CategoryService";
 import envconf from "../envconf";
 
 class ProductService {
@@ -146,6 +146,12 @@ class ProductService {
       }).countDocuments()) / +envconf.ProductsLimit;
 
     return Math.floor(count);
+  }
+
+  async getLatest8Products() {
+    return await ProductModel.find({ dateAdded: { $exists: true } })
+      .sort({ dateAdded: -1 })
+      .limit(8);
   }
 }
 
