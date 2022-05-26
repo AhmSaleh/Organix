@@ -10,8 +10,8 @@ export class OrderService {
 
   constructor(private http:HttpClient,private auth:AuthService) { }
 
-  getOrders(){
-   return this.http.get<IOrder[]>('http://localhost:3000/api/order/orders',{
+  getOrders(id:string){
+   return this.http.get<IOrder[]>(`http://localhost:3000/api/order/orders/${id}`,{
      headers:{
        'x-auth-token':this.auth.getToken()
      }
