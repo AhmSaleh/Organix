@@ -21,6 +21,16 @@ class ProductController {
   static UPDATEProductStatus = UPDATEProductStatus;
   static GETPendingProducts = GETPendingProducts;
   static GETProductsBySearchCount = GETProductsBySearchCount;
+  static GETLatestProducts = GETLatestProducts;
+}
+
+async function GETLatestProducts(req: Request, res: Response) {
+  try {
+    const products = await ProductService.getLatest8Products();
+    res.status(200).send(products);
+  } catch (err) {
+    res.status(500).send(err);
+  }
 }
 
 async function UPDATEProductStatus(req: Request, res: Response) {
@@ -56,8 +66,12 @@ async function GETProductImage(req: Request, res: Response) {
     if (!product)
       return res.status(404).send(`There are no products added by you.`);
 
-    const imgPath = "../../" + product?.imgURL;
-    res.sendFile(path.join(__dirname, imgPath));
+    if (product.imgURL.indexOf("http") === -1) {
+      const imgPath = "../../" + product?.imgURL;
+      res.sendFile(path.join(__dirname, imgPath));
+    } else {
+      res.redirect(product.imgURL);
+    }
   } catch (err) {
     res.status(500).send(err);
   }
@@ -79,6 +93,7 @@ async function GetProductsByMerchent(req: Request, res: Response) {
 
 async function POSTProduct(req: Request, res: Response) {
   try {
+    req.body.dateAdded = Date.now();
     req.body.status = Status.pending;
     req.body.availability = req.body.availableInventory > 0;
     const validate = ajv.getSchema("product");
@@ -129,12 +144,14 @@ async function GETProductsByCatCount(req: Request, res: Response) {
 
 async function GETProductsBySearchCount(req: Request, res: Response) {
   try {
-    const productsCount = await ProductService.getProductBySearchCount(
-      req.params.search
-    );
-    res.send({ productsCount }).status(200);
+    if (typeof req.query.searchTerm == "string"){
+      const productsCount = await ProductService.getProductBySearchCount(
+        req.query.searchTerm
+      );
+      res.send({ productsCount }).status(200);
+    }
   } catch (err) {
-    res.status(500).send();
+    res.status(500).send(err);
   }
 }
 

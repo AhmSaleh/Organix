@@ -7,60 +7,31 @@ import OrderCreateValidate from "../Utils/OrderCreateValidation";
 import OrderService from "../services/OrderService";
 import { RequestWithAuth } from "../middleware/authentication";
 import { RoleEnum } from "../model/UserModel";
-import ProductService from "../services/ProductService";
+import { OrderStatus, PaymentMethod } from "../model/OrderModel";
 
 class OrderController {
-  // static addOrder(req:Request,res:Response){
-  //     var order = req.body;
-  //     const valid = validate(order);
-  //     if(valid){
-  //         OrderService.insertOrder(order);
-  //         res.status(201).json(order);
-  //     }else{
-  //         res.status(409).json(order);
-  //     }
 
-  // }
 
   static async getOrders(r: Request, res: Response) {
     let req = r as RequestWithAuth;
 
-    if (req.tockenInfo.role == RoleEnum.admin) {
-       res.status(200).json(await OrderService.getAll());
-    } else if (req.tockenInfo.role == RoleEnum.merchant) {
-      ProductService.getProductByMerchant(req.tockenInfo.UserId.toHexString());
-      //TODO: check for orders with this products
-    } else
-    {
-      res.status(200).json(await OrderService.getAllUserID(req.tockenInfo.UserId.toString()));
+    // if (req.tockenInfo.role == RoleEnum.admin) {
+    //    res.status(200).json(await OrderService.getAll());
+    // } else if (req.tockenInfo.role == RoleEnum.merchant) {
+    //   ProductService.getProductByMerchant(req.tockenInfo.UserId.toHexString());
+    //   //TODO: check for orders with this products
+    // } else
+    // {
+    //   res.status(200).json(await OrderService.getAllUserID(req.tockenInfo.UserId.toString()));
+    // }
+
+    switch(req.tockenInfo.role){
+      case RoleEnum.admin:
+        return res.status(200).json(await OrderService.getAllUserID(req.params.id));
+      default:
+        return res.status(200).json(await OrderService.getAllUserID(req.tockenInfo.UserId.toString()))
     }
   }
-
-  // static async getAll(req: Request, res: Response) {
-  //   try {
-  //     res.status(200).json(await OrderService.getAll());
-  //   } catch (err) {
-  //     res.status(409).send();
-  //   }
-  // }
-
-  // static async getOne(req: Request, res: Response) {
-  //   try {
-  //     var OrderID = req.params["id"];
-  //     res.status(200).json(await OrderService.getOne(OrderID));
-  //   } catch {
-  //     res.status(409);
-  //   }
-  // }
-
-  // static async getAllUserID(req: Request, res: Response) {
-  //   try {
-  //     var UserID = req.params["id"];
-  //     res.status(200).json(await OrderService.getAllUserID(UserID));
-  //   } catch {
-  //     res.status(409);
-  //   }
-  // }
 
 
 
@@ -69,37 +40,58 @@ class OrderController {
     let req = r as RequestWithAuth;
     //TODO: validate body
     let id = req.body.orderID;
-    let status = req.body.OrderStatus;
+    let status:OrderStatus = req.body.OrderStatus;
 
     let oldStatus = await OrderService.getOrderStatus(id);
     if(oldStatus){
-      if(oldStatus == '4' )
+
+      if(oldStatus == OrderStatus.Canceled )
         return res.status(403).send();
     }else{
       return res.status(404).send();
     }
 
 
-    if(req.tockenInfo.role == RoleEnum.merchant){
-      return res.status(403).send();
+
+    switch(req.tockenInfo.role){
+      case RoleEnum.merchant:
+        return res.status(403).send();
+      case RoleEnum.admin:
+        if(status == OrderStatus.Canceled){
+          return res.status(204).json(await OrderService.cancelOrder(id));
+        }else{
+          await OrderService.updateOrderStatus(id,status)
+          return res.status(204).send();
+        }
+      
+      case RoleEnum.user:
+        await OrderService.cancelOrder(id)
+        return res.status(204).send();
+       
     }
 
-    if (req.tockenInfo.role == RoleEnum.admin) {
-      if(status == '4'){
-        return res.status(204).json(await OrderService.cancelOrder(id));
-      }else{
-        await OrderService.updateOrderStatus(id,status)
-        return res.status(204).send();
-      }
 
-   } else if (req.tockenInfo.role == RoleEnum.user) {
+
+    // if(req.tockenInfo.role == RoleEnum.merchant){
+    //   return res.status(403).send();
+    // }
+
+  //   if (req.tockenInfo.role == RoleEnum.admin) {
+  //     if(status == OrderStatus.Canceled){
+  //       return res.status(204).json(await OrderService.cancelOrder(id));
+  //     }else{
+  //       await OrderService.updateOrderStatus(id,status)
+  //       return res.status(204).send();
+  //     }
+
+  //  } else if (req.tockenInfo.role == RoleEnum.user) {
     
 
-      await OrderService.cancelOrder(id)
-     return res.status(204).send();
+  //     await OrderService.cancelOrder(id)
+  //    return res.status(204).send();
     
 
-   } 
+  //  } 
 
 
   }
@@ -110,7 +102,7 @@ class OrderController {
       let data = req.body;
       const valid = OrderCreateValidate(data);
       if (valid) {
-        if (data.Method == 0) {
+        if (data.Method == PaymentMethod.PayPal) {
           let order = await OrderService.createOrderPaypal(data);
 
           if (Array.isArray(order)) {
