@@ -39,6 +39,10 @@ export class ProductServices {
       .pipe(catchError(this.handleError));
   }
 
+  getProductImageUrl(id: string){
+    return this.ProductUrl + '/image/' + id;
+  }
+
   getProductByMerchent(merchentID: string) {
     return this.http.get<IProduct[]>(`${this.ProductUrl}/merchent`, {
       headers: { merchentID: merchentID },

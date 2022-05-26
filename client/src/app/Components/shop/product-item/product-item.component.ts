@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { IProduct } from 'src/app/Models/IProdcut';
 import { CartService } from 'src/app/Services/cart.service';
+import { ProductServices } from 'src/app/Services/ProductServices/product-services.service';
 
 @Component({
   selector: 'app-product-item',
@@ -9,15 +10,18 @@ import { CartService } from 'src/app/Services/cart.service';
   styleUrls: ['./product-item.component.css'],
 })
 export class ProductItemComponent implements OnInit {
-  constructor(private cartService: CartService) {
+  constructor(private cartService: CartService,private productServices: ProductServices) 
+  {
     this.product = {} as IProduct;
   }
 
   ngOnInit(): void {
     this.currentImage = {
-      'background-image': `url(${this.product.imgURL})`,
+      'background-image': `url(${this.productServices.getProductImageUrl(this.product._id)})`,
     };
   }
+  
+
 
   currentImage: Record<string, string> = {};
 
