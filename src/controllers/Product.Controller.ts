@@ -56,8 +56,12 @@ async function GETProductImage(req: Request, res: Response) {
     if (!product)
       return res.status(404).send(`There are no products added by you.`);
 
-    const imgPath = "../../" + product?.imgURL;
-    res.sendFile(path.join(__dirname, imgPath));
+    if(product.imgURL.indexOf("http") === -1){
+      const imgPath = "../../" + product?.imgURL;
+      res.sendFile(path.join(__dirname, imgPath));
+    }else{
+      res.redirect(product.imgURL);
+    }
   } catch (err) {
     res.status(500).send(err);
   }

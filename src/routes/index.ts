@@ -4,7 +4,7 @@ import cart from "./cart";
 
 
 import category from "./Category";
-import product from "./Proudct"
+import product from "./Product"
 import order from "./order";
 const router = express.Router();
 
