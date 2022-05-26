@@ -1,5 +1,5 @@
 import { Schema, Types } from "mongoose";
-import CategoryModel, { ICategory } from "../model/Categoery";
+import CategoryModel, { ICategory } from "../model/Category";
 import { IProduct } from "../model/Product.Model";
 import ProductService from "./ProductService";
 
@@ -23,7 +23,7 @@ class CategoerySerice {
     }
 
     async getORCreateCategory(categoryName: string) {
-        let category = await this.getCategoryByName(categoryName);
+        let category = await this.getCategoryById(categoryName);
         if (!category) {
             category = await this.createCategory({ name: categoryName });
         }
