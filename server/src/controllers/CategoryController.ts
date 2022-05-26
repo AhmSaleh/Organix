@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import CategoeryService from "../services/CategoeryService";
+import CategoeryService from "../services/CategoryService";
 import { RequestWithSchema } from "../middleware/validation";
-import { ICategory } from "../model/Categoery";
+import { ICategory } from "../model/Category";
 import { RequestWithAuth } from "../middleware/authentication";
 import ajv from "../Utils/validate";
 import path from "path";

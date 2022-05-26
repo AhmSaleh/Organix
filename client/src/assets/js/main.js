@@ -10,7 +10,9 @@
 'use strict';
 
 (function ($) {
-
+    $(".fa-bars").click(function () {
+        console.log("Hello")
+      })
     /*------------------
         Preloader
     --------------------*/

@@ -1,3 +1,19 @@
 .user-link {
-    background-color: #83BD75;
+    background-color: initial;
+    border-color: #7fad39;
+    color: #7fad39;
+    text-decoration: none;
+}
+
+.user-link:hover {
+    background-color: #7fad39;
+    color: black;   
+}
+
+.table-success {
+    background-color: #7fad39;
+}
+
+.table-success:hover {
+    background-color: #8cae5a;
 }
