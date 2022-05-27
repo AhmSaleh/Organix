@@ -7,7 +7,7 @@
                             <ng-template *ngFor="let cat of categories;  index as i" carouselSlide>
                                     <div class="profile-card-2">
                                         <a routerLink="/shop" [queryParams]={category:cat.name}>
-                                            <img [src]="images[0]" class="img img-responsive">
+                                            <img [src]="cat.imageUrl" alt="" class="img img-responsive">
                                         </a>
                                         <div class="profile-name">{{cat.name}}</div>
                                     </div>

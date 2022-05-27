@@ -22,8 +22,6 @@ export class ProductItemComponent implements OnInit {
     };
   }
   
-
-
   currentImage: Record<string, string> = {};
 
   @Input() product: IProduct;
@@ -31,7 +29,7 @@ export class ProductItemComponent implements OnInit {
   addProductIntoCart(event: Event) {
     event.stopPropagation()
     this.cartService.add(this.product);
-    Notify.success('Product added to cart Successfully!', { timeout: 1400 });
+    Notify.success('Product added to cart Successfully!', { timeout: 1000 });
   }
   
   gotoProductDetails(event: Event) {

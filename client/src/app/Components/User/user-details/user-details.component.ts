@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { IUser } from 'src/app/Models/IUser';
 import { UserService } from 'src/app/Services/UserServices/user.service';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-details',
@@ -21,7 +22,7 @@ export class UserDetailsComponent implements OnInit {
   img: any;
   newImg: any;
 
-  constructor(private UserService: UserService) {
+  constructor(private UserService: UserService, private router: Router) {
     UserService.getUserPFP().subscribe(
       (response) => {
         this.createImageFromBlob(response);
@@ -65,6 +66,9 @@ export class UserDetailsComponent implements OnInit {
   }
   ngOnInit(): void {}
 
+  onCancel() {
+    this.router.navigate(["/home"]);
+  }
   createImageFromBlob(image: Blob) {
     let reader = new FileReader();
     reader.addEventListener(

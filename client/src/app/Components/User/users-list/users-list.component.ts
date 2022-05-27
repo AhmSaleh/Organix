@@ -42,9 +42,9 @@ export class UsersListComponent implements OnInit {
   }
 
   showUserOrders(id: string) {
-    // this.dataTransferService.clearData();
-    // this.dataTransferService.setData(id);
-    this.router.navigate([`/orders/${id}`]);
+    this.dataTransferService.clearData();
+    this.dataTransferService.setData(id);
+    this.router.navigate([`/orders`]);
   }
 
   search(value: string): void {

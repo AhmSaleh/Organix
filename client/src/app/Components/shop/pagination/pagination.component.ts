@@ -12,8 +12,8 @@ export class PaginationComponent  {
 
   @Input() currentPage: number = 1;
   
-  viewStartIndex = (currentPage:number) => (currentPage-5 > 0) ? currentPage-5 : 0;
-  viewEndIndex = (currentPage:number) => (this.viewStartIndex(currentPage)+10 < this.lastPageNumber) ? this.viewStartIndex(currentPage)+10 : this.lastPageNumber;
+  viewStartIndex = (currentPage:number) => (currentPage-4 > 0) ? currentPage-4 : 0;
+  viewEndIndex = (currentPage:number) => (this.viewStartIndex(currentPage)+4 < this.lastPageNumber) ? this.viewStartIndex(currentPage)+4 : this.lastPageNumber;
   
   lastPageNumber: number = 10;
   @Input() linkParamters?: productFetchParamters;

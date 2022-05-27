@@ -54,6 +54,7 @@ export class ChangeRoleComponent implements OnInit {
     if (this.userId != '') {
       this.userService.getUserById(this.userId).subscribe(
         (data) => {
+          console.log(this.userId);
           this.user = data[0];
           this.myForm.patchValue({ role: this.user.role });
           this.roles = ['admin', 'merchant', 'user'].filter(

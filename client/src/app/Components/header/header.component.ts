@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { ICartView } from 'src/app/Interfaces/ICartView';
 import { AuthService } from 'src/app/Services/auth.service';
 import { CartService } from 'src/app/Services/cart.service';
 declare var $: any;
 import { LoginComponent } from '../User/login/login.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataTransferService } from 'src/app/Services/DataTransferService/data-transfer.service';
+import { UserService } from 'src/app/Services/UserServices/user.service';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 @Component({
   selector: 'app-header',
@@ -15,13 +15,17 @@ import { DataTransferService } from 'src/app/Services/DataTransferService/data-t
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent {
+  img:any;
+
   constructor(
     public cartService: CartService,
     public authService: AuthService,
     private modalService: NgbModal,
     public router: Router,
-    private dataTransferService: DataTransferService
-  ) {}
+    private dataTransferService: DataTransferService,
+    private userService: UserService
+  ) {
+  }
 
   openLoginModal() {
     const modalRef = this.modalService.open(LoginComponent, {
@@ -30,6 +34,20 @@ export class HeaderComponent {
     });
   }
 
+  createImageFromBlob(image: Blob) {
+    let reader = new FileReader();
+    reader.addEventListener(
+      'load',
+      () => {
+        this.img = reader.result;
+      },
+      false
+    );
+
+    if (image) {
+      reader.readAsDataURL(image);
+    }
+  }
   gotoOrders() {
     this.dataTransferService.clearData();
     this.dataTransferService.setData(this.authService.getUserId());
@@ -55,7 +73,13 @@ export class HeaderComponent {
       prependTo: '#mobile-menu-wrap',
       allowParentLinks: true,
     });
+
   }
+
+  reloadImage() {
+    
+  }
+
   logout() {
     this.authService.logout();
     this.router.navigate(['/home']);

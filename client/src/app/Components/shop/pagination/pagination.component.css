@@ -1,0 +1,48 @@
+a button:focus,a button:active{
+    box-shadow: transparent 0px 1px 4px;
+}
+
+.num{
+    color: black;
+    padding: 3px 15px 3px 15px;
+}
+.disabled-num{
+    color: black;
+    padding: 3px 15px 3px 15px;
+}
+
+.num:hover {
+    color: #7fad39;
+}
+
+/* Right Pagination buttons */
+.right-pagination-btn {
+    border-left: 1px solid #7fad39;
+    border-radius: 0px 5px 5px 0px;
+}
+
+.right-pagination-btn:disabled{
+    pointer-events: none;
+}
+
+.right-pagination-btn:hover{
+    background-color: #7fad39;
+    color: white;
+} 
+
+/* Left Pagination buttons */
+
+.left-pagination-btn {
+    border-right: 1px solid #7fad39;
+    border-radius: 5px 0px 0px 5px;
+}
+
+.left-pagination-btn:disabled{
+    pointer-events: none;
+}
+
+
+.left-pagination-btn:hover{
+    background-color: #7fad39;
+    color: white;
+} 
