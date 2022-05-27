@@ -6,6 +6,7 @@ import CartService from "../services/CartService";
 
 class CartController {
   static async getCart(req: Request, res: Response) {
+    /* 	#swagger.tags = ['User'] */
     try {
       var UserID = req.params["id"];
       res.status(200).json(await CartService.getCart(UserID));
@@ -16,6 +17,7 @@ class CartController {
   }
 
   static async UpdateCart(req: Request, res: Response) {
+    /* 	#swagger.tags = ['User'] */
     try{
     var cart = req.body;
     const valid = validate(cart);

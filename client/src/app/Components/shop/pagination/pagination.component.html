@@ -1,12 +1,21 @@
-<a style="color: green;font-size: 4rem;" routerLink="/shop" [queryParams]=pageWithParamters(+currentPage-1)>
-    <button [disabled]="(+currentPage-1)<1" class="btn btn-outline-success" style="font-size: 2rem;">&lt;</button>
+<a style="color: #7fad39;" routerLink="/shop" [queryParams]=pageWithParamters(1)>
+    <button [disabled]="(+currentPage-1)<1" class="btn left-pagination-btn" style="font-size: 20px;">&lt;&lt;</button>
 </a>
-<span *ngFor="let i of pagesList.slice(viewStartIndex(currentPage) ,viewEndIndex(currentPage))" class="mx-2">
-    <a *ngIf="i == currentPage" style="color: green;font-size: 4rem;" routerLink="/shop"
+<a style="color: #7fad39;" routerLink="/shop" [queryParams]=pageWithParamters(+currentPage-1)>
+    <button [disabled]="(+currentPage-1)<1" class="btn left-pagination-btn" style="border-radius: 0px;font-size: 20px;">&lt;</button>
+</a>
+<span *ngFor="let i of pagesList.slice(viewStartIndex(currentPage) ,viewEndIndex(currentPage))" class="mx-1">
+    <a *ngIf="i == currentPage" style="color: #7fad39; border-bottom: 3px solid #7fad39; font-size: 20px;" routerLink="/shop"
         [queryParams]=pageWithParamters(i)> {{i}} </a>
-    <a *ngIf="i != currentPage" style="color: black;font-size: 2rem;" routerLink="/shop"
+    <a class="num" *ngIf="i != currentPage" style="font-size: 20px;" routerLink="/shop"
         [queryParams]=pageWithParamters(i)> {{i}} </a>
 </span>
-<a style="color: green;" routerLink="/shop" [queryParams]=pageWithParamters(+currentPage+1)> 
-    <button [disabled]="(+currentPage+1)>pagesList.length" class="btn btn-outline-success" style="font-size: 2rem;">&gt;</button> 
-</a>
+<span *ngIf="currentPage < 81" class="mx-1 disabled-num" style="font-size:20px; padding-bottom: 10px;">...</span>
+<span *ngIf="currentPage < 81" class="mx-1 disabled-num" style="font-size:20px;">{{lastPageNumber}}</span>
+
+<a style="color: #7fad39;" routerLink="/shop" [queryParams]=pageWithParamters(+currentPage+1)> 
+    <button [disabled]="(+currentPage+1)>pagesList.length" class="btn right-pagination-btn" style="border-radius: 0px; font-size: 20px;">&gt;</button> 
+</a> 
+<a style="color: #7fad39;" routerLink="/shop" [queryParams]=pageWithParamters(lastPageNumber)> 
+    <button [disabled]="(+currentPage+1)>pagesList.length" class="btn  right-pagination-btn" style="font-size: 20px;">&gt;&gt;</button> 
+</a> 

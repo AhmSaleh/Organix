@@ -17,6 +17,7 @@ class CategoryController {
 }
 
 async function GETCategoryImage(req: Request, res: Response) {
+  /* 	#swagger.tags = ['Category'] */
   try {
     const category = await CategoeryService.getCategoryById(req.params.id);
     if (!category)
@@ -34,6 +35,7 @@ async function GETCategoryImage(req: Request, res: Response) {
 GETCategoryImage;
 
 async function POSTCategory(r: Request, res: Response) {
+  /* 	#swagger.tags = ['Category'] */
   const validate = ajv.getSchema("category");
   const valid = validate!(r.body);
   if (!valid) return res.status(400).send();
@@ -48,6 +50,7 @@ async function POSTCategory(r: Request, res: Response) {
 }
 
 async function GETCategories(req: Request, res: Response) {
+  /* 	#swagger.tags = ['Category'] */
   try {
     const categories = await CategoeryService.getAllCategories();
     res.send(categories).status(200);
@@ -57,6 +60,7 @@ async function GETCategories(req: Request, res: Response) {
 }
 
 async function GETCategoryById(req: Request, res: Response) {
+  /* 	#swagger.tags = ['Category'] */
   try {
     const category = await CategoeryService.getCategoryById(req.params.id);
     if (!category) {
@@ -73,6 +77,7 @@ async function GETCategoryById(req: Request, res: Response) {
 }
 
 async function DELETECategoryById(r: Request, res: Response) {
+  /* 	#swagger.tags = ['Category'] */
   let req = r as RequestWithAuth;
   try {
     const category = await CategoeryService.deleteCategory(req.params.id);
@@ -91,6 +96,7 @@ async function DELETECategoryById(r: Request, res: Response) {
 }
 
 async function UPDATECategoryById(r: Request, res: Response) {
+  /* 	#swagger.tags = ['Category'] */
   let req = r as RequestWithAuth & RequestWithSchema<ICategory>;
   const validate = ajv.getSchema("category");
   const valid = validate!(r.body);
@@ -115,6 +121,7 @@ async function UPDATECategoryById(r: Request, res: Response) {
 }
 
 async function GETCategoryByName(req: Request, res: Response) {
+  /* 	#swagger.tags = ['Category'] */
   try {
     const category = await CategoeryService.getCategoryByName(req.params.name);
     if (!category) {

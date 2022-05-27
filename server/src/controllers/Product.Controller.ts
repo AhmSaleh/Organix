@@ -26,6 +26,7 @@ class ProductController {
 }
 
 async function GETAllProductsAdmin(req: Request, res: Response) {
+  /* 	#swagger.tags = ['Product'] */
   try {
     const products = await ProductService.getAllProductsAdmin();
     res.status(200).send(products);
@@ -35,6 +36,7 @@ async function GETAllProductsAdmin(req: Request, res: Response) {
 }
 
 async function GETLatestProducts(req: Request, res: Response) {
+  /* 	#swagger.tags = ['Product'] */
   try {
     const products = await ProductService.getLatest8Products();
     res.status(200).send(products);
@@ -44,6 +46,7 @@ async function GETLatestProducts(req: Request, res: Response) {
 }
 
 async function UPDATEProductStatus(req: Request, res: Response) {
+  /* 	#swagger.tags = ['Product'] */
   try {
     const product: any = await ProductService.getProductById(req.params.id); // possible error from changing this
     if (!product)
@@ -60,6 +63,7 @@ async function UPDATEProductStatus(req: Request, res: Response) {
 }
 
 async function GETPendingProducts(req: Request, res: Response) {
+  /* 	#swagger.tags = ['Product'] */
   try {
     const products = await ProductService.getPendingProducts();
     if (!products)
@@ -71,6 +75,7 @@ async function GETPendingProducts(req: Request, res: Response) {
 }
 
 async function GETProductImage(req: Request, res: Response) {
+  /* 	#swagger.tags = ['Product'] */
   try {
     const product: any = await ProductService.getProductById(req.params.id);
     if (!product)
@@ -88,6 +93,7 @@ async function GETProductImage(req: Request, res: Response) {
 }
 
 async function GetProductsByMerchent(req: Request, res: Response) {
+  /* 	#swagger.tags = ['Product'] */
   try {
     const products = await ProductService.getProductsByMerchent(
       req.get("merchentID")
@@ -102,6 +108,7 @@ async function GetProductsByMerchent(req: Request, res: Response) {
 }
 
 async function POSTProduct(req: Request, res: Response) {
+  /* 	#swagger.tags = ['Product'] */
   try {
     const validate = ajv.getSchema("product");
     const valid = validate!(req.body);
@@ -119,6 +126,7 @@ async function POSTProduct(req: Request, res: Response) {
 }
 
 async function GETProducts(req: Request, res: Response) {
+  /* 	#swagger.tags = ['Product'] */
   try {
     let { page } = req.query;
     if (!page) page = "1";
@@ -131,6 +139,7 @@ async function GETProducts(req: Request, res: Response) {
 }
 
 async function GETProductsCount(req: Request, res: Response) {
+  /* 	#swagger.tags = ['Product'] */
   try {
     const productsCount = await ProductService.getAllProductsCount();
     res.send({ productsCount }).status(200);
@@ -139,6 +148,7 @@ async function GETProductsCount(req: Request, res: Response) {
   }
 }
 async function GETProductsByCatCount(req: Request, res: Response) {
+  /* 	#swagger.tags = ['Product'] */
   try {
     const productsCount = await ProductService.getProductByCategoryCount(
       req.query.category
@@ -150,6 +160,7 @@ async function GETProductsByCatCount(req: Request, res: Response) {
 }
 
 async function GETProductsBySearchCount(req: Request, res: Response) {
+  /* 	#swagger.tags = ['Product'] */
   try {
     if (typeof req.query.searchTerm == "string") {
       const productsCount = await ProductService.getProductBySearchCount(
@@ -163,6 +174,7 @@ async function GETProductsBySearchCount(req: Request, res: Response) {
 }
 
 async function getProductList(req: Request, res: Response) {
+  /* 	#swagger.tags = ['Product'] */
   try {
     let arr: string[] = JSON.parse(req.params.list);
     const list = await ProductService.getProductList(arr);
@@ -174,6 +186,7 @@ async function getProductList(req: Request, res: Response) {
 }
 
 async function GETProductById(req: Request, res: Response) {
+  /* 	#swagger.tags = ['Product'] */
   try {
     const product = await ProductService.getProductById(req.params.id);
     if (!product) {
@@ -190,6 +203,7 @@ async function GETProductById(req: Request, res: Response) {
 }
 
 async function GETProductByName(req: Request, res: Response) {
+  /* 	#swagger.tags = ['Product'] */
   try {
     let { page } = req.query;
     if (!page) page = "1";
@@ -212,6 +226,7 @@ async function GETProductByName(req: Request, res: Response) {
 }
 
 async function DELETEProductById(req: Request, res: Response) {
+  /* 	#swagger.tags = ['Product'] */
   try {
     const product = ProductService.deleteProduct(req.params.id);
     if (!product) {
@@ -228,6 +243,7 @@ async function DELETEProductById(req: Request, res: Response) {
 }
 
 async function UPDATEProductById(req: Request, res: Response) {
+  /* 	#swagger.tags = ['Product'] */
   try {
     req.body.status = "pending";
     req.body.availability = req.body.availableInventory > 0;
@@ -263,6 +279,7 @@ async function UPDATEProductById(req: Request, res: Response) {
 }
 
 async function GETProductByCategory(req: Request, res: Response) {
+  /* 	#swagger.tags = ['Product'] */
   try {
     let { page } = req.query;
     if (!page) page = "1";
@@ -285,6 +302,7 @@ async function GETProductByCategory(req: Request, res: Response) {
 }
 
 async function GETProductBySearch(req: Request, res: Response) {
+  /* 	#swagger.tags = ['Product'] */
   try {
     let { page } = req.query;
     if (!page) page = "1";

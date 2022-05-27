@@ -169,8 +169,8 @@ ol {
 }
 
 .spad {
-  padding-top: 100px;
-  padding-bottom: 100px;
+  padding-top: 30px;
+  padding-bottom: 30px;
 }
 
 .text-white h1,
@@ -896,6 +896,7 @@ ol {
 }
 
 .featured__item {
+  cursor: pointer;
   margin-bottom: 50px;
 }
 
@@ -1574,6 +1575,7 @@ ol {
 
 .product__item {
   margin-bottom: 50px;
+  cursor: pointer;
 }
 
 .product__item:hover .product__item__pic .product__item__pic__hover {
@@ -2905,8 +2907,8 @@ ol {
 }
 
 .contact-form {
-  padding-top: 80px;
-  padding-bottom: 80px;
+  padding-top: 30px;
+  padding-bottom: 30px;
 }
 
 .contact-form form input {

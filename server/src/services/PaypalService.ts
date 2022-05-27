@@ -4,17 +4,6 @@ import OrderModel, { OrderStatus, PaymentMethod, PaymentStatus } from "../model/
 const checkoutNodeJssdk = require('@paypal/checkout-server-sdk');
 const paypalClient = require('./payPalClient');
 
-// const Environment =
-//   process.env.NODE_ENV === "production"
-//     ? checkoutNodeJssdk.core.LiveEnvironment
-//     : checkoutNodeJssdk.core.SandboxEnvironment
-// const paypalClient = new checkoutNodeJssdk.core.PayPalHttpClient(
-//   new Environment(
-//     process.env.PAYPAL_CLIENT_ID,
-//     process.env.PAYPAL_CLIENT_SECRET
-//   )
-// )
-
 
 const buildRequestBody = async (data:IOrderData)=> {
 
@@ -28,7 +17,7 @@ const buildRequestBody = async (data:IOrderData)=> {
     failed.push(item);
     return {
      "name":item.name,
-     "description": item.shortDescription ,
+     //"description": item.shortDescription ,
      //"sku": "sku01",
      "unit_amount": {
          "currency_code": "USD",
@@ -220,8 +209,7 @@ async function createOrder(data:IOrderData,debug=false) {
         const request = new checkoutNodeJssdk.orders.OrdersCaptureRequest(data.data.orderID);
         request.requestBody({});
         const response = await paypalClient.client().execute(request);
-        console.log(response);
-        if (true){
+        if (debug){
             console.log("Status Code: " + response.statusCode);
             console.log("Status: " + response.result.status);
             console.log("Order ID: " + response.result.id);

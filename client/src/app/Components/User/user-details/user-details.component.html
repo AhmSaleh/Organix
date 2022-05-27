@@ -1,24 +1,30 @@
 <div class="contact-form spad">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-12">
-        <div class="contact__form__title">
-          <h2>User Details</h2>
+  <section class="breadcrumb-section set-bg col-12 mb-5">
+    <img src="assets/img/titleBG.jpg" class="col-12"
+      style="max-height: 150px; filter: brightness(50%); position: absolute;" alt="">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <div class="breadcrumb__text">
+            <h2>User Profile</h2>
+          </div>
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-lg-12">
-        <div class="contact__form__title">
-          <div class="image-upload">
-            <label for="file-input">
-              <img *ngIf="!img" class="rounded-circle" width="200px" src="/assets/img/placeholderImage.png" />
-              <img *ngIf="img" class="rounded-circle" width="200px" [src]="img" />
-            </label>
-
-            <input id="file-input" type="file" (change)="imageSelected($event)" />
+  </section>
+  <div class="container">
+    <div class="row" (click)="imgInput.click()">
+      <div
+        class="product-img-container d-flex justify-content-center m-auto col-xl-12 col-lg-12 col-md-8 col-sm-10 col-10">
+        <label for="add-product-imgage" style="cursor: pointer">
+          <div class="media">
+            <div class="overlay rounder-hover"></div>
+            <img *ngIf="!img" class="user-img" src="assets/img/upload-default.png" />
+            <img *ngIf="img" class="user-img embed-responsive-item" [src]="img" />
+            <div class="image-details">Upload image</div>
           </div>
-        </div>
+          <input #imgInput type="file" class="form-control rounded-circle" style="display: none" id="add-product-image-hidden" name="img" (change)="imageSelected($event)" />
+        </label>
       </div>
     </div>
     <form>
@@ -49,16 +55,19 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-lg-12" #addresses id="addresses">
+        <div class="col-lg-12" style="cursor: pointer;" (click)="addNewAddressInput(addresses)" #addresses id="addresses">
           <p class="h5">
             Addresses
-            <i class="fa fa-plus" aria-hidden="true" (click)="addNewAddressInput(addresses)"></i>
+            <i class="fa fa-plus" aria-hidden="true"></i>
           </p>
         </div>
       </div>
       <div class="text-center">
-        <button type="button" class="site-btn text-center" (click)="onSubmit()">
+        <button type="button" class="btn site-btn text-center mx-2" (click)="onSubmit()">
           Update
+        </button>
+        <button type="button" class="btn btn-secondary text-center" style="padding: 13px 30px 12px;" (click)="onCancel()">
+          Cancel
         </button>
       </div>
     </form>

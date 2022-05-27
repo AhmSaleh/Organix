@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CartService } from 'src/app/Services/cart.service';
 import { ProductServices } from 'src/app/Services/ProductServices/product-services.service';
 import { IProduct } from 'src/app/Models/IProdcut';
+import { Router, RouterEvent, RouterLink } from '@angular/router';
+import { Notify } from 'notiflix';
 
 @Component({
   selector: 'app-featured-products',
@@ -10,55 +12,40 @@ import { IProduct } from 'src/app/Models/IProdcut';
 })
 export class FeaturedProductsComponent implements OnInit {
   featuredProducts: IProduct[] = [];
+  currentImage: Record<string, string> = {};
+  product: IProduct;
 
-  constructor(
-    private cartService: CartService,
-    private productService: ProductServices
-  ) {}
+  constructor(private cartService: CartService, private productService: ProductServices, private router: Router) {
+    this.product = {} as IProduct;
+  }
 
   ngOnInit(): void {
-    this.productService.getLatest8Products().subscribe(
-      (data) => {
-        this.featuredProducts = data;
-      },
-      (err) => console.log(err)
-    );
+    this.productService.getLatest8Products().subscribe(data => {
+      this.featuredProducts = data;
+    }, err => console.log(err)
+    )
+    this.currentImage = {
+      'background-image': `url(${this.productService.getProductImageUrl(this.product._id)})`,
+    };
   }
 
-  addToCart() {
-    /////////////////  انتحر علاشان تستريحوا؟
-    this.cartService.add({
-      _id: '626c8e6db4573ed088c213d9',
-      name: 'Yvor',
-      rate: 5,
-      price: 573.71,
-      shortDescription:
-        'Introduction of Oth Hormone into Periph Vein, Open Approach',
-      availability: false,
-      imgURL: 'http://dummyimage.com/557x438.png/cc0000/ffffff',
-      weight: 1269,
-      availableInventory: 78,
-      longDescription:
-        'Introduction of Other Hormone into Peripheral Vein, Open Approach',
-      productInformation: 'Alpha thalassemia',
-    });
+  gotoProductDetails(event: Event, id: string) {
+    event.stopPropagation()
+    // navigate to page
+    this.router.navigate(['/product', id]);
   }
 
-  removeFromCart() {
-    this.cartService.remove({
-      _id: '626c8e6db4573ed088c213d9',
-      name: 'Yvor',
-      rate: 5,
-      price: 573.71,
-      shortDescription:
-        'Introduction of Oth Hormone into Periph Vein, Open Approach',
-      availability: false,
-      imgURL: 'http://dummyimage.com/557x438.png/cc0000/ffffff',
-      weight: 1269,
-      availableInventory: 78,
-      longDescription:
-        'Introduction of Other Hormone into Peripheral Vein, Open Approach',
-      productInformation: 'Alpha thalassemia',
-    });
+
+  addToCart(id: string) {
+    this.productService.getProduct(id).subscribe(data => {
+      this.cartService.add(data);
+      Notify.success('Product added to cart Successfully!', { timeout: 1000, closeButton: true, });
+    },err => console.log(err));
   }
+
+  // removeFromCart(id: string) {
+  //   this.productService.getProduct(id).subscribe(data => {
+  //     this.cartService.remove(data);
+  //   },err => console.log(err));
+  // }
 }

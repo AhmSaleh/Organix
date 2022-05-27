@@ -65,7 +65,7 @@ export class CheckoutComponent implements OnInit {
         Notify.success('Your order has been placed successfully!', {
           closeButton: true,
         });
-        this.cartService.clearCart()
+        this.cartService.clearCart();
         this.router.navigate(['/home']);
       })
       .catch((err) => {
@@ -76,92 +76,85 @@ export class CheckoutComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.products = this.cart.Products.map((p) => {
-      return { ID: p.product._id, Count: p.Count };
-    });
-    let UserID = this.auth.getUserId();
-    let orderData: IOrderData = {
-      UserID: UserID,
-      Products: this.products,
-      Address: 'ddd',
-      Method: 0,
-    };
-
-    let clearCart = this.cartService.clearCart;
-    paypal.Button.render(
-      {
-        env: 'sandbox', // Or 'production'
-        // Set up the payment:
-        // 1. Add a payment callback
-        payment: function () {
-          // 2. Make a request to your server
-          return fetch('http://localhost:3000/api/order/create', {
-            method: 'POST',
-            headers: {
-              'content-type': 'application/json',
-            },
-            body: JSON.stringify(orderData),
-          })
-            .then((res) => {
-              console.log(res);
-              if (res.ok) return res.json();
-              return res.json().then((json) => {
-
-                let products = json.map((i:any) => i.name);
-                Notify.failure(`products [${products}] are not available in inventory`, {
-                  closeButton: true,
-                });
-                //alert(JSON.stringify(json));
-
-                Promise.reject(json);
-              });
-            })
-            .then(({ id }) => {
-              return id;
-            })
-            .catch((e) => {
-              console.log(e.error);
-            });
-        },
-
-        onAuthorize: async function (data: any, actions: any) {
-          // 2. Make a request to your server
-          return fetch('http://localhost:3000/api/order/capture', {
-            method: 'POST',
-            headers: {
-              'content-type': 'application/json',
-            },
-            body: JSON.stringify({ UserID: UserID, data }),
-          }).then(function (res) {
-            clearCart();
-            console.log(res);
-          });
-        },
-        // onApprove: (data:any, actions:any) => {
-        //   return actions.order.capture().then(function(orderData:any) {
-        //     // Successful capture! For dev/demo purposes:
-        //     console.log(data)
-        //     console.log(actions)
-        //     console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
-        //     const transaction = orderData.purchase_units[0].payments.captures[0];
-        //     alert(`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for all available details`);
-
-        //   });
-        // },
-        style: {
-          color: 'gold',
-          shape: 'rect',
-          //layout: "vertical",
-          size: 'responsive',
-        },
-        commit: true,
-      },
-      '#paypal-button'
-    );
-
     this.userService.getUserAddresses().subscribe(
       (res) => {
         this.userAddresses = res.addresses;
+
+        this.products = this.cart.Products.map((p) => {
+          return { ID: p.product._id, Count: p.Count };
+        });
+        let UserID = this.auth.getUserId();
+        let orderData: IOrderData = {
+          UserID: UserID,
+          Products: this.products,
+          Address: this.userAddresses[0],
+          Method: 0,
+        };
+
+        let that = this;
+        paypal.Button.render(
+          {
+            env: 'sandbox', // Or 'production'
+            // Set up the payment:
+            // 1. Add a payment callback
+            payment: function () {
+              // 2. Make a request to your server
+              return fetch('http://localhost:3000/api/order/create', {
+                method: 'POST',
+                headers: {
+                  'content-type': 'application/json',
+                },
+                body: JSON.stringify(orderData),
+              })
+                .then((res) => {
+                  console.log(res);
+                  if (res.ok) return res.json();
+                  return res.json().then((json) => {
+                    let products = json.map((i: any) => i.name);
+                    Notify.failure(
+                      `products [${products}] are not available in inventory`,
+                      {
+                        closeButton: true,
+                      }
+                    );
+                    //alert(JSON.stringify(json));
+
+                    Promise.reject(json);
+                  });
+                })
+                .then(({ id }) => {
+                  return id;
+                })
+                .catch((e) => {
+                  console.log(e.error);
+                });
+            },
+
+            onAuthorize: async function (data: any, actions: any) {
+              // 2. Make a request to your server
+              return fetch('http://localhost:3000/api/order/capture', {
+                method: 'POST',
+                headers: {
+                  'content-type': 'application/json',
+                },
+                body: JSON.stringify({ UserID: UserID, data }),
+              }).then(function (res) {
+                that.cartService.clearCart();
+                that.router.navigate(['/home']);
+                console.log(res);
+              });
+            },
+
+            style: {
+              color: 'gold',
+              shape: 'rect',
+              //layout: "vertical",
+              size: 'responsive',
+            },
+            commit: true,
+          },
+          '#paypal-button'
+        );
       },
       (error) => {
         Notify.failure("Coudn't Get User Addresses!", {

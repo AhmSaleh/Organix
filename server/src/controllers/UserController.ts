@@ -31,8 +31,12 @@ class UserController {
 }
 
 async function GETUserById(req: Request, res: Response) {
+  /* 	#swagger.tags = ['User'] */
   const user = await UserService.getUserByAdmin(req.params.id);
   if (user) {
+     /* #swagger.responses[200] = { 
+      schema: { "$ref": "#/definitions/regester_schema" },
+      description: "User details." } */
     res.send(user);
   } else {
     res.status(404).send("Merchant not found");
@@ -42,6 +46,14 @@ async function GETUserById(req: Request, res: Response) {
 // static postRegisterPFP = registerPFP;
 
 async function postLogin(r: Request, res: Response) {
+  /* 	#swagger.tags = ['User'] */
+  
+  /*	#swagger.parameters['obj'] = {
+          in: 'body',
+          description: 'User information.',
+          required: true,
+          schema: { $ref: "#/definitions/login" }
+  } */        
   let req = r as RequestWithSchema<ILoginData>;
   const user = req.data;
   // check the user exist
@@ -66,10 +78,20 @@ async function postLogin(r: Request, res: Response) {
   res.header("Access-Control-Expose-Headers", "*");
   res.header("x-auth-token", Token);
   // login success
+  /* #swagger.responses[200] = { 
+      description: "User login successfully." } */
   res.send();
 }
 
 async function postRegister(r: any, res: Response) {
+  /* 	#swagger.tags = ['User'] */
+
+  /*	#swagger.parameters['obj'] = {
+          in: 'body',
+          description: 'User information.',
+          required: true,
+          schema: { $ref: "#/definitions/regester_schema" }
+  } */        
   let req = r as RequestWithAuth & RequestWithSchema<IRegesterData>;
   const user = req.data;
 
@@ -78,15 +100,23 @@ async function postRegister(r: any, res: Response) {
   if (userExist) return res.status(400).send("Email already exist");
   // register success
   const newUser = await UserService.createUser(user);
+  /* #swagger.responses[200] = { 
+      schema: { "$ref": "#/definitions/regester_schema" },
+      description: "User login successfully." } */
   res.status(201).send(newUser);
 }
 
 async function getAll(req: Request, res: Response) {
+  /* 	#swagger.tags = ['User'] */
   const users = await UserService.getAllUsers();
+  /* #swagger.responses[200] = { 
+      schema: { "$ref": "#/definitions/regester_schema" },
+      description: "User login successfully." } */
   res.send(users);
 }
 
 async function getProfile(r: any, res: Response) {
+  /* 	#swagger.tags = ['User'] */
   let req = r as RequestWithAuth;
 
   const user = await UserService.getUserByEmail(req.params.email);
@@ -96,6 +126,9 @@ async function getProfile(r: any, res: Response) {
     req.tockenInfo.role == RoleEnum.admin ||
     user?.id == req.tockenInfo.UserId
   ) {
+    /* #swagger.responses[200] = { 
+      schema: { "$ref": "#/definitions/regester_schema" },
+      description: "User login successfully." } */
     res.send(user);
   } else {
     res.status(403).send("Access Denied");
@@ -103,10 +136,14 @@ async function getProfile(r: any, res: Response) {
 }
 
 async function getAddresses(r: any, res: Response) {
+  /* 	#swagger.tags = ['User'] */
   let req = r as RequestWithAuth;
 
   const user = await UserService.getAddressesByEmail(req.params.email);
   if (user?.id == req.tockenInfo.UserId) {
+    /* #swagger.responses[200] = { 
+      schema: { "$ref": "#/definitions/regester_schema" },
+      description: "User login successfully." } */
     res.send(user);
   } else {
     res.status(403).send("Access Denied");
@@ -114,8 +151,12 @@ async function getAddresses(r: any, res: Response) {
 }
 
 async function getMerchant(r: Request, res: Response) {
+  /* 	#swagger.tags = ['User'] */
   const user = await UserService.getMerchantInfo(r.params.id);
   if (user) {
+    /* #swagger.responses[200] = { 
+      schema: { "$ref": "#/definitions/regester_schema" },
+      description: "User login successfully." } */
     res.send(user);
   } else {
     res.status(404).send("Merchant not found");
@@ -123,6 +164,7 @@ async function getMerchant(r: Request, res: Response) {
 }
 
 async function getPFP(r: Request, res: Response) {
+  /* 	#swagger.tags = ['User'] */
   let req = r as RequestWithAuth;
   const user = await UserService.gePFPByEmail(req.params.email);
 
@@ -137,6 +179,7 @@ async function getPFP(r: Request, res: Response) {
   }
 }
 async function UPDATEUserProfileByEmail(r: Request, res: Response) {
+  /* 	#swagger.tags = ['User'] */
   let req = r as RequestWithAuth;
 
   try {
@@ -160,6 +203,7 @@ async function UPDATEUserProfileByEmail(r: Request, res: Response) {
 }
 
 async function UPDATEUserByAdmin(r: Request, res: Response) {
+  /* 	#swagger.tags = ['User'] */
   let req = r as RequestWithAuth &
     RequestWithSchema<IRegesterDataForUserByAdmin>;
   const user = req.data;

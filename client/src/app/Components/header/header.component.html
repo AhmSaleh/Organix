@@ -17,6 +17,7 @@
     </div>
     <div *ngIf="authService.isLoggedIn()" class="header__top__right__auth">
       <button class="btn" (click)="logout()">logout</button>
+      <a class="btn" routerLink="/user/details"><i class="bi bi-person-circle"></i></a>
     </div>
   </div>
   <nav class="humberger__menu__nav mobile-menu">
@@ -53,7 +54,6 @@
         <div class="col-lg-6 col-md-6">
           <div class="header__top__left">
             <ul>
-              <li><i class="fa fa-envelope"></i> hello@colorlib.com</li>
               <li>Free Shipping for all Order of $99</li>
             </ul>
           </div>
@@ -61,17 +61,21 @@
         <div class="col-lg-6 col-md-6">
           <div class="header__top__right">
             <div class="header__top__right__social">
-              <a href="#"><i class="fa fa-facebook"></i></a>
-              <a href="#"><i class="fa fa-twitter"></i></a>
-              <a href="#"><i class="fa fa-linkedin"></i></a>
-              <a href="#"><i class="fa fa-pinterest-p"></i></a>
+              <a href="https://www.facebook.com/" target="_blank"><i class="fa fa-facebook"></i></a>
+              <a href="https://twitter.com/home" target="_blank"><i class="fa fa-twitter"></i></a>
+              <a href="https://www.instagram.com/?hl=en" target="_blank"><i class="fa fa-linkedin"></i></a>
+              <a href="https://www.pinterest.com/" target="_blank"><i class="fa fa-pinterest-p"></i></a>
             </div>
             <div *ngIf="!authService.isLoggedIn()" class="header__top__right__auth">
-              <button (click)="openLoginModal()"><i class="fa fa-user"></i> Login</button>
+              <button class="btn" (click)="openLoginModal()"><i class="fa fa-user"></i> Login</button>
             </div>
             <div *ngIf="authService.isLoggedIn()" class="header__top__right__auth">
               <button class="btn" (click)="logout()">logout</button>
             </div>
+            <a *ngIf="authService.isLoggedIn()" class="btn profile-icon" routerLink="/user/details">
+              <i *ngIf="!img" class="fa fa-lg fa-user-circle"></i>
+              <img *ngIf="img" [src]="img" style="width: 25px; height: 25px;" class="rounded-circle" alt="">
+            </a>
           </div>
         </div>
       </div>
@@ -97,6 +101,7 @@
               <ul class="header__menu__dropdown">
                 <li><a routerLink="/users-list">Users</a></li>
                 <li><a routerLink="/list-categories">Categories</a></li>
+                <li><a routerLink="/manage-all-products">All Products</a></li>
                 <li><a routerLink="/updatestatus">Pending Products</a></li>
               </ul>
             </li>
