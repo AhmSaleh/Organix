@@ -1,10 +1,23 @@
+<section class="breadcrumb-section set-bg col-12 mb-5">
+  <img src="assets/img/titleBG.jpg" class="col-12"
+    style="max-height: 150px; filter: brightness(50%); position: absolute;" alt="">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <div class="breadcrumb__text">
+          <h2>Orders</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 <section class="shoping-cart spad">
   <div class="container">
     <div class="row">
       <div class="col-lg-12">
         <div class="shoping__cart__table">
-          <table>
-            <thead>
+          <table class="table table-responsive-md table-bordered border-success table-hover overflow-scroll">
+            <thead class="table-success">
               <tr>
                 <th>Products</th>
                 <th>Date</th>
@@ -13,23 +26,23 @@
                 <th>Order Status</th>
                 <th>Payment Status</th>
                 <th>Payment method</th>
+                <th></th>
                 <ng-container *ngIf="this.role == 'admin'">
-                  <th></th
-                ></ng-container>
+                  <th></th>
+                </ng-container>
                 <ng-container *ngIf="this.role == 'admin'">
-                  <th></th
-                ></ng-container>
+                  <th></th>
+                </ng-container>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let order of orders; let itemIndex = index">
-                <td
-                  *ngFor="
-                    let product of order.Products;
-                    let productIndex = index
-                  "
-                >
-                  <h5>{{ product.Count }} {{ product.ProductID.name }}</h5>
+                <td>
+                  <select class="form-control">
+                    <option  *ngFor=" let product of order.Products; let productIndex = index" value="">
+                      {{ product.Count }} {{ product.ProductID.name }}
+                    </option>
+                  </select> 
                 </td>
                 <td class="shoping__cart__price">
                   {{ order.Date | date }}
@@ -41,26 +54,20 @@
                 <td>{{ PaymentMethod[order.Payment.Method] }}</td>
                 <ng-container *ngIf="this.role == 'admin'">
                   <td>
-                    <button
-                      class="btn btn-light"
-                      [disabled]="OrderStatus[order.OrderStatus] == 'Canceled'"
-                      (click)="openDialog(order)"
-                    >
+                    <button class="btn btn-light" [disabled]="OrderStatus[order.OrderStatus] == 'Canceled'"
+                      (click)="openDialog(order)">
                       Edit Status
                     </button>
-                  </td></ng-container
-                >
+                  </td>
+                </ng-container>
                 <ng-container *ngIf="this.role == 'user'">
                   <td>
-                    <button
-                      [disabled]="OrderStatus[order.OrderStatus] != 'Pending'"
-                      class="btn btn-danger"
-                      (click)="cancelOrder(order._id)"
-                    >
+                    <button [disabled]="OrderStatus[order.OrderStatus] != 'Pending'" class="anchor-delete"
+                      (click)="cancelOrder(order._id)"><i class="bi bi-trash mr-1"></i> 
                       Cancel
                     </button>
-                  </td></ng-container
-                >
+                  </td>
+                </ng-container>
               </tr>
             </tbody>
           </table>

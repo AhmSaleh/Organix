@@ -15,33 +15,43 @@
   border-radius: 5px;
 }
 
+img:hover {
+  cursor: pointer;
+}
+.image-upload > input {
+  display: none;
+}
+
+a {
+  color: green;
+}
+
+a:hover {
+  cursor: pointer;
+}
+
+i {
+  cursor: pointer;
+}
+
 .product-img-container {
   position: relative;
   width: fit-content;
 }
 
-.product-img {
+.user-img {
   display: block;
   width: fit-content;
   height: 250px;
-}
-
-.text {
-  color: white;
-  font-size: 30px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-  text-align: center;
+  width: 250px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 
 .media {
-  width: fit-content;
-  height: fit-content;
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -57,9 +67,12 @@
 .overlay {
   background: rgba(0, 0, 0, 0.3);
   position: absolute;
-  height: 30%;
-  width: 100%;
-  bottom: 0;
+  height: 250px;
+  width: 250px;
+  border-radius: 50%;
+  /* border-bottom-left-radius: 250px;
+  border-bottom-right-radius: 250px; */
+  bottom: 10px;
   z-index: 3;
   opacity: 0;
   transition: all ease-in-out 0.5s;
@@ -69,13 +82,14 @@
   opacity: 1;
 }
 
+/* 
 img {
   width: 100%;
   z-index: -1;
   margin: auto;
   transform: scale(1);
   transition: all ease-in-out 0.5s;
-}
+} */
 
 .media:hover img {
   transform: scale(1);
@@ -84,8 +98,8 @@ img {
 
 .image-details {
   text-align: center;
-  color: white;
-  font-size: 25px;
+  color: rgb(222, 218, 218);
+  font-size: 20px;
   z-index: 4;
   position: absolute;
   top: 100%;

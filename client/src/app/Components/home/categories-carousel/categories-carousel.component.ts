@@ -47,7 +47,8 @@ export class CategoriesCarouselComponent implements OnInit {
   ngOnInit(): void { 
     this.categoryService.getCategories().subscribe(data=>{
       this.categories = data;
-      console.log(this.categories[0].name);
+      console.log(this.categories);
+      console.log(this.images[0]);
     })
   }
 

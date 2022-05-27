@@ -1,3 +1,16 @@
+<section class="breadcrumb-section set-bg col-12 mb-5">
+  <img src="assets/img/titleBG.jpg" class="col-12"
+    style="max-height: 150px; filter: brightness(50%); position: absolute;" alt="">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <div class="breadcrumb__text">
+          <h2><i class="bi bi-cart2"></i> Cart</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 <section
   *ngIf="cartService.getCart()?.Products?.length || 0 > 0"
   class="shoping-cart spad"
@@ -82,7 +95,7 @@
               Total <span>EGP {{ calcCartTotal().toFixed(2) }}</span>
             </li>
           </ul>
-          <a href="/checkout" class="primary-btn">PROCEED TO CHECKOUT</a>
+          <a routerLink="/checkout" class="primary-btn">PROCEED TO CHECKOUT</a>
         </div>
       </div>
     </div>

@@ -16,3 +16,81 @@ a:hover {
 i {
   cursor: pointer;
 }
+
+.product-img-container {
+  position: relative;
+  width: fit-content;
+}
+
+.user-img {
+  display: block;
+  width: fit-content;
+  height: 250px;
+  width: 250px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+
+.media {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+.media:hover {
+  cursor: pointer;
+}
+
+.overlay {
+  background: rgba(0, 0, 0, 0.3);
+  position: absolute;
+  height: 250px;
+  width: 250px;
+  border-radius: 50%;
+  /* border-bottom-left-radius: 250px;
+  border-bottom-right-radius: 250px; */
+  bottom: 10px;
+  z-index: 3;
+  opacity: 0;
+  transition: all ease-in-out 0.5s;
+}
+
+.media:hover .overlay {
+  opacity: 1;
+}
+
+/* 
+img {
+  width: 100%;
+  z-index: -1;
+  margin: auto;
+  transform: scale(1);
+  transition: all ease-in-out 0.5s;
+} */
+
+.media:hover img {
+  transform: scale(1);
+  filter: blur(1px);
+}
+
+.image-details {
+  text-align: center;
+  color: rgb(222, 218, 218);
+  font-size: 20px;
+  z-index: 4;
+  position: absolute;
+  top: 100%;
+  opacity: 0;
+  transition: all ease-in-out 0.5s;
+}
+
+.media:hover .image-details {
+  top: 75%;
+  opacity: 1;
+}

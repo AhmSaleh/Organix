@@ -2,6 +2,9 @@
   <div class="product__item__pic set-bg" [ngStyle]="currentImage">
     <ul class="product__item__pic__hover">
       <li>
+        <a routerLink="/product/{{product._id}}"><i class="fa fa-info"></i></a>
+    </li>
+      <li>
         <a (click)="addProductIntoCart($event)"><i class="fa fa-shopping-cart"></i></a>
       </li>
     </ul>

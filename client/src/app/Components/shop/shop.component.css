@@ -1,0 +1,7 @@
+.shop-pagination{
+    width: fit-content;
+    border: 1px solid green;
+    border-radius: 5px;
+    margin: auto;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
