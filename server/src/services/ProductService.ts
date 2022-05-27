@@ -18,10 +18,14 @@ class ProductService {
     let skip = (parseInt(page) - 1) * +envconf.ProductsLimit;
 
     return await ProductModel.find(
-      {},
+      { status: "approved" },
       {},
       { limit: +envconf.ProductsLimit, skip: skip }
     );
+  }
+
+  async getAllProductsAdmin() {
+    return await ProductModel.find({});
   }
 
   async getProductsByMerchent(merchentID: string | undefined) {
@@ -53,6 +57,7 @@ class ProductService {
         $text: {
           $search: search,
         },
+        status: "approved",
       },
       { score: { $meta: "textScore" } },
       { limit: +envconf.ProductsLimit, skip: skip }
@@ -101,7 +106,7 @@ class ProductService {
   }
 
   async getProductList(ids: string[]) {
-    return await ProductModel.find().where("_id").in(ids);
+    return await ProductModel.find({ status: "approved" }).where("_id").in(ids);
   }
 
   async getProductByMerchant(id: string) {
@@ -109,6 +114,7 @@ class ProductService {
   }
 
   async getProductByCategory(categoryName: string, page: any = undefined) {
+    //fixed your shit/////////////////////////////////////////////////////////////////////////////////
     if (!page) return await ProductModel.find({});
     let start = (parseInt(page) - 1) * +envconf.ProductsLimit + 1;
 
@@ -120,7 +126,9 @@ class ProductService {
 
   async getAllProductsCount() {
     const count =
-      (await ProductModel.countDocuments()) / +envconf.ProductsLimit;
+      (await ProductModel.find({ status: "approved" }).countDocuments()) /
+      +envconf.ProductsLimit;
+    //(await ProductModel.countDocuments()) / +envconf.ProductsLimit;
     return Math.floor(count);
   }
 
@@ -132,6 +140,7 @@ class ProductService {
     const count =
       (await ProductModel.find({
         categoryName,
+        status: "approved",
       }).countDocuments()) / +envconf.ProductsLimit;
 
     return Math.floor(count);
@@ -149,7 +158,10 @@ class ProductService {
   }
 
   async getLatest8Products() {
-    return await ProductModel.find({ dateAdded: { $exists: true } })
+    return await ProductModel.find({
+      dateAdded: { $exists: true },
+      status: "approved",
+    })
       .sort({ dateAdded: -1 })
       .limit(8);
   }

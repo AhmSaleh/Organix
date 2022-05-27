@@ -16,6 +16,10 @@ export class ProductServices {
   ProductUrl = 'http://localhost:3000/api/product';
   constructor(private http: HttpClient) {}
 
+  getAllProductsAdmin() {
+    return this.http.get(this.ProductUrl + '/all');
+  }
+
   getProduct(id: string): Observable<IProduct> {
     return this.http.get<IProduct>(`${this.ProductUrl}/${id}`);
   }
