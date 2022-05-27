@@ -87,12 +87,12 @@
       <div class="col-lg-8">
         <nav class="header__menu">
           <ul>
-            <li class="active"><a routerLink="/home">Home</a></li>
-            <li><a routerLink="/shop">Shop</a></li>
-            <li><a routerLink="/about-us">About US</a></li>
-            <li><a routerLink="/contact">Contact</a></li>
-            <li *ngIf="this.authService.isLoggedIn()"><a style="cursor: pointer;" (click)="gotoOrders()">Orders</a></li>
-            <li *ngIf="this.authService.isLoggedIn() && this.authService.isAdmin()"><a
+            <li [class.active]="router.url.includes('home')"><a routerLink="/home">Home</a></li>
+            <li [class.active]="router.url.includes('shop')" ><a routerLink="/shop">Shop</a></li>
+            <li [class.active]="router.url.includes('about-us')" ><a routerLink="/about-us">About US</a></li>
+            <li [class.active]="router.url.includes('contact')" ><a routerLink="/contact">Contact</a></li>
+            <li [class.active]="router.url.includes('orders')" *ngIf="this.authService.isLoggedIn()"><a style="cursor: pointer;" (click)="gotoOrders()">Orders</a></li>
+            <li [class.active]="router.url.includes('list')||router.url.includes('updatestatus')" *ngIf="this.authService.isLoggedIn() && this.authService.isAdmin()"><a
                 class="dropdown-toggle">Management</a>
               <ul class="header__menu__dropdown">
                 <li><a routerLink="/users-list">Users</a></li>
@@ -100,7 +100,7 @@
                 <li><a routerLink="/updatestatus">Pending Products</a></li>
               </ul>
             </li>
-            <li *ngIf="this.authService.isLoggedIn() && this.authService.isMerchant()">
+            <li [class.active]="router.url.includes('myproducts')" *ngIf="this.authService.isLoggedIn() && (this.authService.isMerchant())">
               <a routerLink="/myproducts">Manage Products</a>
             </li>
           </ul>
