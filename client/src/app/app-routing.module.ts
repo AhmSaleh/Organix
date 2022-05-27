@@ -53,7 +53,7 @@ const routes: Routes = [
         canActivate: [AuthGuard, RoleGuard],
         data: { expecteRole: ['admin','merchant'] },
       },
-      { path: 'view-product', component: ViewProductDetailsComponent },
+      // { path: 'view-product', component: ViewProductDetailsComponent },
       { path: 'list-categories', component: ListCategoriesComponent },
       { path: 'edit-category', component: EditCategoryComponent },
       { path: 'add-category', component: AddCategoryComponent },

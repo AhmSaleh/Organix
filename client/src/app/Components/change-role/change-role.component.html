@@ -1,44 +1,40 @@
-<section class="my-form-color mx-auto container-img vertical-center col-lg-7 col-md-9 col-sm-10 p-0 pb-4">
+<section class="my-form-color mx-auto container-img vertical-center col-lg-7 col-md-9 col-sm-8 p-0 pb-4">
   <header>
     <h1 class="text-center bold mat-display-2 mb-0 mt-3">Product Details</h1>
     <hr>
   </header>
-  <div class="container col-lg-8 col-md-9 col-sm-10" *ngIf="user">
-    <!-- <div class="media">
-        <img *ngIf="!img" class="product-img" src="assets/img/product/product-1.jpg" />
-        <img *ngIf="img" class="product-img embed-responsive-item" [src]="img || img" />
-      </div> -->
+  <div class="container col-lg-8 col-md-9 col-sm-8" *ngIf="user">
     <dl class="row">
       <dt class="col-xl-4 col-lg-4 col-sm-12">
         Name:
       </dt>
-      <dd class="col-xl-10 col-lg-10 col-sm-12">
+      <dd class="col-xl-8 col-lg-8 col-sm-12">
         {{user.name.first}} {{user.name.second}}
       </dd>
 
       <dt class="col-xl-4 col-lg-4 col-sm-12">
         Email:
       </dt>
-      <dd class="col-xl-10 col-lg-10 col-sm-12">
+      <dd class="col-xl-8 col-lg-8 col-sm-12">
         {{user.email}}
       </dd>
 
       <dt class="col-xl-4 col-lg-4 col-sm-12">
         Phone Number:
       </dt>
-      <dd class="col-xl-10 col-lg-10 col-sm-12">
+      <dd class="col-xl-8 col-lg-8 col-sm-12">
         {{user.phone}}
       </dd>
     </dl>
     <form [formGroup]="myForm">
-      <label>Role</label>
-      <select formControlName="role">
+      <label class="form-label" for="user-role">Role</label>
+      <select id="user-role" class="form-control form-select mb-3" formControlName="role">
         <option value="{{user.role}}" selected>{{capitalizeFirstLetter(user.role)}}</option>
         <option *ngFor="let role of roles" [value]="role">{{capitalizeFirstLetter(role)}}</option>
       </select>
-      <div>
-        <button (click)="onSubmit()">Update</button>
-        <button (click)="onCancel()">Cancel</button>
+      <div class="m-auto d-flex justify-content-end">
+        <button class="btn site-btn mx-1" (click)="onSubmit()">Update</button>
+        <button class="btn btn-secondary" (click)="onCancel()">Cancel</button>
       </div>
     </form>
   </div>

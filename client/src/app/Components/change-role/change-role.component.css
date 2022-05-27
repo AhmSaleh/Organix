@@ -1,0 +1,11 @@
+dd, dt{
+    font-size: 20px;
+}
+
+dd{
+    padding-bottom: 5px;
+}
+
+dt{
+    margin-bottom: 6px;
+}

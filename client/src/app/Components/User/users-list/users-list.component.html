@@ -31,7 +31,7 @@
                 <td>{{user.name.first + ' ' + user.name.last}}</td>
                 <td>{{user.email}}</td>
                 <td>{{user.role}}</td>
-                <td>
+                <td class="text-center">
                     <button (click)="showUserOrders(user._id)" class="btn user-link">Orders</button> |
                     <button (click)="updateRole(user._id)" class="btn user-link">Edit Role</button>
                 </td>

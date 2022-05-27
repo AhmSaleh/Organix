@@ -896,6 +896,7 @@ ol {
 }
 
 .featured__item {
+  cursor: pointer;
   margin-bottom: 50px;
 }
 
@@ -1574,6 +1575,7 @@ ol {
 
 .product__item {
   margin-bottom: 50px;
+  cursor: pointer;
 }
 
 .product__item:hover .product__item__pic .product__item__pic__hover {

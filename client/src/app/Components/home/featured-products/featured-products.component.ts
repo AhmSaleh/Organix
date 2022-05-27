@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CartService } from 'src/app/Services/cart.service';
 import { ProductServices } from 'src/app/Services/ProductServices/product-services.service';
 import { IProduct } from 'src/app/Models/IProdcut';
+import { Router, RouterEvent, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-featured-products',
@@ -11,17 +12,27 @@ import { IProduct } from 'src/app/Models/IProdcut';
 export class FeaturedProductsComponent implements OnInit {
 
   featuredProducts: IProduct[] = [];
-  
-  constructor(private cartService: CartService, private productService: ProductServices) { }
+  currentImage: Record<string, string> = {};
+  @Input() product: IProduct;
 
+  constructor(private cartService: CartService, private productService: ProductServices, private router: Router) {
+    this.product = {} as IProduct;
+  }
+  
   ngOnInit(): void {
-   this.productService.getAllProducts().subscribe(data => {
-      this.featuredProducts = data.slice(data.length - 9, 8);
-      console.log(this.featuredProducts);
+    this.productService.getAllProducts().subscribe(data => {
+      this.featuredProducts = data.slice(0, 8);
     })
+    this.currentImage = {
+      'background-image': `url(${this.productService.getProductImageUrl(this.product._id)})`,
+    };
   }
 
-
+  gotoProductDetails(event: Event, id: string) {
+    event.stopPropagation()
+    // navigate to page
+    this.router.navigate(['/product', id]);
+  }
 
   addToCart() {
     this.cartService.add({

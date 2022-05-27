@@ -33,6 +33,7 @@ export class ProductItemComponent implements OnInit {
     this.cartService.add(this.product);
     Notify.success('Product added to cart Successfully!', { timeout: 1400 });
   }
+  
   gotoProductDetails(event: Event) {
     event.stopPropagation()
     // navigate to page
