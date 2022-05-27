@@ -43,7 +43,6 @@
                       {{ product.Count }} {{ product.ProductID.name }}
                     </option>
                   </select>
-
                 </td>
                 <td class="shoping__cart__price">
                   {{ order.Date | date }}
@@ -61,7 +60,7 @@
                     </button>
                   </td>
                 </ng-container>
-                <ng-container *ngIf="this.role == 'user'">
+                <ng-container *ngIf="this.role == 'user' && this.role == 'merchant'">
                   <td>
                     <button [disabled]="OrderStatus[order.OrderStatus] != 'Pending'" class="anchor-delete"
                       (click)="cancelOrder(order._id)"><i class="bi bi-trash mr-1"></i>

@@ -4,7 +4,12 @@
     font-family: "Cairo", sans-serif !important;
     font-weight: 600;
 }
-
+li a {
+    color : black;
+}
+li a:hover{
+    color: green;
+}
 .team-member {
     width: 150px;
 }
