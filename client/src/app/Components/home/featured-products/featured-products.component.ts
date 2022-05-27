@@ -6,24 +6,27 @@ import { IProduct } from 'src/app/Models/IProdcut';
 @Component({
   selector: 'app-featured-products',
   templateUrl: './featured-products.component.html',
-  styleUrls: ['./featured-products.component.css']
+  styleUrls: ['./featured-products.component.css'],
 })
 export class FeaturedProductsComponent implements OnInit {
-
   featuredProducts: IProduct[] = [];
-  
-  constructor(private cartService: CartService, private productService: ProductServices) { }
+
+  constructor(
+    private cartService: CartService,
+    private productService: ProductServices
+  ) {}
 
   ngOnInit(): void {
-   this.productService.getAllProducts().subscribe(data => {
-      this.featuredProducts = data.slice(data.length - 9, 8);
-      console.log(this.featuredProducts);
-    })
+    this.productService.getLatest8Products().subscribe(
+      (data) => {
+        this.featuredProducts = data;
+      },
+      (err) => console.log(err)
+    );
   }
 
-
-
   addToCart() {
+    /////////////////  انتحر علاشان تستريحوا؟
     this.cartService.add({
       _id: '626c8e6db4573ed088c213d9',
       name: 'Yvor',
