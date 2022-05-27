@@ -45,7 +45,7 @@ class OrderController {
     let status:OrderStatus = req.body.OrderStatus;
 
     let oldStatus = await OrderService.getOrderStatus(id);
-    if(oldStatus){
+    if(oldStatus != undefined){
 
       if(oldStatus == OrderStatus.Canceled )
         return res.status(403).send();
