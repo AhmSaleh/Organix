@@ -13,6 +13,7 @@ class OrderController {
 
 
   static async getOrders(r: Request, res: Response) {
+    /* 	#swagger.tags = ['Order'] */
     let req = r as RequestWithAuth;
 
     // if (req.tockenInfo.role == RoleEnum.admin) {
@@ -37,6 +38,7 @@ class OrderController {
 
 
   static async updateOrder(r: Request, res: Response){
+    /* 	#swagger.tags = ['Order'] */
     let req = r as RequestWithAuth;
     //TODO: validate body
     let id = req.body.orderID;
@@ -97,6 +99,7 @@ class OrderController {
   }
 
   static async createOrder(req: Request, res: Response) {
+    /* 	#swagger.tags = ['Order'] */
     //create data interface here
     try {
       let data = req.body;
@@ -125,6 +128,7 @@ class OrderController {
   }
 
   static async captureOrder(req: Request, res: Response) {
+    /* 	#swagger.tags = ['Order'] */
     try {
       //create data interface here
       let data = req.body;

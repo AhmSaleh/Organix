@@ -1,3 +1,5 @@
+import { RoleEnum } from "./model/UserModel";
+
 const swaggerAutogen = require('swagger-autogen')();
 
 const doc = {
@@ -7,6 +9,148 @@ const doc = {
   },
   host: 'localhost:3000',
   schemes: ['http'],
+  definitions: {
+    login:{
+      email: {
+        type: "string",
+        format: "email",
+      },
+      password: {
+        type: "string",
+      },
+    },
+    
+    regester_schema:{
+      email: {
+        type: "string",
+        format: "email",
+      },
+      password: {
+        type: "string",
+        minLength: 8,
+        maxLength: 20,
+        format: "password",
+      },
+      name: {
+        type: "object",
+        properties: {
+          first: {
+            type: "string",
+            minLength: 2,
+            maxLength: 20,
+          },
+          last: {
+            type: "string",
+            minLength: 2,
+            maxLength: 20,
+          },
+        },
+        required: ["first", "last"],
+        additionalProperties: false,
+      },
+      role: {
+        type: "string",
+        enum: Object.values(RoleEnum),
+        default: RoleEnum.user,
+      },
+      phone: {
+        type: "string",
+      },
+      img: {
+        type: "string",
+      },
+      addresses: {
+        type: "array",
+        items: { type: "string" },
+      },
+    },
+    regesterForUser: {
+      email: {
+        type: "string",
+        format: "email",
+      },
+      password: {
+        type: "string",
+        minLength: 8,
+        maxLength: 20,
+        format: "password",
+      },
+      name: {
+        type: "object",
+        properties: {
+          first: {
+            type: "string",
+            minLength: 2,
+            maxLength: 20,
+          },
+          last: {
+            type: "string",
+            minLength: 2,
+            maxLength: 20,
+          },
+        },
+        required: ["first", "last"],
+        additionalProperties: false,
+      },
+      phone: {
+        type: "string",
+      },
+      img: {
+        type: "string",
+      },
+      addresses: {
+        type: "array",
+        items: { type: "string" },
+      },
+    },
+    
+    updateUser: {
+      email: {
+        type: "string",
+        format: "email",
+        nullable: true,
+      },
+      password: {
+        type: "string",
+        minLength: 8,
+        maxLength: 20,
+        format: "password",
+        nullable: true,
+      },
+      name: {
+        type: "object",
+        nullable: true,
+        properties: {
+          first: {
+            type: "string",
+            minLength: 2,
+            maxLength: 20,
+            nullable: true,
+          },
+          last: {
+            type: "string",
+            minLength: 2,
+            maxLength: 20,
+            nullable: true,
+          },
+        },
+        additionalProperties: false,
+      },
+      phone: {
+        type: "string",
+        nullable: true,
+      },
+      img: {
+        type: "string",
+        nullable: true,
+      },
+      addresses: {
+        type: "array",
+        items: { type: "string" },
+        nullable: true,
+      },
+    }
+  }
 };
 
 const outputFile = './docs/swagger-output.json';
