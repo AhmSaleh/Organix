@@ -54,7 +54,7 @@ export class ProductServices {
   }
 
   getProductByCategory(name: string, page: number = 1) {
-    return this.http.get<{ name: string; products: IProduct[] }>(
+    return this.http.get<IProduct[]>(
       `${this.ProductUrl}/category/${name}`,
       { params: { page: page } }
     );

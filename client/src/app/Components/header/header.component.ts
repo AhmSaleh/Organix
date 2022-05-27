@@ -19,7 +19,7 @@ export class HeaderComponent {
     public cartService: CartService,
     public authService: AuthService,
     private modalService: NgbModal,
-    private router: Router,
+    public router: Router,
     private dataTransferService: DataTransferService
   ) {}
 

@@ -28,7 +28,7 @@ export class ProductGridComponent implements OnInit {
 
     if (fetchParamters?.category) {
       this.productService.getProductByCategory(fetchParamters.category,fetchParamters?.page)
-        .subscribe((data) => this.fillProducts(data.products));
+        .subscribe((data) => this.fillProducts(data));
     }
     else if (fetchParamters?.searchTerm) {
       this.productService.getProductBySearchTerm(fetchParamters.searchTerm,fetchParamters?.page)
