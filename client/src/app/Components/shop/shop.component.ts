@@ -26,7 +26,6 @@ export class ShopComponent implements OnInit {
       else {
         this.currentPage = 1;
       }
-
     })
   }
 }

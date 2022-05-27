@@ -15,10 +15,8 @@ import { Subject } from 'rxjs';
   providedIn: 'root',
 })
 export class CartService {
-
   CartEmitter = new Subject<ICartView>();
   constructor(private http: HttpClient, private auth: AuthService) {
-
     if (this.auth.isLoggedIn()) {
       this.http
         .get<ICartView>(
@@ -29,6 +27,10 @@ export class CartService {
           localStorage.setItem('Cart', JSON.stringify(res));
         });
     }
+  }
+
+  logoutClearCart() {
+    localStorage.setItem('Cart', '');
   }
 
   getCart() {
@@ -73,8 +75,8 @@ export class CartService {
     this.syncItems(cart);
   }
 
-  clearCart(){
-    let cart: ICartView = { Products: [] }
+  clearCart() {
+    let cart: ICartView = { Products: [] };
     this.syncItems(cart);
   }
 

@@ -14,21 +14,19 @@
                 <th>Payment Status</th>
                 <th>Payment method</th>
                 <ng-container *ngIf="this.role == 'admin'">
-                  <th></th
-                ></ng-container>
+                  <th></th>
+                </ng-container>
                 <ng-container *ngIf="this.role == 'admin'">
-                  <th></th
-                ></ng-container>
+                  <th></th>
+                </ng-container>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let order of orders; let itemIndex = index">
-                <td
-                  *ngFor="
+                <td *ngFor="
                     let product of order.Products;
                     let productIndex = index
-                  "
-                >
+                  ">
                   <h5>{{ product.Count }} {{ product.ProductID.name }}</h5>
                 </td>
                 <td class="shoping__cart__price">
@@ -41,26 +39,20 @@
                 <td>{{ PaymentMethod[order.Payment.Method] }}</td>
                 <ng-container *ngIf="this.role == 'admin'">
                   <td>
-                    <button
-                      class="btn btn-light"
-                      [disabled]="OrderStatus[order.OrderStatus] == 'Canceled'"
-                      (click)="openDialog(order)"
-                    >
+                    <button class="btn btn-light" [disabled]="OrderStatus[order.OrderStatus] == 'Canceled'"
+                      (click)="openDialog(order)">
                       Edit Status
                     </button>
-                  </td></ng-container
-                >
+                  </td>
+                </ng-container>
                 <ng-container *ngIf="this.role == 'user'">
                   <td>
-                    <button
-                      [disabled]="OrderStatus[order.OrderStatus] != 'Pending'"
-                      class="btn btn-danger"
-                      (click)="cancelOrder(order._id)"
-                    >
+                    <button [disabled]="OrderStatus[order.OrderStatus] != 'Pending'" class="btn btn-danger"
+                      (click)="cancelOrder(order._id)">
                       Cancel
                     </button>
-                  </td></ng-container
-                >
+                  </td>
+                </ng-container>
               </tr>
             </tbody>
           </table>
