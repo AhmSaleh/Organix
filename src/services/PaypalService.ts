@@ -17,7 +17,7 @@ const buildRequestBody = async (data:IOrderData)=> {
     failed.push(item);
     return {
      "name":item.name,
-     "description": item.shortDescription ,
+     //"description": item.shortDescription ,
      //"sku": "sku01",
      "unit_amount": {
          "currency_code": "USD",
