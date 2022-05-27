@@ -49,8 +49,10 @@ export class LoginComponent implements OnInit {
             this.cart.syncItems(cart)
           }
           Notify.success('Login Successful', { timeout: 1000, closeButton: true, });
-          this.router.navigate(['/home']);
-          this.closeModal();
+          this.router.navigate(['/home']).then(()=>
+            window.location.reload()
+            );
+            this.closeModal();
         },
         error: (error) => {
           if(error.status == 401) {

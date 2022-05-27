@@ -74,11 +74,12 @@ export class HeaderComponent {
       allowParentLinks: true,
     });
 
+    this.userService.getUserPFP().subscribe(data => {
+      this.createImageFromBlob(data);
+    });
     this.email = this.authService.getEmail();
-    // console.log('email: ', this.email);
   }
 
-  reloadImage() {}
 
   logout() {
     this.email = '';
