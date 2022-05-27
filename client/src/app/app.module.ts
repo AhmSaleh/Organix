@@ -51,6 +51,8 @@ import { AddCategoryComponent } from './Components/Category/add-category/add-cat
 import { ViewCategoryComponent } from './Components/Category/view-category/view-category.component';
 import { UpdateProductStatusComponent } from './Components/update-product-status/update-product-status.component';
 import { ChangeRoleComponent } from './Components/change-role/change-role.component';
+import { ManageAllProductsComponent } from './Components/Admin/manage-all-products/manage-all-products.component';
+import { ProductListFilterPipe } from './Pipes/product-list-filter.pipe';
 // import {MatRadioModule} from '@angular/material/radio'
 // import {MatFormFieldModule} from '@angular/material/form-field'
 
@@ -97,6 +99,8 @@ import { ChangeRoleComponent } from './Components/change-role/change-role.compon
     ViewCategoryComponent,
     UpdateProductStatusComponent,
     ChangeRoleComponent,
+    ManageAllProductsComponent,
+    ProductListFilterPipe,
   ],
   imports: [
     BrowserAnimationsModule,

@@ -19,7 +19,7 @@ export class OrdersComponent implements OnInit {
     private orderService: OrderService,
     private auth: AuthService,
     private dialog: MatDialog,
-    private param : DataTransferService,
+    private param: DataTransferService,
     private router: Router
   ) {}
   orders: IOrder[] = [];
@@ -29,15 +29,12 @@ export class OrdersComponent implements OnInit {
   readonly role = this.auth.getRole();
 
   ngOnInit(): void {
-    if(this.param.getData() != "")
-    {
-      
+    if (this.param.getData() != '') {
       this.orderService.getOrders(this.param.getData()).subscribe((res) => {
         this.orders = res;
       });
-    }
-    else{
-      this.router.navigate(["/"])
+    } else {
+      this.router.navigate(['/']);
     }
   }
 
