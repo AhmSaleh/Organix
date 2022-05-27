@@ -67,7 +67,7 @@ export class UserDetailsComponent implements OnInit {
   ngOnInit(): void {}
 
   onCancel() {
-    this.router.navigate(["/home"]);
+    this.router.navigate(['/home']);
   }
   createImageFromBlob(image: Blob) {
     let reader = new FileReader();
@@ -114,7 +114,11 @@ export class UserDetailsComponent implements OnInit {
     this.UserService.updateUser(formData).subscribe(
       (res) => {
         if (!res)
-          Notify.success('Updated Successfully!', { closeButton: true });
+          Notify.success('Updated Successfully!', {
+            closeButton: true,
+            timeout: 1000,
+          });
+        this.router.navigate(['/']);
       },
       (err) => Notify.failure("Coudn't update!", { closeButton: true })
     );
