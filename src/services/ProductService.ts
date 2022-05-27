@@ -15,6 +15,7 @@ class ProductService {
       await CategoeryService.getORCreateCategory(product.categoryName);
       await CategoeryService.addProduct(new_product._id, product.categoryName);
     }
+    return new_product;
   }
 
   async getAllProducts(page: any = undefined) {
