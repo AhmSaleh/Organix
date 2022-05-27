@@ -5,6 +5,7 @@ import path from "path";
 import { Status } from "../model/Product.Model";
 
 class ProductController {
+  static GETAllProductsAdmin = GETAllProductsAdmin;
   static POSTProduct = POSTProduct;
   static GETProducts = GETProducts;
   static GETProductById = GETProductById;
@@ -24,6 +25,15 @@ class ProductController {
   static GETLatestProducts = GETLatestProducts;
 }
 
+async function GETAllProductsAdmin(req: Request, res: Response) {
+  try {
+    const products = await ProductService.getAllProductsAdmin();
+    res.status(200).send(products);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+}
+
 async function GETLatestProducts(req: Request, res: Response) {
   try {
     const products = await ProductService.getLatest8Products();
@@ -35,7 +45,7 @@ async function GETLatestProducts(req: Request, res: Response) {
 
 async function UPDATEProductStatus(req: Request, res: Response) {
   try {
-    const product = await ProductService.getProductById(req.params.id);
+    const product: any = await ProductService.getProductById(req.params.id); // possible error from changing this
     if (!product)
       return res
         .status(404)
@@ -62,7 +72,7 @@ async function GETPendingProducts(req: Request, res: Response) {
 
 async function GETProductImage(req: Request, res: Response) {
   try {
-    const product = await ProductService.getProductById(req.params.id);
+    const product: any = await ProductService.getProductById(req.params.id);
     if (!product)
       return res.status(404).send(`There are no products added by you.`);
 
@@ -144,7 +154,7 @@ async function GETProductsByCatCount(req: Request, res: Response) {
 
 async function GETProductsBySearchCount(req: Request, res: Response) {
   try {
-    if (typeof req.query.searchTerm == "string"){
+    if (typeof req.query.searchTerm == "string") {
       const productsCount = await ProductService.getProductBySearchCount(
         req.query.searchTerm
       );
@@ -231,7 +241,7 @@ async function UPDATEProductById(req: Request, res: Response) {
 
     if (!valid) return res.status(400).send();
 
-    const product = await ProductService.getProductById(req.params.id);
+    const product: any = await ProductService.getProductById(req.params.id);
 
     if (!product) {
       return res
