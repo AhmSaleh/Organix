@@ -96,8 +96,9 @@
             <li [class.active]="router.url.includes('shop')"><a routerLink="/shop">Shop</a></li>
             <li [class.active]="router.url.includes('about-us')"><a routerLink="/about-us">About US</a></li>
             <!-- <li [class.active]="router.url.includes('contact')" ><a routerLink="/contact">Contact</a></li> -->
-            <li [class.active]="router.url.includes('orders')" *ngIf="this.authService.isLoggedIn()"><a
-                style="cursor: pointer;" (click)="gotoOrders()">Orders</a></li>
+            <li [class.active]="router.url.includes('orders')"
+              *ngIf="this.authService.isLoggedIn() && !this.authService.isAdmin()"><a style="cursor: pointer;"
+                (click)="gotoOrders()">Orders</a></li>
             <li [class.active]="router.url.includes('list')||router.url.includes('updatestatus')"
               *ngIf="this.authService.isLoggedIn() && this.authService.isAdmin()"><a
                 class="dropdown-toggle">Management</a>

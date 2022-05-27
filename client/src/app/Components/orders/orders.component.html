@@ -27,12 +27,12 @@
                 <th>Payment Status</th>
                 <th>Payment method</th>
                 <th></th>
-                <ng-container *ngIf="this.role == 'admin'">
+                <!-- <ng-container *ngIf="this.role == 'admin'">
                   <th></th>
                 </ng-container>
                 <ng-container *ngIf="this.role == 'admin'">
                   <th></th>
-                </ng-container>
+                </ng-container> -->
               </tr>
             </thead>
             <tbody>
@@ -55,7 +55,7 @@
                 <td>{{ PaymentMethod[order.Payment.Method] }}</td>
                 <ng-container *ngIf="this.role == 'admin'">
                   <td>
-                    <button class="btn btn-light" [disabled]="OrderStatus[order.OrderStatus] == 'Canceled'"
+                    <button class="btn site-btn" [disabled]="OrderStatus[order.OrderStatus] == 'Canceled'"
                       (click)="openDialog(order)">
                       Edit Status
                     </button>

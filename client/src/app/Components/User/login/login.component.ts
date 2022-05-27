@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private auth: AuthService,
     private activeModal: NgbActiveModal,
-    private cart:CartService
+    private cart: CartService
   ) {
     this.myForm = new FormGroup({
       email: new FormControl('', Validators.required),
@@ -32,10 +32,10 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  closeModal(){
+  closeModal() {
     this.activeModal.close();
   }
-  
+
   onSubmit() {
     if (this.myForm.valid) {
       this.userService.loginUser(this.myForm.value).subscribe({
@@ -45,23 +45,30 @@ export class LoginComponent implements OnInit {
             this.myForm.value.email
           );
           let cart = this.cart.getCart();
-          if(cart.Products.length > 0){
-            this.cart.syncItems(cart)
+          if (cart.Products.length > 0) {
+            this.cart.syncItems(cart);
           }
-          Notify.success('Login Successful', { timeout: 1000, closeButton: true, });
-          this.router.navigate(['/home']);
+          Notify.success('Login Successful', {
+            timeout: 1000,
+            closeButton: true,
+          });
+          this.router.navigate(['/home']).then(() => {
+            window.location.reload();
+          });
           this.closeModal();
         },
         error: (error) => {
-          if(error.status == 401) {
-            Report.failure('Login Failed', 'Invalid Email or Password',"try again");
-          }
-          else {
+          if (error.status == 401) {
+            Report.failure(
+              'Login Failed',
+              'Invalid Email or Password',
+              'try again'
+            );
+          } else {
             Notify.failure('Something went wrong');
           }
-        }
-      }
-      );
+        },
+      });
     }
   }
 

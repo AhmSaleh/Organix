@@ -75,6 +75,10 @@ export class HeaderComponent {
     });
 
     this.email = this.authService.getEmail();
+
+    this.userService.getUserPFP().subscribe((data) => {
+      this.createImageFromBlob(data);
+    });
     // console.log('email: ', this.email);
   }
 
