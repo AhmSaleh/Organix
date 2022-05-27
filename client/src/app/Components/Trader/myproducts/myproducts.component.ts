@@ -77,7 +77,8 @@ export class MyproductsComponent implements OnInit {
             f != '_id' &&
             f != '__v' &&
             f != 'merchantId' &&
-            f != 'availability'
+            f != 'availability' &&
+            f != 'dateAdded'
         );
       });
   }

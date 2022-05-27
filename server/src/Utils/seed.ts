@@ -56,7 +56,10 @@ async function fillIfEmptyProducts(merchants_ids: mongoose.Types.ObjectId[]) {
         name: randFood(),
         rate: randNumber({ min: 1, max: 5 }),
         price: randNumber({ min: 10, max: 1000 }),
-        shortDescription: (randFood() + randFood() + randFood()).substring(0, 70),
+        shortDescription: (randFood() + randFood() + randFood()).substring(
+          0,
+          70
+        ),
         availability: randBoolean(),
         imgURL: randImgLocal(),
         imagesURL: Array(randNumber({ min: 1, max: 5 }))
@@ -73,7 +76,7 @@ async function fillIfEmptyProducts(merchants_ids: mongoose.Types.ObjectId[]) {
       };
 
       let new_prod = await ProductService.createProduct(randProduct);
-      
+
       new_prod.status = Status.approved;
       await ProductService.updateProduct(new_prod.id, new_prod);
       if (i % 200 === 0) console.log(`${i} products added`);
@@ -103,7 +106,7 @@ async function fillIfEmptyCategories() {
     for (let cat of categories) {
       const randCat: ICategory = {
         name: cat,
-        imageUrl:randImgLocal(),
+        imageUrl: randImgLocal(),
       };
       await CategoryService.createCategory(randCat);
     }

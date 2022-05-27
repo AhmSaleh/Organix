@@ -12,24 +12,30 @@
   </div>
 </section>
 <section class="mx-auto container-img vertical-center col-lg-10 col-md-11 col-sm-12 p-0 pb-3">
-  <table class="table table-bordered table-hover">
-    <thead>
-      <tr>
-        <th class="text-center">Name</th>
-        <th class="text-center">Operations</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let prod of products">
-        <td class="text-center">{{prod['name']}}</td>
-        <td class="text-center">
-          <p><a class="btn btn-info  text-white" (click)="changeStatus(prod['_id'])" data-toggle="modal"
-              data-target="#statusModal">Change Status</a> | <a class="btn btn-primary text-white"
-              (click)="detailClick(prod['_id'])" data-toggle="modal" data-target="#detailModals">Details</a> </p>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <h1 class="text-center font-h1">Pending Products</h1>
+  <div class="table-responsive container mb-1">
+
+    <table class="table table-bordered border-success table-hover overflow-scroll">
+      <thead class="table-success">
+        <tr>
+          <th class="text-center">#</th>
+          <th class="text-center">Name</th>
+          <th class="text-center">Operations</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let prod of products; index as i">
+          <td scope="row" class="text-center"> {{i + 1}}</td>
+          <td class="text-center">{{prod['name']}}</td>
+          <td class="text-center">
+            <p><a class="btn btn-info  text-white" (click)="changeStatus(prod['_id'])" data-toggle="modal"
+                data-target="#statusModal">Change Status</a> | <a class="btn btn-primary text-white"
+                (click)="detailClick(prod['_id'])" data-toggle="modal" data-target="#detailModals">Details</a> </p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </section>
 
 <div class="modal fade" id="detailModals" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"

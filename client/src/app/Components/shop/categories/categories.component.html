@@ -1,6 +1,6 @@
 <ul class="category-dd">
     <li class="category-item">
-        <a routerLink="/shop">all</a>
+        <a routerLink="/shop">All</a>
     </li>
     <li *ngFor="let category of categories" class="category-item">
         <a routerLink="/shop" [queryParams]={category:category.name}>{{category.name}}</a>

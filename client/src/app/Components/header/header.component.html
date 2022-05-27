@@ -39,8 +39,8 @@
   </div>
   <div class="humberger__menu__contact">
     <ul>
-      <li><i class="fa fa-envelope"></i> hello@iti.com</li>
-      <li>Free Shipping for all Order of $9999</li>
+      <li *ngIf="email"><i class="fa fa-envelope"></i>{{email}}</li>
+      <li>Free Shipping for all Order of $99</li>
     </ul>
   </div>
 </div>
@@ -54,6 +54,7 @@
         <div class="col-lg-6 col-md-6">
           <div class="header__top__left">
             <ul>
+              <li *ngIf="email"><i class="fa fa-envelope"></i>{{email}}</li>
               <li>Free Shipping for all Order of $99</li>
             </ul>
           </div>
@@ -92,11 +93,13 @@
         <nav class="header__menu">
           <ul>
             <li [class.active]="router.url.includes('home')"><a routerLink="/home">Home</a></li>
-            <li [class.active]="router.url.includes('shop')" ><a routerLink="/shop">Shop</a></li>
-            <li [class.active]="router.url.includes('about-us')" ><a routerLink="/about-us">About US</a></li>
+            <li [class.active]="router.url.includes('shop')"><a routerLink="/shop">Shop</a></li>
+            <li [class.active]="router.url.includes('about-us')"><a routerLink="/about-us">About US</a></li>
             <!-- <li [class.active]="router.url.includes('contact')" ><a routerLink="/contact">Contact</a></li> -->
-            <li [class.active]="router.url.includes('orders')" *ngIf="this.authService.isLoggedIn()"><a style="cursor: pointer;" (click)="gotoOrders()">Orders</a></li>
-            <li [class.active]="router.url.includes('list')||router.url.includes('updatestatus')" *ngIf="this.authService.isLoggedIn() && this.authService.isAdmin()"><a
+            <li [class.active]="router.url.includes('orders')" *ngIf="this.authService.isLoggedIn()"><a
+                style="cursor: pointer;" (click)="gotoOrders()">Orders</a></li>
+            <li [class.active]="router.url.includes('list')||router.url.includes('updatestatus')"
+              *ngIf="this.authService.isLoggedIn() && this.authService.isAdmin()"><a
                 class="dropdown-toggle">Management</a>
               <ul class="header__menu__dropdown">
                 <li><a routerLink="/users-list">Users</a></li>
@@ -105,7 +108,8 @@
                 <li><a routerLink="/updatestatus">Pending Products</a></li>
               </ul>
             </li>
-            <li [class.active]="router.url.includes('myproducts')" *ngIf="this.authService.isLoggedIn() && (this.authService.isMerchant())">
+            <li [class.active]="router.url.includes('myproducts')"
+              *ngIf="this.authService.isLoggedIn() && (this.authService.isMerchant())">
               <a routerLink="/myproducts">Manage Products</a>
             </li>
           </ul>

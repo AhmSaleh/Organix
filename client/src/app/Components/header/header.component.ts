@@ -15,7 +15,8 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent {
-  img:any;
+  img: any;
+  email: any;
 
   constructor(
     public cartService: CartService,
@@ -24,8 +25,7 @@ export class HeaderComponent {
     public router: Router,
     private dataTransferService: DataTransferService,
     private userService: UserService
-  ) {
-  }
+  ) {}
 
   openLoginModal() {
     const modalRef = this.modalService.open(LoginComponent, {
@@ -74,13 +74,14 @@ export class HeaderComponent {
       allowParentLinks: true,
     });
 
+    this.email = this.authService.getEmail();
+    // console.log('email: ', this.email);
   }
 
-  reloadImage() {
-    
-  }
+  reloadImage() {}
 
   logout() {
+    this.email = '';
     this.authService.logout();
     this.router.navigate(['/home']);
   }

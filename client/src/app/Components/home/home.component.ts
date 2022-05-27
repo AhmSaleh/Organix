@@ -20,5 +20,7 @@ export class HomeComponent implements OnInit {
     config.showNavigationIndicators = false;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (!this.authService.isLoggedIn()) this.cartService.logoutClearCart();
+  }
 }
