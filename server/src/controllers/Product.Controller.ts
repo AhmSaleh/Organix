@@ -103,9 +103,6 @@ async function GetProductsByMerchent(req: Request, res: Response) {
 
 async function POSTProduct(req: Request, res: Response) {
   try {
-    req.body.dateAdded = Date.now();
-    req.body.status = Status.pending;
-    req.body.availability = req.body.availableInventory > 0;
     const validate = ajv.getSchema("product");
     const valid = validate!(req.body);
     if (!valid) return res.status(400).send();
@@ -270,7 +267,7 @@ async function GETProductByCategory(req: Request, res: Response) {
     let { page } = req.query;
     if (!page) page = "1";
 
-    const products = await ProductService.getProductByCategory(
+    const products = await ProductService.getProductByCategory_noRef(
       req.params.category,
       page
     );

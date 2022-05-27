@@ -5,6 +5,10 @@ import envconf from "../envconf";
 
 class ProductService {
   async createProduct(product: IProduct) {
+    product.dateAdded = Date.now();
+    product.status = Status.pending;
+    product.availability = product.availableInventory > 0;
+    
     const new_product = await ProductModel.create(product);
     // update category
     if (new_product.categoryName.length) {
@@ -95,11 +99,12 @@ class ProductService {
     if (!page) return await ProductModel.find({});
     let skip = (parseInt(page) - 1) * +envconf.ProductsLimit;
 
-    return await ProductModel.find(
-      { categoryName: _category },
+    let products =  await ProductModel.find(
+      { categoryName: _category , status: "approved"},
       {},
       { limit: +envconf.ProductsLimit, skip: skip }
     );
+    return products;
   }
   async updateBulk(arr: any) {
     return await ProductModel.bulkWrite(arr);
@@ -113,8 +118,9 @@ class ProductService {
     return await ProductModel.find({ merchantId: id });
   }
 
+  /* @deprecated 
+  */
   async getProductByCategory(categoryName: string, page: any = undefined) {
-    //fixed your shit/////////////////////////////////////////////////////////////////////////////////
     if (!page) return await ProductModel.find({});
     let start = (parseInt(page) - 1) * +envconf.ProductsLimit + 1;
 
