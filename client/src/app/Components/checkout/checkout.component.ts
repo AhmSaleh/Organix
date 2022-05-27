@@ -87,7 +87,7 @@ export class CheckoutComponent implements OnInit {
       Method: 0,
     };
 
-    let clearCart = this.cartService.clearCart;
+    let service = this.cartService;
     paypal.Button.render(
       {
         env: 'sandbox', // Or 'production'
@@ -133,21 +133,11 @@ export class CheckoutComponent implements OnInit {
             },
             body: JSON.stringify({ UserID: UserID, data }),
           }).then(function (res) {
-            clearCart();
+            service.clearCart();
             console.log(res);
           });
         },
-        // onApprove: (data:any, actions:any) => {
-        //   return actions.order.capture().then(function(orderData:any) {
-        //     // Successful capture! For dev/demo purposes:
-        //     console.log(data)
-        //     console.log(actions)
-        //     console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
-        //     const transaction = orderData.purchase_units[0].payments.captures[0];
-        //     alert(`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for all available details`);
 
-        //   });
-        // },
         style: {
           color: 'gold',
           shape: 'rect',
