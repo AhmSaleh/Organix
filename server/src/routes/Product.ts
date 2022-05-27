@@ -23,28 +23,33 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-router.get("/", ProductController.GETProducts);
+router.get("/", ProductController.GETProducts); //
 
-router.get("/merchent", ProductController.GETProductByMerchent);
+router.get("/merchent", ProductController.GETProductByMerchent); //
 
-router.get("/latest", ProductController.GETLatestProducts);
+router.get("/all", ProductController.GETAllProductsAdmin); //
 
-router.get("/allCount", ProductController.GETProductsCount);
+router.get("/latest", ProductController.GETLatestProducts); //
 
-router.get("/CatgCount", ProductController.GETProductsByCatCount);
-router.get("/SearchCount", ProductController.GETProductsBySearchCount);
+router.get("/allCount", ProductController.GETProductsCount); //
 
-router.get("/status", ProductController.GETPendingProducts);
+router.get("/CatgCount", ProductController.GETProductsByCatCount); //
 
-router.get("/:id", ProductController.GETProductById);
+router.get("/SearchCount", ProductController.GETProductsBySearchCount); //
 
-router.get("/image/:id", ProductController.GETProductImage);
+router.get("/status", ProductController.GETPendingProducts); //
 
-router.get("/name/:name", ProductController.GETProductByName);
+router.get("/:id", ProductController.GETProductById); // hatem's
 
-router.get("/search/:search", ProductController.GETProductBySearch);
+router.get("/image/:id", ProductController.GETProductImage); //
 
-router.get("/category/:category", ProductController.GETProductByCategory);
+router.get("/name/:name", ProductController.GETProductByName); // not registered in frontend service
+
+router.get("/search/:search", ProductController.GETProductBySearch); //
+
+router.get("/category/:category", ProductController.GETProductByCategory); //
+
+router.get("/list/:list", ProductController.GETProductList);
 
 router.post(
   "/",
@@ -62,7 +67,7 @@ router.post(
 
 router.delete(
   "/:id",
-  checkRole(RoleEnum.admin),
+  checkRole(RoleEnum.admin, RoleEnum.merchant),
   ProductController.DELETEProductById
 );
 
@@ -85,7 +90,5 @@ router.patch(
   checkRole(RoleEnum.merchant, RoleEnum.admin),
   ProductController.UPDATEProductById
 );
-
-router.get("/list/:list", ProductController.GETProductList);
 
 export default router;

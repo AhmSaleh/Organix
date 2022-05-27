@@ -56,7 +56,7 @@ async function fillIfEmptyProducts(merchants_ids: mongoose.Types.ObjectId[]) {
         name: randFood(),
         rate: randNumber({ min: 1, max: 5 }),
         price: randNumber({ min: 10, max: 1000 }),
-        shortDescription: randParagraph(),
+        shortDescription: (randFood() + randFood() + randFood()).substring(0, 70),
         availability: randBoolean(),
         imgURL: randImgLocal(),
         imagesURL: Array(randNumber({ min: 1, max: 5 }))
@@ -65,14 +65,17 @@ async function fillIfEmptyProducts(merchants_ids: mongoose.Types.ObjectId[]) {
         weight: randNumber({ min: 1, max: 1000 }),
         availableInventory: randNumber({ min: 0, max: 100 }),
         longDescription: randParagraph(),
-        productInformation: randParagraph(),
+        productInformation: randParagraph().substring(0, 70),
         categoryName: rand(categories),
         merchantId: rand(merchants_ids),
         status: randomEnum(Status),
         dateAdded: randNumber({ min: 10, max: 1000000000 }),
       };
 
-      await ProductService.createProduct(randProduct);
+      let new_prod = await ProductService.createProduct(randProduct);
+      
+      new_prod.status = Status.approved;
+      await ProductService.updateProduct(new_prod.id, new_prod);
       if (i % 200 === 0) console.log(`${i} products added`);
     }
   }
@@ -187,6 +190,7 @@ function randomEnum<T>(anEnum: T): T[keyof T] {
 async function main() {
   await resetAll();
   await fillAll();
+  console.log("Populate Done");
 }
 
 main();

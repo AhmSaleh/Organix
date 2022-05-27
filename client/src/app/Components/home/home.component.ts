@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {NgbCarouselConfig} from '@ng-bootstrap/ng-bootstrap';
+import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
 import { IProduct } from 'src/app/Interfaces/IProduct';
 import { AuthService } from 'src/app/Services/auth.service';
 import { CartService } from 'src/app/Services/cart.service';
@@ -8,14 +8,17 @@ import { CartService } from 'src/app/Services/cart.service';
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
-  providers: [NgbCarouselConfig]
+  providers: [NgbCarouselConfig],
 })
 export class HomeComponent implements OnInit {
-
-  constructor(private cartService: CartService,config:  NgbCarouselConfig, private authService:AuthService) {
+  constructor(
+    private cartService: CartService,
+    config: NgbCarouselConfig,
+    private authService: AuthService
+  ) {
     config.showNavigationArrows = false;
     config.showNavigationIndicators = false;
-}
+  }
 
   ngOnInit(): void {}
 }

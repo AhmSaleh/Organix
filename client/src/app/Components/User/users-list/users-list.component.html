@@ -1,17 +1,18 @@
 <header>
-    <h1 class="text-center bold mat-display-2 mb-0 mt-0">Users List</h1>
-    <hr />
+  <h1 class="text-center bold mat-display-2 mb-0 mt-0">Users List</h1>
+  <hr />
 </header>
 <div class="container d-flex flex-row-reverse">
-        <div class="input-group mb-3">
-            <ng-template #tipContent>search by name, email, or role. Clear the search Bar then search to get the whole list.</ng-template>
-            <i data-toggle="tooltip" placement="top" [ngbTooltip]="tipContent" 
-            class='fa fa-info-circle fa-pull-left fa-lg' style="color: #7fad39; margin-top: 10px;"></i>
-            <input type="text" #searchBar class="form-control" placeholder="Search by Name or Email">
-            <div class="input-group-append">
-                <button (click)="search(searchBar.value)" class="btn user-link" type="button">Search</button>
-            </div>
-          </div>
+  <div class="input-group mb-3">
+    <ng-template #tipContent>search by name, email, or role. Clear the search Bar then search to get the whole list.
+    </ng-template>
+    <i data-toggle="tooltip" placement="top" [ngbTooltip]="tipContent" class='fa fa-info-circle fa-pull-left fa-lg'
+      style="color: #7fad39; margin-top: 10px;"></i>
+    <input type="text" #searchBar class="form-control" placeholder="Search by Name or Email">
+    <div class="input-group-append">
+      <button (click)="search(searchBar.value)" class="btn user-link" type="button">Search</button>
+    </div>
+  </div>
 </div>
 <div class="table-responsive container mb-1" style="height: 500px;">
     <table class="table table-bordered border-success table-hover overflow-scroll">

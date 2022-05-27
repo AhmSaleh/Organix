@@ -5,12 +5,17 @@ import envconf from "../envconf";
 
 class ProductService {
   async createProduct(product: IProduct) {
+    product.dateAdded = Date.now();
+    product.status = Status.pending;
+    product.availability = product.availableInventory > 0;
+    
     const new_product = await ProductModel.create(product);
     // update category
     if (new_product.categoryName.length) {
       await CategoeryService.getORCreateCategory(product.categoryName);
       await CategoeryService.addProduct(new_product._id, product.categoryName);
     }
+    return new_product;
   }
 
   async getAllProducts(page: any = undefined) {
@@ -18,10 +23,14 @@ class ProductService {
     let skip = (parseInt(page) - 1) * +envconf.ProductsLimit;
 
     return await ProductModel.find(
-      {},
+      { status: "approved" },
       {},
       { limit: +envconf.ProductsLimit, skip: skip }
     );
+  }
+
+  async getAllProductsAdmin() {
+    return await ProductModel.find({});
   }
 
   async getProductsByMerchent(merchentID: string | undefined) {
@@ -53,6 +62,7 @@ class ProductService {
         $text: {
           $search: search,
         },
+        status: "approved",
       },
       { score: { $meta: "textScore" } },
       { limit: +envconf.ProductsLimit, skip: skip }
@@ -90,24 +100,27 @@ class ProductService {
     if (!page) return await ProductModel.find({});
     let skip = (parseInt(page) - 1) * +envconf.ProductsLimit;
 
-    return await ProductModel.find(
-      { categoryName: _category },
+    let products =  await ProductModel.find(
+      { categoryName: _category , status: "approved"},
       {},
       { limit: +envconf.ProductsLimit, skip: skip }
     );
+    return products;
   }
   async updateBulk(arr: any) {
     return await ProductModel.bulkWrite(arr);
   }
 
   async getProductList(ids: string[]) {
-    return await ProductModel.find().where("_id").in(ids);
+    return await ProductModel.find({ status: "approved" }).where("_id").in(ids);
   }
 
   async getProductByMerchant(id: string) {
     return await ProductModel.find({ merchantId: id });
   }
 
+  /* @deprecated 
+  */
   async getProductByCategory(categoryName: string, page: any = undefined) {
     if (!page) return await ProductModel.find({});
     let start = (parseInt(page) - 1) * +envconf.ProductsLimit + 1;
@@ -120,7 +133,9 @@ class ProductService {
 
   async getAllProductsCount() {
     const count =
-      (await ProductModel.countDocuments()) / +envconf.ProductsLimit;
+      (await ProductModel.find({ status: "approved" }).countDocuments()) /
+      +envconf.ProductsLimit;
+    //(await ProductModel.countDocuments()) / +envconf.ProductsLimit;
     return Math.floor(count);
   }
 
@@ -132,6 +147,7 @@ class ProductService {
     const count =
       (await ProductModel.find({
         categoryName,
+        status: "approved",
       }).countDocuments()) / +envconf.ProductsLimit;
 
     return Math.floor(count);
@@ -149,7 +165,10 @@ class ProductService {
   }
 
   async getLatest8Products() {
-    return await ProductModel.find({ dateAdded: { $exists: true } })
+    return await ProductModel.find({
+      dateAdded: { $exists: true },
+      status: "approved",
+    })
       .sort({ dateAdded: -1 })
       .limit(8);
   }
