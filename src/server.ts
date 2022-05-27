@@ -38,6 +38,9 @@ import swaggerUi from 'swagger-ui-express';
 app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile))
 
 
+//serve static file
+app.use(express.static("public"));
+
 app.listen(3000, () =>
   console.log("Server is up on port 3000 http://localhost:3000")
 );
