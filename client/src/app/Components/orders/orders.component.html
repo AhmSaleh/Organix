@@ -37,44 +37,38 @@
             </thead>
             <tbody>
               <tr *ngFor="let order of orders; let itemIndex = index">
-                <<<<<<< HEAD <td *ngFor="
-                    let product of order.Products;
-                    let productIndex = index
-                  ">
-                  <h5>{{ product.Count }} {{ product.ProductID.name }}</h5>
-                  =======
+                <td>
+                  <select class="form-control">
+                    <option *ngFor=" let product of order.Products; let productIndex = index" value="">
+                      {{ product.Count }} {{ product.ProductID.name }}
+                    </option>
+                  </select>
+
+                </td>
+                <td class="shoping__cart__price">
+                  {{ order.Date | date }}
+                </td>
+                <td>{{ order.Address }}</td>
+                <td>{{ order.Gross }}</td>
+                <td>{{ OrderStatus[order.OrderStatus] }}</td>
+                <td>{{ PaymentStatus[order.Payment.Status] }}</td>
+                <td>{{ PaymentMethod[order.Payment.Method] }}</td>
+                <ng-container *ngIf="this.role == 'admin'">
                   <td>
-                    <select class="form-control">
-                      <option *ngFor=" let product of order.Products; let productIndex = index" value="">
-                        {{ product.Count }} {{ product.ProductID.name }}
-                      </option>
-                    </select>
-                    >>>>>>> origin/main
+                    <button class="btn btn-light" [disabled]="OrderStatus[order.OrderStatus] == 'Canceled'"
+                      (click)="openDialog(order)">
+                      Edit Status
+                    </button>
                   </td>
-                  <td class="shoping__cart__price">
-                    {{ order.Date | date }}
+                </ng-container>
+                <ng-container *ngIf="this.role == 'user'">
+                  <td>
+                    <button [disabled]="OrderStatus[order.OrderStatus] != 'Pending'" class="anchor-delete"
+                      (click)="cancelOrder(order._id)"><i class="bi bi-trash mr-1"></i>
+                      Cancel
+                    </button>
                   </td>
-                  <td>{{ order.Address }}</td>
-                  <td>{{ order.Gross }}</td>
-                  <td>{{ OrderStatus[order.OrderStatus] }}</td>
-                  <td>{{ PaymentStatus[order.Payment.Status] }}</td>
-                  <td>{{ PaymentMethod[order.Payment.Method] }}</td>
-                  <ng-container *ngIf="this.role == 'admin'">
-                    <td>
-                      <button class="btn btn-light" [disabled]="OrderStatus[order.OrderStatus] == 'Canceled'"
-                        (click)="openDialog(order)">
-                        Edit Status
-                      </button>
-                    </td>
-                  </ng-container>
-                  <ng-container *ngIf="this.role == 'user'">
-                    <td>
-                      <button [disabled]="OrderStatus[order.OrderStatus] != 'Pending'" class="anchor-delete"
-                        (click)="cancelOrder(order._id)"><i class="bi bi-trash mr-1"></i>
-                        Cancel
-                      </button>
-                    </td>
-                  </ng-container>
+                </ng-container>
               </tr>
             </tbody>
           </table>
